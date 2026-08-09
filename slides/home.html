@@ -608,12 +608,12 @@ var _hmt = _hmt || [];
 
   /* ── 统计 ── */
   document.getElementById('stParts').textContent = C.parts.length;
-  document.getElementById('stLessons').textContent = totalLessons - 2; /* 知识点口径：排除阶段自测与结业考试两个条目 */
+  document.getElementById('stLessons').textContent = totalLessons; /* 考试类条目已在计数循环中排除，totalLessons 即知识点数 */
   document.getElementById('stInteractive').textContent = totalInteractive;
   document.getElementById('stDone').textContent = totalDone;
 
   /* ── 结业证书板块进度 ── */
-  var learnable = totalLessons - 2; /* 排除阶段自测与结业考试两个条目 */
+  var learnable = totalLessons; /* 考试类条目已在计数循环中排除 */
   var csNum = document.getElementById('csNum');
   if (csNum) {
     csNum.textContent = totalDone + ' / ' + learnable;
