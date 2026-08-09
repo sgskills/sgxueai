@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汇总 · 进阶篇一页纸 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="设计模式 / 质检体系 / 自我改进——第四篇章核心知识全景，一张图带走。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="汇总 · 进阶篇一页纸">
+<meta property="og:description" content="设计模式 / 质检体系 / 自我改进，进阶知识全景。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-8.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .map-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:14px;}
+  .mg{border-radius:12px;border:1.5px solid var(--border);background:var(--card);padding:15px 17px;transition:.18s;}
+  .mg:hover{border-color:var(--accent-border);transform:translateY(-2px);box-shadow:var(--shadow-pop);}
+  .mg .mg-tag{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:999px;margin-bottom:8px;}
+  .mg h4{font-size:14.5px;font-weight:800;color:var(--text-h);margin-bottom:5px;}
+  .mg p{font-size:12.5px;color:var(--sub);line-height:1.7;margin:0;}
+  .mg a{font-size:12px;font-weight:700;color:var(--accent);display:inline-block;margin-top:8px;}
+  .mg.design .mg-tag{background:rgba(37,99,235,.09);color:var(--blue);}
+  .mg.eval .mg-tag{background:rgba(124,58,237,.09);color:var(--purple);}
+  .mg.evo .mg-tag{background:rgba(249,115,22,.09);color:var(--accent);}
+  .chain{margin-top:16px;}
+  .chain .ch-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:center;font-size:12px;font-weight:800;color:var(--sub);}
+  .chain .ch{padding:7px 13px;border-radius:999px;background:var(--pill-bg);border:1.5px solid var(--border);text-align:center;}
+  .chain .ch.hot{background:var(--accent-soft);border-color:var(--accent-border);color:var(--accent);}
+  .chain .arrow{color:var(--accent);}
+  @media(max-width:768px){.map-grid{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶</div>
+    <h1>汇总 · 进阶篇一页纸</h1>
+    <p class="subtitle">前三篇让 AI“能干活”，这一篇让业务流“活得久”：信息不丢、产出可查、指标可盯、系统能自己变好。</p>
+    <div class="tag-row"><span class="tag">汇总</span><span class="tag">第四篇章</span><span class="tag">5 分钟</span></div>
+  </div>
+
+  <div class="sec-label">七节课，一条主线：从“能用”到“可持续”</div>
+
+  <div class="map-grid reveal">
+    <div class="mg design">
+      <span class="mg-tag">业务流设计模式</span>
+      <h4>4-1 上下文工程：交接班记录</h4>
+      <p>事实、进度、待办、雷区四要素。验收标准：接手方不问一句就能续上。</p>
+      <a href="4-1.html">回顾 →</a>
+    </div>
+    <div class="mg design">
+      <span class="mg-tag">业务流设计模式</span>
+      <h4>4-2 工具设计的艺术</h4>
+      <p>单一职责、报错带 hint、返回最小化。好工具让 AI 不试错就能调对。</p>
+      <a href="4-2.html">回顾 →</a>
+    </div>
+    <div class="mg design">
+      <span class="mg-tag">业务流设计模式</span>
+      <h4>4-3 长任务 Agent 三保命</h4>
+      <p>迭代上限防纠缠、断点恢复防白跑、三层超时防卡死——任务先拆格。</p>
+      <a href="4-3.html">回顾 →</a>
+    </div>
+    <div class="mg eval">
+      <span class="mg-tag">AI 输出质检</span>
+      <h4>4-4 三层评测漏斗</h4>
+      <p>规则拦 70% → 模型互评拦 25% → 人工只抽 5%。问题必须回流前两层。</p>
+      <a href="4-4.html">回顾 →</a>
+    </div>
+    <div class="mg eval">
+      <span class="mg-tag">AI 输出质检</span>
+      <h4>4-5 黄金测试集</h4>
+      <p>50 道真实买家问题 + 得分点。改提示词先跑回归，低于线上版就驳回。</p>
+      <a href="4-5.html">回顾 →</a>
+    </div>
+    <div class="mg eval">
+      <span class="mg-tag">AI 输出质检</span>
+      <h4>4-6 数据看板三指标</h4>
+      <p>结论准确率（业绩）、人工返工率（求助率）、Token 单耗（饭量），异动都有排查路径。</p>
+      <a href="4-6.html">回顾 →</a>
+    </div>
+    <div class="mg evo">
+      <span class="mg-tag">自我改进</span>
+      <h4>4-7 提示词自动迭代</h4>
+      <p>跑测试 → 评成绩 → AI 改版 → 对比裁决。日常自动跑，大改人拍板。</p>
+      <a href="4-7.html">回顾 →</a>
+    </div>
+    <div class="mg evo">
+      <span class="mg-tag">一句话总纲</span>
+      <h4>进阶篇心法</h4>
+      <p>把每一次人工干预都变成系统能力：交接变交接卡、质检变规则、经验变测试题。</p>
+      <a href="4-1.html">从头看 →</a>
+    </div>
+  </div>
+
+  <div class="sec-label">串成一条线：AI 业务流的“永续运行”链条</div>
+
+  <div class="demo chain reveal">
+    <div class="demo-title">信息流闭环 · 七节课怎么咬在一起</div>
+    <div class="ch-row">
+      <span class="ch">4-1 交接卡<br>信息不丢</span><span class="arrow">→</span>
+      <span class="ch">4-2 好工具<br>调用不歪</span><span class="arrow">→</span>
+      <span class="ch">4-3 三保命<br>长跑不崩</span><span class="arrow">→</span>
+      <span class="ch">4-4 质检漏斗<br>产出可查</span><span class="arrow">→</span>
+      <span class="ch">4-5 测试集<br>改动可验</span><span class="arrow">→</span>
+      <span class="ch">4-6 看板<br>效果可盯</span><span class="arrow">→</span>
+      <span class="ch hot">4-7 自动迭代<br>系统自进化</span>
+    </div>
+  </div>
+
+  <div class="l-callout reveal">
+    回头看：第一篇让你<b>懂原理</b>，第二篇让你<b>会设计</b>，第三篇让你<b>能落地</b>，第四篇让你<b>可持续</b>。下一篇换个视角——从“系统怎么建”到“团队怎么用”：流程控制、质量底线、文档沉淀。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本篇要点</div>
+    <ul>
+      <li><b>设计模式</b>：交接卡四要素、工具三验收、长任务三保命——工程化基本功。</li>
+      <li><b>质检体系</b>：三层漏斗 + 黄金测试集 + 三指标看板，产出全程可查可验可盯。</li>
+      <li><b>自我改进</b>：评测结果反向优化提示词，让“持续变好”成为机制而非口号。</li>
+      <li><b>总纲</b>：每一次人工干预，都要沉淀成系统能力——这才叫“业务流”。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

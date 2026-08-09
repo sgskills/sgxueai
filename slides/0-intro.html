@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我们在哪里？电商人的达克效应 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="用达克曲线定位你在 AI 应用上的真实位置：为什么很多电商老手在 AI 上栽跟头？从愚昧之巅到平稳高原，这门课带你走完这条路。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="我们在哪里？电商人的达克效应">
+<meta property="og:description" content="定位你在 AI 应用上的真实位置，别在愚昧之巅开店。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/0-intro.html">
+<link rel="stylesheet" href="lesson.css">
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem('aibp_course_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  }catch(e){}
+})();
+</script>
+<style>
+  /* 本页特有样式：达克曲线交互 */
+  .dk-stage{
+    position:relative;height:280px;margin:18px 0 8px;
+  }
+  .dk-curve{width:100%;height:100%;}
+  .dk-marker{
+    position:absolute;transform:translate(-50%,-100%);
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    transition:left .1s linear, top .1s linear;pointer-events:none;
+  }
+  .dk-marker .pin{
+    width:16px;height:16px;border-radius:50%;
+    background:var(--accent);border:3px solid var(--card);
+    box-shadow:0 2px 10px rgba(249,115,22,.5);
+  }
+  .dk-marker .flag{
+    font-size:11px;font-weight:800;color:var(--accent);
+    background:var(--card);border:1px solid var(--accent-border);
+    padding:2px 9px;border-radius:999px;white-space:nowrap;
+  }
+  .dk-readout{
+    text-align:center;min-height:78px;padding:12px 16px;
+    background:var(--pill-bg);border-radius:var(--radius-sm);
+  }
+  .dk-readout .stage-name{font-size:16px;font-weight:900;color:var(--text-h);}
+  .dk-readout .stage-desc{font-size:13px;color:var(--sub);margin-top:4px;line-height:1.6;}
+  .dk-slider-row{display:flex;align-items:center;gap:12px;margin-top:14px;}
+  .dk-slider-row span{font-size:12px;color:var(--sub);flex-shrink:0;}
+  @media (max-width:768px){ .dk-stage{height:210px;} }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">导学篇 · 开学第一课</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">导学篇 · 开学第一课</div>
+    <h1>我们在哪里？电商人的达克效应</h1>
+    <p class="subtitle">学 AI 之前，先搞清楚自己站在哪——很多电商老手不是学不会，而是不知道自己不知道。</p>
+    <div class="tag-row"><span class="tag">开篇</span><span class="tag">交互</span><span class="tag">5 分钟</span></div>
+  </div>
+
+  <div class="sec-label">达克效应：认识你自己</div>
+
+  <p class="reveal">心理学上有个著名的<b>达克效应</b>：人对一个领域懂得越少，越容易高估自己。放在 AI 应用上，电商人大多会走过这样一条曲线：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">交互演示 · 拖动滑块，看看你在这条曲线的哪个位置</div>
+    <div class="dk-stage">
+      <svg class="dk-curve" viewBox="0 0 600 240" preserveAspectRatio="none">
+        <!-- 达克曲线：起步高 → 愚昧之巅 → 绝望之谷 → 开悟之坡 → 平稳高原 -->
+        <path d="M10,120 C60,40 90,20 130,25 C180,32 210,180 260,195 C310,210 340,150 400,110 C460,70 540,55 590,50"
+              fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="115" y="14" font-size="11" fill="var(--sub)" text-anchor="middle">愚昧之巅</text>
+        <text x="265" y="228" font-size="11" fill="var(--sub)" text-anchor="middle">绝望之谷</text>
+        <text x="420" y="100" font-size="11" fill="var(--sub)" text-anchor="middle">开悟之坡</text>
+        <text x="545" y="42" font-size="11" fill="var(--sub)" text-anchor="middle">平稳高原</text>
+      </svg>
+      <div class="dk-marker" id="dkMarker" style="left:5%;top:50%;">
+        <span class="flag">你在这</span><span class="pin"></span>
+      </div>
+    </div>
+    <div class="dk-readout">
+      <div class="stage-name" id="dkName">刚接触 AI</div>
+      <div class="stage-desc" id="dkDesc">信心满满：“不就是聊天吗？”——这个阶段的特点是不知道提示词、上下文、Token 这些概念的存在。</div>
+    </div>
+    <div class="dk-slider-row">
+      <span>新手</span>
+      <input type="range" id="dkSlider" min="0" max="100" value="5">
+      <span>老手</span>
+    </div>
+  </div>
+
+  <div class="sec-label">四个阶段，对号入座</div>
+
+  <ul>
+    <li class="reveal"><b>愚昧之巅</b>：“AI 不就是聊天吗？”随便写两句提示词就敢上生产，出了问题只会说“AI 不行”。</li>
+    <li class="reveal"><b>绝望之谷</b>：发现 AI 写文案跑偏、客服答非所问、生图六指怪——原来这里面的水这么深。</li>
+    <li class="reveal"><b>开悟之坡</b>：开始懂 Token、上下文窗口、温度、RAG 是怎么回事，知道怎么约束 AI、怎么给它配知识库，输出质量稳步上升。</li>
+    <li class="reveal"><b>平稳高原</b>：AI 业务流稳定跑在店里，你管的是 SOP 和质检，AI 干的是重复劳动——这才叫“AI 员工”。</li>
+  </ul>
+
+  <p class="reveal">这门课的目标很明确：<b>带你用最快的速度穿过绝望之谷，爬上开悟之坡</b>。不整虚的，每一篇都落在电商真实场景上——客服、文案、生图、选品、数据，全是你的日常。</p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>用过 ≠ 会用</b>：能出图、能聊天，不代表 AI 能稳定干活，中间隔着一整套方法论。</li>
+      <li><b>达克效应</b>：懂得越少越自信。承认“我不知道”是这门课最好的起点。</li>
+      <li><b>课程目标</b>：不是把你变成技术人员，而是让你能<b>管住 AI、用好 AI、验收 AI</b>。</li>
+      <li>下一节我们聊聊：怎么学，知识才能真正留下来。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  // 达克曲线采样（与 SVG path 大致吻合的贝塞尔近似）
+  var stages = [
+    { at: 5,  name: '刚接触 AI',        desc: '信心满满：“不就是聊天吗？”——这个阶段的特点是不知道提示词、上下文、Token 这些概念的存在。' },
+    { at: 20, name: '愚昧之巅 ⚠️',      desc: '用 AI 写过几条文案就敢上生产，出了问题只会说“AI 不行”。大多数电商团队卡在这里。' },
+    { at: 43, name: '绝望之谷',          desc: '文案跑偏、客服胡说、生图翻车……你终于发现这里面的水有多深。别慌，这说明你开始懂了。' },
+    { at: 68, name: '开悟之坡',          desc: '懂 Token、懂上下文、会给 AI 配知识库、会写约束指令——AI 输出质量开始稳步上升。' },
+    { at: 92, name: '平稳高原 🏔️',      desc: 'AI 业务流稳定跑在店里，你管 SOP 和质检，AI 干重复劳动。这就是这门课要带你到的地方。' }
+  ];
+  // 曲线 y 值的简单插值（0=谷顶高，1=谷底低）映射到舞台百分比
+  function curveY(x){ // x: 0-100
+    if (x < 22) return 50 - (x/22)*38;            // 上升到愚昧之巅
+    if (x < 44) return 12 + ((x-22)/22)*70;        // 跌到绝望之谷
+    if (x < 72) return 82 - ((x-44)/28)*40;        // 爬开悟之坡
+    return 42 - ((x-72)/28)*20;                    // 平稳高原
+  }
+  var slider = document.getElementById('dkSlider');
+  var marker = document.getElementById('dkMarker');
+  var nameEl = document.getElementById('dkName');
+  var descEl = document.getElementById('dkDesc');
+  function update(){
+    var x = +slider.value;
+    marker.style.left = (3 + x*0.94) + '%';
+    marker.style.top = curveY(x) + '%';
+    var s = stages[0];
+    for (var i=0;i<stages.length;i++){ if (x >= stages[i].at - 8) s = stages[i]; }
+    nameEl.textContent = s.name;
+    descEl.textContent = s.desc;
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

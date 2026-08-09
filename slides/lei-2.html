@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>测款：用最小成本验证市场 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="测款预算怎么定、数据怎么看、什么信号该加码什么信号该砍——用最小成本验证市场。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="测款：用最小成本验证市场">
+<meta property="og:description" content="测款预算、数据信号、加码与砍掉的判断标准。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/lei-2.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .sig-lab{margin-top:14px;}
+  .sig-case{border-radius:11px;border:1.5px solid var(--border);background:var(--card);padding:13px 16px;margin-bottom:10px;}
+  .sig-case .sc-data{font-size:12.5px;line-height:1.8;color:var(--text);}
+  .sig-case .sc-data b{color:var(--text-h);}
+  .sig-case .sc-acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  .sig-case .sc-acts button{flex:1;min-width:90px;padding:7px 10px;font-size:12px;border-radius:9px;border:1.5px solid var(--border-strong);
+    background:var(--pill-bg);color:var(--text);cursor:pointer;font-weight:800;transition:.15s;font-family:inherit;}
+  .sig-case .sc-acts button:hover{border-color:var(--accent);}
+  .sig-case .sc-acts button.right{background:rgba(16,185,129,.12);border-color:var(--success);color:var(--success);}
+  .sig-case .sc-acts button.wrong{background:rgba(220,38,38,.1);border-color:var(--danger);color:var(--danger);}
+  .sig-case .sc-why{display:none;margin-top:9px;font-size:12px;color:var(--sub);line-height:1.7;border-top:1px dashed var(--border);padding-top:8px;}
+  .sig-case .sc-why.show{display:block;}
+  .sig-case .sc-why b{color:var(--text-h);}
+  .sig-score{text-align:center;font-size:13.5px;font-weight:800;padding:12px;border-radius:11px;
+    background:var(--pill-bg);border:1.5px solid var(--border);color:var(--text-h);}
+  .sig-score b{color:var(--accent);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">加餐篇 · 团队应用加餐</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">加餐篇 · 团队应用加餐</div>
+    <h1>测款：用最小成本验证市场</h1>
+    <p class="subtitle">上一节讲了选品逻辑，但逻辑再对也只是“判断”。判断和市场之间，隔着一次低成本的验证——这就是测款：别问“我觉得能不能卖”，让真实数据回答。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">加餐</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">测款预算：小钱买的是“不犯大错”</div>
+
+  <p class="reveal">新手最常犯的错是<b>把测款做成了压货</b>：还没验证就备三个月的库存，测款变成了赌博。举个例子，一个常见的测款打法是：<b>单款测款预算 2000-5000 元推广费 + 最小起订量</b>，测完数据说话——数据好才放大，数据差就当几千块买个明白。金额丰俭由人、因类目而异，重要的是<b>“预算有上限”这条纪律本身</b>。</p>
+
+  <p class="reveal">这个预算买到的不是销量，是三个关键信号：<b>点击率</b>（图和款有没有吸引力）、<b>收藏加购率</b>（看了想买的人多不多）、<b>转化率</b>（想买的人最后掏不掏钱）。三个信号各管一段，缺一个都不能下结论。</p>
+
+  <div class="sec-label">三个信号怎么读</div>
+
+  <ul>
+    <li class="reveal"><b>点击率</b>：低于行业均值 → 款或图不行，先换图再判款，别急着砍。</li>
+    <li class="reveal"><b>收藏加购率</b>：点击高但加购低 → 进来发现“不是想要的”（价格带错/卖点错位）；加购高是强信号，说明需求真实。</li>
+    <li class="reveal"><b>转化率</b>：加购高但转化低 → 卡在最后一步（价格、评价、详情页没说服力）；转化达标才算“能卖”。</li>
+  </ul>
+
+  <div class="sec-label">上手练：四组真实测款数据，你来判</div>
+
+  <div class="demo sig-lab reveal">
+    <div class="demo-title">信号判读练习 · 每组数据选：加码 / 观望 / 砍掉</div>
+
+    <div class="sig-case">
+      <div class="sc-data"><b>案例 A · 连衣裙</b>：测款 5 天，点击率 4.2%（行业均值 3%），加购率 12%（优秀线 8%），转化率 3.5%（达标线 2%）</div>
+      <div class="sc-acts">
+        <button data-r="1">🚀 加码</button><button data-r="0">👀 观望</button><button data-r="0">✂️ 砍掉</button>
+      </div>
+      <div class="sc-why"><b>正解：加码。</b>三个信号全部在线——点击说款有吸引力，加购说需求真实，转化说最后一公里的障碍也扫清了。这种款要果断放大预算，抢占时间窗口，竞品跟进通常只有 2-4 周延迟。</div>
+    </div>
+
+    <div class="sig-case">
+      <div class="sc-data"><b>案例 B · 保温杯</b>：点击率 4.5%（高），加购率 3%（低），转化率 0.8%（低）</div>
+      <div class="sc-acts">
+        <button data-r="0">🚀 加码</button><button data-r="0">👀 观望</button><button data-r="1">✂️ 砍掉</button>
+      </div>
+      <div class="sc-why"><b>正解：砍掉（或换卖点重测）。</b>点击高只是“图好看/标题吸引人”，加购崩塌说明进店的人发现货不对板——典型的“图骗点击”。先想是不是卖点错位；想不出错位在哪，就认赔这笔推广费，别恋战。</div>
+    </div>
+
+    <div class="sig-case">
+      <div class="sc-data"><b>案例 C · 收纳箱</b>：点击率 3.1%（达标），加购率 9%（优秀），转化率 1.1%（低于达标线）</div>
+      <div class="sc-acts">
+        <button data-r="0">🚀 加码</button><button data-r="1">👀 观望</button><button data-r="0">✂️ 砍掉</button>
+      </div>
+      <div class="sc-why"><b>正解：观望 + 修转化。</b>点击和加购证明需求是真的，卡在最后一公里——查三样：价格是不是比竞品高了、评价是不是太少（新品常见）、详情页是不是没解决核心顾虑。修完再测一轮，很多“待爆品”死在这一步没人修。</div>
+    </div>
+
+    <div class="sig-case">
+      <div class="sc-data"><b>案例 D · 宠物窝</b>：点击率 1.2%（行业均值 3%），加购率 2%，转化率 0.3%，但你在直播间看这个类目“特别火”</div>
+      <div class="sc-acts">
+        <button data-r="0">🚀 加码</button><button data-r="0">👀 观望</button><button data-r="1">✂️ 砍掉</button>
+      </div>
+      <div class="sc-why"><b>正解：砍掉。</b>三个信号全线溃败，直播间的“火”是内容热度不是搜索需求——呼应加餐第 1 课《选品的底层逻辑》的教训：别把流量热度当需求。几千块买个明白，这已经是最好的结局。</div>
+    </div>
+
+    <div class="sig-score" id="sigScore">已判 0 / 4 组 · 答对 <b>0</b> 组</div>
+  </div>
+
+  <div class="sec-label">测款的三条纪律</div>
+
+  <ul>
+    <li class="reveal"><b>预算封顶</b>：单款测款预算写死在墙上，到线必须出结论——“再测测看”是亏损的开端。</li>
+    <li class="reveal"><b>数据到量才判</b>：点击量不到 300 不下结论，样本太小的“信号”都是噪音。</li>
+    <li class="reveal"><b>砍款不内耗</b>：测款本来就是买情报，10 款测出 2 款能打的，这就是高胜率——剩下 8 款的费用是情报费，不是亏损。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>测款 = 买情报</b>：一笔设好上限的推广费（比如 2000-5000 元）+ 最小起订量，买的是“不犯大错”。</li>
+      <li><b>三个信号各管一段</b>：点击看吸引力、加购看需求真假、转化看最后一公里。</li>
+      <li><b>判断矩阵</b>：全在线加码、点击高加购崩砍、加购高转化低先修再测、全线溃败果断砍。</li>
+      <li><b>三条纪律</b>：预算封顶、数据到量才判、砍款不内耗。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var total=4,judged=0,right=0;
+  var score=document.getElementById('sigScore');
+  document.querySelectorAll('.sig-case').forEach(function(box){
+    var btns=box.querySelectorAll('button'),why=box.querySelector('.sc-why');
+    btns.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(box.getAttribute('data-done'))return;
+        box.setAttribute('data-done','1');
+        btns.forEach(function(b){b.classList.add(b.getAttribute('data-r')==='1'?'right':'wrong');b.style.pointerEvents='none';});
+        why.classList.add('show');
+        judged++;if(btn.getAttribute('data-r')==='1')right++;
+        score.innerHTML='已判 '+judged+' / '+total+' 组 · 答对 <b>'+right+'</b> 组'+(judged===total?(right===4?' —— 🏆 全对！你的盘感可以直接上岗测款了':right>=2?' —— 不错，再把“三个信号各管一段”默念三遍':' —— 回上面把三个信号的定义再看一遍'):'');
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

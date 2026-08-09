@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小步快跑：别让 AI 一次写 50 条文案 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="批次拆分、单点确认、快速纠偏——控制 AI 产出的节奏，别一口气吞 50 条。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="小步快跑：别让 AI 一次写 50 条文案">
+<meta property="og:description" content="批次拆分、单点确认、快速纠偏——控制 AI 产出节奏。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/5-3.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .batch{margin-top:14px;}
+  .batch-cols{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+  .bc{border-radius:12px;border:1.5px solid var(--border);background:var(--card);padding:14px 16px;}
+  .bc h5{font-size:13px;font-weight:900;color:var(--text-h);margin-bottom:9px;display:flex;align-items:center;gap:7px;}
+  .bc.bad h5{color:var(--danger);}
+  .bc.good h5{color:var(--success);}
+  .bc-list{font-size:12px;line-height:1.9;color:var(--sub);}
+  .bc-list .it{display:flex;gap:7px;align-items:flex-start;margin-bottom:5px;}
+  .bc-list .it .dot{flex-shrink:0;width:17px;height:17px;border-radius:50%;font-size:10px;font-weight:900;
+    display:flex;align-items:center;justify-content:center;margin-top:2px;color:#fff;background:var(--sub);}
+  .bc-list .it.ok .dot{background:var(--success);}
+  .bc-list .it.no .dot{background:var(--danger);}
+  .bc-list .it.fix .dot{background:var(--amber);}
+  .bc-cost{margin-top:9px;font-size:11.5px;font-weight:800;padding:7px 11px;border-radius:8px;text-align:center;}
+  .bc.bad .bc-cost{background:rgba(220,38,38,.08);color:var(--danger);}
+  .bc.good .bc-cost{background:rgba(16,185,129,.09);color:var(--success);}
+  .rate{margin-top:14px;}
+  .rate label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--text-h);margin-bottom:4px;}
+  .rate label output{color:var(--accent);}
+  .rate-out{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+  .rate-out .ro{flex:1;min-width:130px;text-align:center;border-radius:10px;padding:11px;background:var(--pill-bg);border:1.5px solid var(--border);}
+  .rate-out .ro .n{font-size:21px;font-weight:900;color:var(--text-h);}
+  .rate-out .ro .l{font-size:11px;color:var(--sub);font-weight:700;margin-top:2px;}
+  @media(max-width:640px){.batch-cols{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第五篇章 · 电商团队 AI 协作规范</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第五篇章 · 电商团队 AI 协作规范</div>
+    <h1>小步快跑：别让 AI 一次写 50 条文案</h1>
+    <p class="subtitle">上一节教你怎么“下一单任务”。这节教你怎么拆“批量任务”——同样的 50 条文案，一口气吞和分五批吃，质量完全是两个世界。</p>
+    <div class="tag-row"><span class="tag">技巧</span><span class="tag">节奏</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">50 条一口气生成，会发生什么</div>
+
+  <p class="reveal">“帮我把这 50 个 SKU 的标题全写了”——指令一发，AI 哗哗哗输出 50 条。你从头看到尾，发现第 3 条开始就有个理解偏差，然后<b>这个偏差像复印机卡纸一样，贯穿了后面 47 条</b>。为什么？因为 1-3 节讲过：AI 在接龙，前面的输出会变成后面的“语境”——第 3 条的错，会被它自己当成“范文”抄下去。</p>
+
+  <div class="demo batch reveal">
+    <div class="demo-title">两种节奏对比 · 左边一口气吞，右边小步快跑</div>
+    <div class="batch-cols">
+      <div class="bc bad">
+        <h5>❌ 一口气吞 50 条</h5>
+        <div class="bc-list">
+          <div class="it ok"><span class="dot">✓</span>第 1-2 条：质量不错</div>
+          <div class="it no"><span class="dot">✗</span>第 3 条：把“冰丝”理解成“加绒”</div>
+          <div class="it no"><span class="dot">✗</span>第 4-50 条：错误被当范文复制，47 条全跑偏</div>
+          <div class="it no"><span class="dot">✗</span>你 40 分钟后才发现 → 整批作废重来</div>
+        </div>
+        <div class="bc-cost">损耗：50 条 × 重写 + 40 分钟</div>
+      </div>
+      <div class="bc good">
+        <h5>✅ 分五批，每批 10 条</h5>
+        <div class="bc-list">
+          <div class="it ok"><span class="dot">✓</span>批次 1：第 3 条出现同样偏差</div>
+          <div class="it fix"><span class="dot">⚑</span>你 8 分钟就发现 → 补一句“冰丝=凉感面料”</div>
+          <div class="it ok"><span class="dot">✓</span>批次 2-5：带着修正跑，40 条全对</div>
+          <div class="it ok"><span class="dot">✓</span>总耗时反而更短，还沉淀了一条经验</div>
+        </div>
+        <div class="bc-cost">损耗：2 条重写 + 8 分钟</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">动手算算：批次大小怎么定</div>
+
+  <p class="reveal">批次不是越小越好——分太碎，你的确认成本会吃掉收益。拖一拖，找到你的甜蜜点：</p>
+
+  <div class="demo rate reveal">
+    <div class="demo-title">批次甜蜜点计算器 · 调 AI 的“首条出错率”</div>
+    <label>这批任务里，AI 出理解偏差的概率（新任务往右拖，熟练任务往左拖）<output id="oErr">30%</output></label>
+    <input type="range" id="rErr" min="5" max="60" value="30">
+    <div class="rate-out">
+      <div class="ro"><div class="n" id="nBig">15 条</div><div class="l">一口气吞的预计报废量</div></div>
+      <div class="ro"><div class="n" id="nSmall">2 条</div><div class="l">分批跑的预计报废量</div></div>
+      <div class="ro"><div class="n" id="nSweet">8~12 条/批</div><div class="l">建议批次大小</div></div>
+    </div>
+  </div>
+
+  <div class="sec-label">小步快跑的三条操作纪律</div>
+
+  <ul>
+    <li class="reveal"><b>首批必查</b>：每批任务的前 2-3 条逐字看——这是“校准时钟”，首批过了，后面才有放权的资格。</li>
+    <li class="reveal"><b>纠偏不过批</b>：发现问题当场改提示词，<b>绝不让带着错误的批次继续跑</b>——否则错误会被当成范文自我复制。</li>
+    <li class="reveal"><b>经验当场记</b>：每次纠偏产出的那句“补丁”（“冰丝=凉感面料”），顺手存进提示词资产库——5-7 节会告诉你怎么管这些资产。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    小步快跑的本质：<b>把“质量检查点”从终点挪到过程中</b>。这跟做供应链一个理——你不会等 5000 件货全到仓才验第一批货，AI 的产出也不该等到 50 条全写完才看第一条。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>错误会自我复制</b>：AI 接龙机制下，前面的错会被当成范文抄下去。</li>
+      <li><b>分批 = 过程质检</b>：首批发现偏差 8 分钟纠掉，一口气吞 40 分钟后整批报废。</li>
+      <li><b>批次甜蜜点</b>：新任务 5-8 条/批，熟练任务 10-15 条/批，首批必逐字查。</li>
+      <li><b>纠偏不过批</b>：发现问题当场修提示词，补丁顺手存进资产库。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var r=document.getElementById('rErr'),o=document.getElementById('oErr');
+  var nBig=document.getElementById('nBig'),nSmall=document.getElementById('nSmall'),nSweet=document.getElementById('nSweet');
+  function update(){
+    var err=+r.value;
+    o.textContent=err+'%';
+    // 一口气吞 50 条：首条出错后错误自我复制，预计报废 = 出错概率 × 后续蔓延
+    var big=Math.round(50*(err/100)*0.9);
+    // 分批：只有首批的一部分报废
+    var small=Math.max(1,Math.round(10*(err/100)*0.6));
+    nBig.textContent=big+' 条';
+    nSmall.textContent=small+' 条';
+    nSweet.textContent=err>=40?'5~8 条/批':(err>=20?'8~12 条/批':'10~15 条/批');
+  }
+  r.addEventListener('input',update);update();
+})();
+</script>
+</body>
+</html>

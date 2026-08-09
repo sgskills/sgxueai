@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>应对二：Temperature 温度调节 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="拖动温度滑块，实时看同一条“连衣裙”文案从保守到放飞的变化。低温求稳，高温求变，电商场景怎么选？">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="应对二：Temperature 温度调节">
+<meta property="og:description" content="拖动滑块，实时看同一条连衣裙文案从保守到放飞的变化。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-8.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .temp-readout{display:flex;align-items:baseline;gap:10px;margin:6px 0 12px;}
+  .temp-readout .tv{font-size:34px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums;}
+  .temp-readout .tn{font-size:14px;font-weight:800;color:var(--text-h);}
+  .pool{display:flex;flex-direction:column;gap:7px;margin:16px 0;}
+  .pool .pc{display:flex;align-items:center;gap:10px;font-size:13px;transition:opacity .3s, filter .3s;}
+  .pool .pc .w{width:96px;text-align:right;font-weight:700;color:var(--text-h);flex-shrink:0;}
+  .pool .pc .barw{flex:1;height:18px;background:var(--pill-bg);border-radius:6px;overflow:hidden;}
+  .pool .pc .bar{height:100%;border-radius:6px;background:var(--sub);transition:width .5s, background .5s;}
+  .pool .pc.hot .bar{background:var(--accent);}
+  .pool .pc.dim{opacity:.28;filter:grayscale(1);}
+  .copy-out{
+    background:var(--pill-bg);border-radius:12px;padding:16px 18px;font-size:14.5px;
+    line-height:1.9;min-height:72px;border-left:4px solid var(--accent);transition:.2s;
+  }
+  .temp-verdict{margin-top:12px;font-size:12.5px;color:var(--sub);background:var(--pill-bg);border-radius:10px;padding:10px 14px;line-height:1.7;}
+  .temp-verdict b{color:var(--text-h);}
+  .scene-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .scene-tags span{
+    font-size:11.5px;font-weight:700;padding:3px 11px;border-radius:999px;
+    background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-border);
+  }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座 · 幻觉应对 2/4</div>
+    <h1>Temperature：给 AI 的“发挥尺度”调个档</h1>
+    <p class="subtitle">同一个模型、同一条提示词，为什么有时候稳如老狗，有时候放飞自我？秘密全在这个 0 到 1 的滑块上。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">技巧</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">温度到底在调什么</div>
+
+  <p class="reveal">回忆接龙原理：AI 每个字都有一张赔率表，然后“押注”。<b>Temperature 调的不是它懂多少，而是它押注时有多“守规矩”</b>：</p>
+
+  <ul>
+    <li class="reveal"><b>低温（接近 0）</b>：永远押赔率最高的那个字。输出稳定、保守、千篇一律——但每次生成都几乎一样。</li>
+    <li class="reveal"><b>高温（接近 1）</b>：低赔率的字也有机会上桌。输出多变、有惊喜——但偏题和犯错的概率同步上升。</li>
+  </ul>
+
+  <p class="reveal">用店里员工打比方：低温像<b>照着话术本念的老客服</b>，高温像<b>灵感型文案策划</b>。没有好坏，只有岗位合不合适。</p>
+
+  <div class="sec-label">交互演示 · 拖动温度，看文案变脸</div>
+
+  <p class="reveal">任务：给一条法式碎花连衣裙写一句卖点文案。拖动滑块，左边看候选词的“上桌资格”变化，右边看实际输出怎么变：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">Temperature 滑块实验台 · 同一提示词，只看温度</div>
+    <div class="temp-readout">
+      <span class="tv" id="tv">0.3</span>
+      <span class="tn" id="tn">稳妥档 · 复述事实</span>
+    </div>
+    <input type="range" id="tempSlider" min="0" max="100" value="30">
+    <div class="pool" id="pool"></div>
+    <div class="copy-out" id="copyOut"></div>
+    <div class="temp-verdict" id="verdict"></div>
+  </div>
+
+  <div class="sec-label">电商场景的温度速查表</div>
+
+  <p class="reveal">不同活儿配不同温度，这是我给团队定的参考档位，直接抄：</p>
+
+  <table class="reveal">
+    <tr><th>场景</th><th>建议温度</th><th>为什么</th></tr>
+    <tr><td>客服问答 / 售后处理</td><td><b>0 ~ 0.2</b></td><td>政策、价格、承诺必须钉死，多一分发挥都是风险</td></tr>
+    <tr><td>商品参数整理 / 表格生成</td><td><b>0 ~ 0.1</b></td><td>要的是原样照抄，任何“创作”都是事故</td></tr>
+    <tr><td>详情页 / 卖点文案</td><td><b>0.3 ~ 0.5</b></td><td>事实框架内求一点表达差异，避免全网同款文案</td></tr>
+    <tr><td>短视频脚本 / 小红书笔记</td><td><b>0.6 ~ 0.8</b></td><td>要网感要钩子，允许它跳脱，人工再筛</td></tr>
+    <tr><td>头脑风暴 / 起名 / 创意方向</td><td><b>0.8 ~ 1.0</b></td><td>就是要天马行空，反正最后人来拍板</td></tr>
+  </table>
+
+  <div class="l-callout reveal">
+    一句话：<b>凡是“错了要赔钱”的场景，温度往低调；凡是“平庸等于白干”的场景，温度往高调。</b>温度管的是“发挥尺度”，管不了“事实真假”——参数有没有编错，还得靠知识库，下一节见。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>Temperature 调押注风格</b>：低温只押高概率（稳），高温给低概率机会（野）。</li>
+      <li><b>低温 ≠ 更准确</b>：温度管发挥尺度，管不了事实真假，0 度照样可能编参数。</li>
+      <li><b>速查口诀</b>：客服和参数往 0 调，详情页 0.3-0.5，内容创作 0.6 起步。</li>
+      <li><b>生产环境固定档位</b>：调好的温度写进 SOP，别让每个运营自己随手设。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  // 候选词池：某位置上的候选及基础概率
+  var poolData = [
+    ['碎花', 46], ['法式', 22], ['浪漫', 14], ['温柔', 10], ['复古', 5], ['惊艳', 2], ['炸街', 1]
+  ];
+  // 各温度档的输出文案
+  var copies = [
+    { max: 15, t: '0.1', name: '钉死档 · 机械复述', copy: '法式碎花连衣裙，雪纺面料，透气舒适，S-XL 码现货。', verdict: '<b>输出特征：</b>每次生成都一样，像复制粘贴。<b>适合：</b>客服政策回复、参数整理。' },
+    { max: 40, t: '0.3', name: '稳妥档 · 复述事实', copy: '这条法式碎花连衣裙采用轻盈雪纺，上身透气不闷，通勤约会都合适。', verdict: '<b>输出特征：</b>规规矩矩，挑不出错也记不住。<b>适合：</b>详情页基础文案。' },
+    { max: 65, t: '0.6', name: '平衡档 · 有点灵气', copy: '碎花开满整条裙子，像把南法的春天穿在了身上——雪纺很轻，风一吹就飘。', verdict: '<b>输出特征：</b>事实还在，表达有了画面感。<b>适合：</b>小红书笔记、主图卖点。' },
+    { max: 85, t: '0.8', name: '放飞档 · 灵感型', copy: '穿上它转个圈，裙摆能开出一整个莫奈花园——约会这么穿，谁看了不迷糊？', verdict: '<b>输出特征：</b>金句概率上升，但“莫奈花园”已经开始脱离商品事实。<b>适合：</b>短视频钩子，需人工筛。' },
+    { max: 100, t: '1.0', name: '暴走档 · 高风险', copy: '这条裙子有魔法！穿上立刻瘦十斤、桃花运爆棚，法国皇室同款工艺，错过等三年！！', verdict: '<b>输出特征：</b>🚨 功效承诺+虚假背书，直接违反广告法。<b>适合：</b>只用于头脑风暴，绝不能直接上架。' }
+  ];
+  var slider = document.getElementById('tempSlider');
+  var tv = document.getElementById('tv');
+  var tn = document.getElementById('tn');
+  var pool = document.getElementById('pool');
+  var copyOut = document.getElementById('copyOut');
+  var verdict = document.getElementById('verdict');
+
+  function update(){
+    var v = +slider.value;
+    var temp = v / 100;
+    // 温度影响：候选词的“上桌资格”——低温时只有高概率词可见
+    var cutoff = 3 + temp * 45; // 概率低于 cutoff 的被压制
+    pool.innerHTML = poolData.map(function(p){
+      var dim = p[1] < cutoff ? ' dim' : '';
+      var hot = p[1] >= cutoff && p[1] === Math.max.apply(null, poolData.filter(function(x){return x[1]>=cutoff;}).map(function(x){return x[1];})) ? ' hot' : '';
+      return '<div class="pc' + dim + hot + '"><span class="w">' + p[0] + '</span>'
+        + '<span class="barw"><span class="bar" style="width:' + p[1]*2 + '%"></span></span></div>';
+    }).join('');
+    var c = copies[0];
+    for (var i = 0; i < copies.length; i++){ if (v <= copies[i].max) { c = copies[i]; break; } c = copies[i]; }
+    tv.textContent = temp.toFixed(1);
+    tn.textContent = c.name;
+    copyOut.textContent = c.copy;
+    verdict.innerHTML = c.verdict;
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

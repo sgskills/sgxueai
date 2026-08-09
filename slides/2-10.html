@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客服 Agent 效率提升计算器 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="AI 帮你多接多少客、省出多少小时、高峰少排多少队？拉动滑块，算清客服 Agent 的效率红利——省下的时间去跟高意向客人，就是抽成和转化。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="客服 Agent 效率提升计算器">
+<meta property="og:description" content="算清 AI 帮你多接多少客、省出多少小时。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-10.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .calc-inputs .row{margin-bottom:16px;}
+  .calc-inputs label{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--text-h);margin-bottom:6px;}
+  .calc-inputs label .v{color:var(--purple);font-variant-numeric:tabular-nums;}
+  .calc-inputs .hint{font-size:11px;color:var(--sub);margin-top:4px;}
+  .calc-outs{display:flex;flex-direction:column;gap:10px;}
+  .co{background:var(--pill-bg);border-radius:11px;padding:13px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  .co .k{font-size:12.5px;color:var(--sub);font-weight:700;}
+  .co .v{font-size:21px;font-weight:900;color:var(--text-h);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .co.big{background:rgba(16,185,129,.08);border:1.5px solid rgba(16,185,129,.35);}
+  .co.big .v{color:var(--success);font-size:26px;}
+  .curve-wrap{margin-top:18px;}
+  .curve-wrap .ct{font-size:12px;font-weight:800;color:var(--sub);letter-spacing:1px;margin-bottom:8px;}
+  .eff-note{
+    margin-top:16px;background:var(--accent-soft);border:1.5px solid var(--accent-border);
+    border-radius:11px;padding:12px 16px;font-size:13px;line-height:1.7;
+  }
+  .eff-note b{color:var(--accent);}
+  @media(max-width:768px){.calc{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson wide">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>客服 Agent 效率提升计算器</h1>
+    <p class="subtitle">别问“AI 能省多少钱”，问“AI 能帮你多接多少客、省出多少小时”——拉一拉滑块，算清它给你的效率红利，以及这些时间能换回多少抽成和转化。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">电商</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先换个视角：AI 的价值要用“效率”算</div>
+
+  <p class="reveal">很多人看 AI 客服，第一眼去看账单——格局小了。换个看法：<b>它是你团队里那个不用睡觉、永远秒回、能同时接 1000 个人的新同事</b>。这样的同事，价值该怎么算？算它帮你接住了多少人、让客人少排了多久队、把你从琐事里释放出来几个小时。</p>
+
+  <p class="reveal">而这些被释放出来的小时，才是真金白银：拿去跟高意向客人、做复购维护、打磨话术——<b>多接的每一个客、多跟的每一个单，都是你的抽成和转化率</b>。下面的计算器，算的就是这笔效率账。</p>
+
+  <div class="sec-label">交互演示 · 算算 AI 给你的效率红利</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">客服 Agent 效率提升计算器</div>
+    <div class="calc">
+      <div class="calc-inputs">
+        <div class="row">
+          <label>每天咨询量 <span class="v" id="vChats">300 人/天</span></label>
+          <input type="range" id="inChats" min="50" max="3000" value="300" step="50">
+          <div class="hint">大促期间记得拉到峰值看看</div>
+        </div>
+        <div class="row">
+          <label>AI 分担比例 <span class="v" id="vRatio">70%</span></label>
+          <input type="range" id="inRatio" min="40" max="90" value="70" step="5">
+          <div class="hint">FAQ + 常规售前通常占 60-80%，配好知识库更高</div>
+        </div>
+        <div class="row">
+          <label>人工处理一通平均时长 <span class="v" id="vMins">5 分钟</span></label>
+          <input type="range" id="inMins" min="3" max="10" value="5">
+          <div class="hint">含打字、查单、切换后台的完整耗时</div>
+        </div>
+        <div class="row">
+          <label>团队客服人数 <span class="v" id="vHumans">2 人</span></label>
+          <input type="range" id="inHumans" min="1" max="10" value="2">
+          <div class="hint">用于估算高峰期排队时间</div>
+        </div>
+      </div>
+      <div class="calc-outs">
+        <div class="co"><span class="k">AI 每天帮你接住</span><span class="v" id="oTake">-</span></div>
+        <div class="co"><span class="k">每天为你释放工时</span><span class="v" id="oHours">-</span></div>
+        <div class="co big"><span class="k">相当于团队多出</span><span class="v" id="oHumans">-</span></div>
+        <div class="co"><span class="k">每月可多跟进高意向客人（15 分钟/人）</span><span class="v" id="oFollow">-</span></div>
+      </div>
+    </div>
+    <div class="curve-wrap">
+      <div class="ct">咨询量上涨时：人工排队时间 vs AI 响应（示意估算）</div>
+      <svg id="curve" viewBox="0 0 640 190" style="width:100%;height:auto;"></svg>
+    </div>
+    <div class="eff-note" id="effNote"></div>
+  </div>
+
+  <div class="sec-label">看懂曲线：人工会排队，AI 不会</div>
+
+  <p class="reveal">平峰时段，人工和 AI 差别不大——真正的分水岭在<b>爆线时刻</b>。咨询量一翻倍，人工排队时间直线上升，客人等 5 分钟走一批、等 10 分钟走一半；AI 那条线纹丝不动，照样秒回。<b>客服 Agent 最大的效率红利，不在平时，在你最忙、最接不过来的那一刻</b>——而那恰恰是高意向客人最多、最不该丢单的时刻。</p>
+
+  <div class="sec-label">这笔账，客服同学该怎么看</div>
+
+  <div class="l-callout reveal">
+    如果你是客服，担心 AI 抢饭碗，先看完这笔账：<b>AI 接走的恰恰是你最烦的那部分活</b>——凌晨两点的“包邮吗”、大促爆线的长队、一天回答 80 遍的尺码表。它把这些人接住了，你才有空做真正出业绩的事：跟高意向客人促成下单、安抚售后情绪、维护老客复购——这些才产生抽成，也才练人。未来最吃香的客服，不是打字最快的，是<b>会训练 AI、会收拾 AI 烂摊子</b>的——这门课，就是把你往那个方向送。
+  </div>
+
+  <div class="sec-label">附：Token 账一分钟版（知道就行，别焦虑）</div>
+
+  <p class="reveal">AI 不是免费的，它的账单公式是：<b>费用 =（输入 + 输出 Token）× 单价</b>，且每轮新对话要把前面的内容重付一遍——所以轮数越多，成本加速上涨（这就是后面 3-9 说的“轮数系数”）。但现在国内模型单价很便宜，主流档跑一家店的客服 Agent，一个月通常也就几百到小几千元。<b>这笔账算清是为了心里有数，不是为了焦虑——效率红利才是主菜。</b></p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>AI 的价值用效率算</b>：接客量、响应速度、释放工时——不是用成本算。</li>
+      <li><b>人工会排队，AI 不会</b>：爆线时刻才是 AI 的主场，也是最不该丢单的时刻。</li>
+      <li><b>释放的时间 = 你的抽成</b>：多跟高意向客人、维护复购、打磨话术，时间花在哪，业绩出在哪。</li>
+      <li><b>琐事归 AI，难单归你</b>：会训练 AI 的客服，比打字快的客服值钱。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function fmt(n){ return n >= 10000 ? (n/10000).toFixed(1) + '万' : Math.round(n).toLocaleString(); }
+  // 高峰排队估算：高峰 2 小时涌入全天 40% 咨询；超出人工产能的部分产生排队（示意）
+  function waitMinutes(chats, mins, humans){
+    var peakPerHour = chats * 0.4 / 2;
+    var humanPerHour = humans * 60 / mins;
+    var r = peakPerHour / humanPerHour;
+    if (r <= 1) return 0;
+    return Math.min(60, Math.round((r - 1) * 15));
+  }
+  function calc(){
+    var chats = +$('inChats').value;
+    var ratio = +$('inRatio').value;
+    var mins = +$('inMins').value;
+    var humans = +$('inHumans').value;
+    $('vChats').textContent = chats + ' 人/天';
+    $('vRatio').textContent = ratio + '%';
+    $('vMins').textContent = mins + ' 分钟';
+    $('vHumans').textContent = humans + ' 人';
+    var aiTake = Math.round(chats * ratio / 100);
+    var hours = aiTake * mins / 60;
+    var extraHumans = hours / 8;
+    var follow = Math.round(hours * 30 * 4); // 每月多跟进高意向客人（15 分钟/人）
+    $('oTake').textContent = fmt(aiTake) + ' 人';
+    $('oHours').textContent = hours.toFixed(1) + ' 小时';
+    $('oHumans').textContent = extraHumans.toFixed(1) + ' 个客服';
+    $('oFollow').textContent = '约 ' + fmt(follow) + ' 人';
+    var wait = waitMinutes(chats, mins, humans);
+    $('effNote').innerHTML = '你的配置下：AI 每天帮你接住 <b>' + fmt(aiTake) + ' 人</b>、释放 <b>' + hours.toFixed(1)
+      + ' 小时</b>——相当于团队多了 <b>' + extraHumans.toFixed(1) + ' 个不用睡觉的客服</b>。'
+      + (wait > 0
+        ? '高峰期人工排队约 <b>' + wait + ' 分钟</b>，AI 依旧秒回——'
+        : '当前咨询量人工尚接得住，但大促翻倍试试——')
+      + '省出的时间拿去跟高意向客人，那才是你的抽成。';
+    drawCurve(chats, mins, humans);
+  }
+  function drawCurve(curChats, mins, humans){
+    var svg = $('curve');
+    var W = 640, H = 190, pad = 44, MAXY = 60;
+    var pts = [];
+    for (var c = 50; c <= 3000; c += 50){
+      var w = waitMinutes(c, mins, humans);
+      var x = pad + (c - 50) / 2950 * (W - pad - 16);
+      var y = H - 24 - (w / MAXY) * (H - 58);
+      pts.push([x, y, c, w]);
+    }
+    var path = 'M' + pts.map(function(p){ return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' L');
+    var cx = pad + (curChats - 50) / 2950 * (W - pad - 16);
+    var cy = H - 24 - (waitMinutes(curChats, mins, humans) / MAXY) * (H - 58);
+    var aiY = H - 26; // AI 秒回：贴近底部的平线
+    svg.innerHTML =
+      '<line x1="' + pad + '" y1="' + (H-24) + '" x2="' + (W-16) + '" y2="' + (H-24) + '" stroke="var(--border-strong)"/>'
+      + '<line x1="' + pad + '" y1="14" x2="' + pad + '" y2="' + (H-24) + '" stroke="var(--border-strong)"/>'
+      + '<path d="' + path + '" fill="none" stroke="var(--purple)" stroke-width="3" stroke-linecap="round"/>'
+      + '<line x1="' + pad + '" y1="' + aiY + '" x2="' + (W-16) + '" y2="' + aiY + '" stroke="var(--success)" stroke-width="3" stroke-linecap="round"/>'
+      + '<circle cx="' + cx + '" cy="' + cy + '" r="6" fill="var(--accent)" stroke="var(--card)" stroke-width="2.5"/>'
+      + '<text x="' + (W-16) + '" y="' + (H-6) + '" font-size="11" fill="var(--sub)" text-anchor="end">日咨询量 →</text>'
+      + '<text x="' + (pad-6) + '" y="20" font-size="11" fill="var(--sub)" text-anchor="end">60 分钟</text>'
+      + '<text x="' + (pad+8) + '" y="26" font-size="11.5" font-weight="800" fill="var(--purple)">人工高峰排队</text>'
+      + '<text x="' + (W-150) + '" y="' + (aiY-8) + '" font-size="11.5" font-weight="800" fill="var(--success)">AI：始终秒回</text>'
+      + '<text x="' + cx + '" y="' + Math.max(16, cy - 12) + '" font-size="11.5" font-weight="800" fill="var(--accent)" text-anchor="middle">你在这</text>';
+  }
+  ['inChats','inRatio','inMins','inHumans'].forEach(function(id){
+    $(id).addEventListener('input', calc);
+  });
+  calc();
+})();
+</script>
+</body>
+</html>

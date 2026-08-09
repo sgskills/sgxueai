@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>应对三：RAG 给 AI 配一本“商品手册” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="RAG 检索增强生成 5 步动画：AI 回答前先查商品手册，卖点再也不瞎编。电商知识库的入门第一课。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="应对三：RAG 给 AI 配一本&quot;商品手册&quot;">
+<meta property="og:description" content="先查资料再回答——RAG 5 步流程动画，卖点再也不瞎编。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-9.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .rag-flow{display:flex;flex-direction:column;gap:0;margin-top:16px;}
+  .rag-step{
+    display:flex;gap:14px;align-items:flex-start;padding:13px 15px;border-radius:12px;
+    border:1.5px solid transparent;transition:.3s;opacity:.4;
+  }
+  .rag-step.active{opacity:1;border-color:var(--accent-border);background:var(--accent-soft);}
+  .rag-step.done{opacity:.85;}
+  .rag-step .no{
+    width:26px;height:26px;border-radius:50%;flex-shrink:0;margin-top:1px;
+    background:var(--pill-bg);color:var(--sub);font-size:12px;font-weight:900;
+    display:flex;align-items:center;justify-content:center;transition:.3s;
+  }
+  .rag-step.active .no{background:var(--accent);color:#fff;}
+  .rag-step.done .no{background:var(--success);color:#fff;}
+  .rag-step .st{font-size:13.5px;font-weight:800;color:var(--text-h);}
+  .rag-step .sd{font-size:12.5px;color:var(--sub);line-height:1.6;margin-top:2px;}
+  .rag-controls{display:flex;gap:10px;justify-content:center;margin-top:16px;}
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .cmp .side{border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.75;}
+  .cmp .side h5{font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:8px;}
+  .cmp .no-rag{background:rgba(220,38,38,.06);border:1.5px solid rgba(220,38,38,.25);}
+  .cmp .no-rag h5{color:var(--danger);}
+  .cmp .with-rag{background:rgba(16,185,129,.06);border:1.5px solid rgba(16,185,129,.3);}
+  .cmp .with-rag h5{color:var(--success);}
+  @media(max-width:768px){.cmp{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座 · 幻觉应对 3/4</div>
+    <h1>RAG：给 AI 配一本“商品手册”</h1>
+    <p class="subtitle">治幻觉最釜底抽薪的一招：回答之前，先让它翻资料。这套机制叫 RAG，是你未来店铺知识库的地基。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">动画</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">开卷考试 vs 闭卷考试</div>
+
+  <p class="reveal">前面三节我们知道了：AI 是闭卷考试的考生，遇到不会的题就凭“语感”瞎蒙，还蒙得理直气壮。</p>
+
+  <p class="reveal">RAG（检索增强生成）做的事，就是把闭卷改成<b>开卷</b>：客人每问一个问题，系统先去你的商品手册里<b>翻出相关那一页</b>，贴到 AI 的白板上，再让它回答。有原文照着，它想编都没机会编。</p>
+
+  <div class="sec-label">动画演示 · RAG 的五步流程</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">客人问：“这款扫地机器人有什么卖点？”</div>
+    <div class="rag-flow" id="ragFlow"></div>
+    <div class="rag-controls">
+      <button id="ragPlay">▶ 播放五步流程</button>
+      <button class="btn-ghost" id="ragReset">↺ 重置</button>
+    </div>
+  </div>
+
+  <div class="sec-label">有手册 vs 没手册，回答对比</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">同一个问题的两种回答</div>
+    <div class="cmp">
+      <div class="side no-rag">
+        <h5>❌ 没配手册（闭卷瞎蒙）</h5>
+        “亲，这款扫地机器人功能很强大哦！智能规划路线、扫拖一体、大吸力，续航也很持久，性价比特别高，很多客户都回购呢～”
+        <div style="margin-top:8px;font-size:12px;color:var(--danger);font-weight:700;">全是品类套话，零有效信息——客人问了个寂寞。</div>
+      </div>
+      <div class="side with-rag">
+        <h5>✅ 配了商品手册（开卷作答）</h5>
+        “亲，这款 F6 Pro 的核心卖点有三个：① <b>5000Pa 大吸力 + 拖布抬升</b>，地毯只扫不拖；② <b>75 天免倒尘</b>，集尘袋一年换 4 次；③ <b>AI 避障</b>，数据线袜子都能绕开。适合 120㎡ 以上、有宠物或大户型家庭～”
+        <div style="margin-top:8px;font-size:12px;color:var(--success);font-weight:700;">参数精准、卖点具体、人群明确——这才叫客服。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">RAG 不是万能的，三个坑先知道</div>
+
+  <ul>
+    <li class="reveal"><b>手册烂，回答烂</b>：商品参数表乱七八糟、FAQ 三年没更新，AI 查到的就是错的。RAG 的工程质量 70% 在知识库整理，不在技术。</li>
+    <li class="reveal"><b>可能查错页</b>：客人问“A 款和 B 款差在哪”，系统只翻出 A 款的页面，AI 就敢对比。检索精度需要专门调优。</li>
+    <li class="reveal"><b>成本和延迟都上升</b>：每次回答多一步检索，多贴一份资料，Token 账单和响应时间都变长——这就是为什么第四篇章要讲成本优化。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    先记住一个判断标准：<b>凡是答案藏在“你家自己的资料”里的问题（参数、政策、库存、案例），都该走 RAG；凡是通用表达类的问题（写文案、想创意），提示词+温度就够。</b>第二篇章我们会手把手搭这本“商品手册”。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>RAG = 开卷考试</b>：先检索商品手册 → 贴到白板 → 再生成回答，从源头掐断编造。</li>
+      <li><b>五步流程</b>：提问 → 检索 → 取回相关页 → 注入上下文 → 基于资料作答。</li>
+      <li><b>效果天差地别</b>：没手册全是套话，有手册参数精准、卖点具体、人群明确。</li>
+      <li><b>三个坑</b>：手册质量、检索精度、成本延迟——RAG 的功夫在库不在模型。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var steps = [
+    ['客人提问','“这款扫地机器人有什么卖点？”——问题先不进 AI，而是交给检索器。'],
+    ['检索商品手册','系统把问题转成检索词，在店铺知识库（商品参数表/FAQ/详情页）里找最相关的几条。'],
+    ['取回相关资料','命中：《F6 Pro 产品参数》——5000Pa 吸力、拖布抬升、75 天免倒尘、AI 避障、适用 120㎡+。'],
+    ['贴到 AI 白板上','把取回的资料写进上下文（还记得那块白板吗），和问题一起交给 AI。'],
+    ['基于资料作答','AI 照着资料组织语言——参数有据可查，编不了，也不用编。']
+  ];
+  var flow = document.getElementById('ragFlow');
+  flow.innerHTML = steps.map(function(s, i){
+    return '<div class="rag-step" data-i="' + i + '"><span class="no">' + (i+1) + '</span>'
+      + '<div><div class="st">' + s[0] + '</div><div class="sd">' + s[1] + '</div></div></div>';
+  }).join('');
+  var timer = null;
+  function reset(){
+    clearInterval(timer); timer = null;
+    flow.querySelectorAll('.rag-step').forEach(function(el){ el.classList.remove('active','done'); });
+  }
+  function play(){
+    reset();
+    var i = 0;
+    timer = setInterval(function(){
+      if (i > 0){
+        flow.children[i-1].classList.remove('active');
+        flow.children[i-1].classList.add('done');
+      }
+      if (i >= steps.length){
+        clearInterval(timer); timer = null; return;
+      }
+      flow.children[i].classList.add('active');
+      i++;
+    }, 1100);
+  }
+  document.getElementById('ragPlay').addEventListener('click', play);
+  document.getElementById('ragReset').addEventListener('click', reset);
+  if (window.lessonOnView){
+    lessonOnView(flow, play, 0.4);
+  }
+})();
+</script>
+</body>
+</html>

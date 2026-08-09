@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电商团队 AI 使用 SOP 模板 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="从客服到美工，一套可直接落地的 AI 协作 SOP 框架——各岗位怎么用、怎么验、怎么沉淀。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="电商团队 AI 使用 SOP 模板">
+<meta property="og:description" content="从客服到美工，可直接落地的 AI 协作 SOP 框架。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/5-8.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .sop-role{margin-top:14px;}
+  .sop-item{border-radius:12px;border:1.5px solid var(--border);background:var(--card);margin-bottom:10px;overflow:hidden;}
+  .sop-head{display:flex;align-items:center;gap:11px;padding:14px 17px;cursor:pointer;transition:.15s;}
+  .sop-head:hover{background:var(--accent-soft);}
+  .sop-head .sh-ico{font-size:19px;}
+  .sop-head .sh-name{font-size:14px;font-weight:800;color:var(--text-h);}
+  .sop-head .sh-sub{font-size:11.5px;color:var(--sub);}
+  .sop-head .sh-arrow{margin-left:auto;color:var(--sub);transition:.25s;font-size:13px;}
+  .sop-item.open .sh-arrow{transform:rotate(90deg);color:var(--accent);}
+  .sop-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .sop-item.open .sop-body{max-height:400px;}
+  .sop-body .sb-in{padding:0 17px 15px;font-size:12.5px;line-height:1.9;color:var(--sub);}
+  .sop-body .sb-in b{color:var(--text-h);}
+  .sop-body .sb-step{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start;}
+  .sop-body .sb-step .n{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--cyan);color:#fff;
+    font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+  .sop-flow{margin-top:14px;text-align:center;}
+  .sop-flow .sf-row{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;font-size:12px;font-weight:800;color:var(--sub);}
+  .sop-flow .sf{padding:8px 14px;border-radius:999px;background:var(--pill-bg);border:1.5px solid var(--border);}
+  .sop-flow .sf.hot{background:var(--accent-soft);border-color:var(--accent-border);color:var(--accent);}
+  .sop-flow .arrow{color:var(--accent);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第五篇章 · 电商团队 AI 协作规范</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第五篇章 · 电商团队 AI 协作规范</div>
+    <h1>电商团队 AI 使用 SOP 模板</h1>
+    <p class="subtitle">前面五节讲的都是“动作”，这节把它们装订成册——一套每个岗位都能直接照做的 SOP 框架。点开你团队的岗位，直接抄。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">模板</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">SOP 骨架：每个岗位都是同一个公式</div>
+
+  <div class="demo sop-flow reveal">
+    <div class="demo-title">岗位通用 SOP 公式 · 六步闭环</div>
+    <div class="sf-row">
+      <span class="sf">① 取任务<br><small>三段式说清</small></span><span class="arrow">→</span>
+      <span class="sf">② 查资产库<br><small>有现成的别重写</small></span><span class="arrow">→</span>
+      <span class="sf">③ 小步生成<br><small>分批跑</small></span><span class="arrow">→</span>
+      <span class="sf">④ 清单验收<br><small>逐项打勾</small></span><span class="arrow">→</span>
+      <span class="sf">⑤ 上架/交付<br><small>留痕</small></span><span class="arrow">→</span>
+      <span class="sf hot">⑥ 沉淀<br><small>经验回资产库</small></span>
+    </div>
+  </div>
+
+  <p class="reveal">六步是骨架，各岗位往里填自己的肉。点开看四个岗位的具体 SOP：</p>
+
+  <div class="sop-role reveal">
+    <div class="sop-item open">
+      <div class="sop-head"><span class="sh-ico">🎧</span><span><div class="sh-name">客服岗</div><div class="sh-sub">AI 辅助应答 · 人机配合</div></span><span class="sh-arrow">▶</span></div>
+      <div class="sop-body"><div class="sb-in">
+        <div class="sb-step"><span class="n">1</span>AI 先答：常规问题（尺码/物流/优惠）由客服 Agent 自动应答。</div>
+        <div class="sb-step"><span class="n">2</span>盯转人工信号：客人情绪升级、连问两次未解决、涉及赔付——按 3-8 的刹车机制立即接管。</div>
+        <div class="sb-step"><span class="n">3</span>接管先看交接卡：事实/进度/待办/雷区（4-1），不问客人第二遍。</div>
+        <div class="sb-step"><span class="n">4</span>下班前 10 分钟：把今天 AI 答砸的对话标记出来，投进问题池——周末回流到知识库和测试集。</div>
+      </div></div>
+    </div>
+    <div class="sop-item">
+      <div class="sop-head"><span class="sh-ico">✍️</span><span><div class="sh-name">文案岗</div><div class="sh-sub">标题/详情/种草文批量产出</div></span><span class="sh-arrow">▶</span></div>
+      <div class="sop-body"><div class="sb-in">
+        <div class="sb-step"><span class="n">1</span>领任务时对齐角度：先让 AI 出 3 个卖点角度，选定再展开（5-1 三段式）。</div>
+        <div class="sb-step"><span class="n">2</span>批量生成走小步：每批 ≤10 条，首批逐字看（5-3）。</div>
+        <div class="sb-step"><span class="n">3</span>过文案清单 7 项（5-6）：违禁词过机、数字对账、调性对卡，逐项打勾。</div>
+        <div class="sb-step"><span class="n">4</span>好用的版本当场存资产库：命名“文案-XX-v?.?”，记效果（5-7）。</div>
+      </div></div>
+    </div>
+    <div class="sop-item">
+      <div class="sop-head"><span class="sh-ico">🎨</span><span><div class="sh-name">设计岗</div><div class="sh-sub">主图/海报 AI 辅助出图</div></span><span class="sh-arrow">▶</span></div>
+      <div class="sop-body"><div class="sb-in">
+        <div class="sb-step"><span class="n">1</span>垫图先行：产品白底图喂给 AI，风格描述从资产库取（不现场即兴写）。</div>
+        <div class="sb-step"><span class="n">2</span>批量出图后先粗筛：手指/LOGO/材质三项一眼过，穿帮的直接删（3-3）。</div>
+        <div class="sb-step"><span class="n">3</span>精修只修“选中的”：AI 出 10 张选 2 张精修，不在废图上花时间。</div>
+        <div class="sb-step"><span class="n">4</span>上架前过图片清单 8 项（5-6），字体授权单独确认（5-5 底线四）。</div>
+      </div></div>
+    </div>
+    <div class="sop-item">
+      <div class="sop-head"><span class="sh-ico">📊</span><span><div class="sh-name">运营岗</div><div class="sh-sub">数据分析 · 报表 · 决策支持</div></span><span class="sh-arrow">▶</span></div>
+      <div class="sop-body"><div class="sb-in">
+        <div class="sb-step"><span class="n">1</span>给 AI 数据先脱敏：导报表时去掉客人手机号/地址（2-4 安全意识的延伸）。</div>
+        <div class="sb-step"><span class="n">2</span>让 AI 出“初步洞察”，你来出“结论”：AI 负责找异常，你负责归因——归因必须能交叉验证。</div>
+        <div class="sb-step"><span class="n">3</span>过数据清单 6 项（5-6）：口径、时间范围、异常解释，逐项打勾。</div>
+        <div class="sb-step"><span class="n">4</span>每周把 AI 看板三指标（4-6）发群里：解决率/转人工率/Token 单耗，异常带排查结论。</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="sec-label">SOP 落地：别想一口吃成胖子</div>
+
+  <ul>
+    <li class="reveal"><b>第一周只上一个岗</b>：选产出量最大的岗位（通常是文案），跑通六步闭环，再复制给其他岗。</li>
+    <li class="reveal"><b>SOP 上墙</b>：打印出来贴在工位——别藏在飞书文档第 8 层目录里。看得见才执行得了。</li>
+    <li class="reveal"><b>每月复盘一次</b>：哪一步大家总是跳过？跳过的步骤要么改进、要么删掉——<b>没人执行的 SOP 条目是 SOP 的负债</b>。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    这套 SOP 的野心不大：它不追求“AI 用得惊艳”，只追求<b>“谁来做都不掉链子”</b>。团队战斗力的下限，才是老板真正睡得着觉的东西。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>六步闭环</b>：取任务 → 查资产库 → 小步生成 → 清单验收 → 交付留痕 → 沉淀回库。</li>
+      <li><b>四岗各表</b>：客服盯刹车、文案走批次、设计先粗筛、运营管归因。</li>
+      <li><b>落地节奏</b>：先跑通一个岗，SOP 上墙，每月复盘删改。</li>
+      <li><b>SOP 的目标</b>：不是用得惊艳，是谁来做都不掉链子——保下限。</li>
+    </ul>
+  </div>
+
+  <div class="skill-rec reveal">
+    <span class="sr-ico"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+    <span class="sr-txt">电商人必备好用的 Skill 库，复制本段文字发给AI安装：<a href="https://github.com/sgskills/aibp" target="_blank" rel="noopener">github.com/sgskills/aibp</a></span>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.sop-head').forEach(function(head){
+    head.addEventListener('click',function(){
+      head.parentElement.classList.toggle('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

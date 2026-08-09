@@ -1,0 +1,373 @@
+/* ═══════════════════════════════════════════════════════════
+   lesson.css —— 课程子页统一设计系统
+   AI 电商基础从入门到掌握 · 诗光聊AI电商 入门课
+   所有课程页面（文章式布局）共享此文件。
+   页面特有样式写在各自页面的 <style> 中，骨架统一用这里的类。
+   ═══════════════════════════════════════════════════════════ */
+
+:root,[data-theme="light"] {
+  /* 色板 */
+  --bg: #faf7f2;            /* 页面米白底 */
+  --card: #ffffff;          /* 卡片白底 */
+  --text: #1c1c1e;          /* 主文字 */
+  --text-h: #111827;        /* 标题文字 */
+  --sub: #6b7280;           /* 次要文字 */
+  --accent: #F97316;        /* 主题橙（诗光品牌色） */
+  --accent-soft: rgba(249,115,22,.06);
+  --accent-border: rgba(249,115,22,.22);
+  --danger: #dc2626;
+  --amber: #d97706;
+  --success: #10B981;
+  --cyan: #0D9488;
+  --purple: #7C3AED;
+  --blue: #2563EB;
+  --green: #059669;
+  --border: rgba(0,0,0,.07);
+  --border-strong: rgba(0,0,0,.13);
+  --pill-bg: rgba(0,0,0,.05);
+
+  /* 布局 */
+  --content-w: 880px;       /* 常规文章宽度 */
+  --content-w-wide: 1100px; /* 宽内容（大图表/分栏）宽度 */
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.05);
+  --shadow-pop: 0 8px 30px rgba(194,100,20,.14);
+}
+
+[data-theme="dark"] {
+  --bg: #161412;
+  --card: #221f1b;
+  --text: #e7e5e4;
+  --text-h: #fafaf9;
+  --sub: #a8a29e;
+  --accent: #fb923c;
+  --accent-soft: rgba(251,146,60,.10);
+  --accent-border: rgba(251,146,60,.32);
+  --border: rgba(255,255,255,.08);
+  --border-strong: rgba(255,255,255,.16);
+  --pill-bg: rgba(255,255,255,.08);
+  --shadow-card: 0 1px 3px rgba(0,0,0,.3);
+  --shadow-pop: 0 8px 30px rgba(0,0,0,.45);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.75;
+  padding-bottom: 110px; /* 给底部悬浮按钮留空间 */
+  transition: background .25s, color .25s;
+}
+
+/* ── 课页顶栏 ── */
+.lesson-topbar{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.lesson-topbar .inner{
+  max-width:var(--content-w);margin:0 auto;padding:0 24px;height:54px;
+  display:flex;align-items:center;gap:12px;
+}
+.lesson-topbar .home-link{
+  display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px;color:var(--text-h);
+}
+.lesson-topbar .home-link .logo{
+  width:26px;height:26px;border-radius:8px;
+  background:linear-gradient(135deg,#F97316,#ea580c);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;font-weight:900;
+}
+.lesson-topbar .crumb{font-size:12.5px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lesson-topbar .right{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.theme-btn{
+  width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;
+  background:transparent;color:var(--sub);display:flex;align-items:center;justify-content:center;
+  transition:.2s;font-size:16px;
+}
+.theme-btn:hover{background:var(--pill-bg);color:var(--text-h);}
+[data-theme="light"] .ico-moon{display:block;}
+[data-theme="light"] .ico-sun{display:none;}
+[data-theme="dark"] .ico-moon{display:none;}
+[data-theme="dark"] .ico-sun{display:block;}
+
+/* ── 文章容器 ── */
+.lesson {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 52px 28px 40px;
+}
+.lesson.wide { max-width: var(--content-w-wide); }
+
+/* ── 页头 ── */
+.lesson-header { margin-bottom: 36px; }
+.lesson-header .kicker {
+  font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+}
+.lesson-header h1 {
+  font-size: 32px; font-weight: 800; line-height: 1.35; color: var(--text-h);
+}
+.lesson-header .subtitle {
+  font-size: 15px; color: var(--sub); margin-top: 10px; line-height: 1.7;
+}
+.lesson-header .tag-row{ display:flex;gap:8px;margin-top:14px;flex-wrap:wrap; }
+.lesson-header .tag-row .tag{
+  font-size:11px;font-weight:700;padding:3px 11px;border-radius:999px;
+  background:var(--accent-soft);border:1px solid var(--accent-border);color:var(--accent);
+}
+
+/* ── 章节小标题（贯穿全文的分节） ── */
+.sec-label {
+  font-size: 12px; font-weight: 800; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--sub);
+  margin: 38px 0 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── 正文排版 ── */
+.lesson p{ margin: 12px 0; font-size: 15px; }
+.lesson p b, .lesson li b{ color: var(--text-h); }
+.lesson ul, .lesson ol{ margin: 12px 0 12px 22px; font-size: 15px; }
+.lesson li{ margin: 6px 0; }
+
+/* ── 通用卡片 ── */
+.l-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ── 强调框（引言/结论） ── */
+.l-callout {
+  background: var(--accent-soft);
+  border: 1.5px solid var(--accent-border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+}
+.l-callout b { color: var(--accent); }
+
+/* ── takeaway 总结块 ── */
+.takeaway{
+  margin-top:44px;
+  background:linear-gradient(135deg,var(--accent-soft),transparent 70%);
+  border:1.5px solid var(--accent-border);
+  border-radius:var(--radius);
+  padding:22px 24px;
+}
+.takeaway .tk-title{
+  font-size:13px;font-weight:900;letter-spacing:1.2px;color:var(--accent);
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;
+}
+.takeaway ul{ margin:0 0 0 20px; }
+.takeaway li{ margin:7px 0;font-size:14.5px; }
+.takeaway li b{ color:var(--text-h); }
+
+/* ── 渐入动画（逐步展示的元素统一用 .reveal + .show） ── */
+.reveal {
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.reveal.show { opacity: 1; transform: translateY(0); }
+
+/* ── 交互演示容器 ── */
+.demo{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:22px 24px;margin:16px 0;
+  box-shadow:var(--shadow-card);
+}
+.demo .demo-title{
+  font-size:12px;font-weight:800;letter-spacing:1px;color:var(--sub);
+  text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.demo .demo-title::before{
+  content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-soft);
+}
+.demo input[type="range"]{ width:100%;accent-color:var(--accent);cursor:pointer; }
+.demo button{
+  font-family:inherit;cursor:pointer;border:none;border-radius:10px;
+  padding:9px 18px;font-size:13.5px;font-weight:700;
+  background:var(--accent);color:#fff;transition:.15s;
+}
+.demo button:hover{ filter:brightness(1.08); }
+.demo .btn-ghost{
+  background:var(--pill-bg);color:var(--text);
+}
+.demo .btn-ghost:hover{ background:var(--border);filter:none; }
+
+/* ── 上一节 / 下一节导航 ── */
+.lesson-nav{
+  margin-top:48px;display:flex;gap:14px;justify-content:space-between;
+}
+.lesson-nav a{
+  flex:1;max-width:48%;display:flex;flex-direction:column;gap:3px;
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;transition:.18s;
+}
+.lesson-nav a:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-pop);}
+.lesson-nav a .dir{font-size:11.5px;color:var(--sub);font-weight:700;letter-spacing:.8px;}
+.lesson-nav a .nav-title{font-size:13.5px;font-weight:700;color:var(--text-h);line-height:1.45;}
+.lesson-nav a.next{margin-left:auto;text-align:right;}
+.lesson-nav a.next .nav-title{color:var(--accent);}
+.lesson-nav .spacer{flex:1;max-width:48%;}
+
+/* ── 底部悬浮"完成并继续"按钮 ── */
+.fab-wrap {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: center;
+  padding: 14px 20px calc(18px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--bg) 55%, transparent);
+  pointer-events: none; z-index: 50;
+}
+.fab-wrap .btn-next {
+  pointer-events: auto;
+  background: linear-gradient(135deg,#F97316,#ea580c); color: #fff; border: none;
+  padding: 13px 34px; border-radius: 999px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 6px 20px rgba(249,115,22,.35);
+  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+  font-family: inherit;
+}
+.fab-wrap .btn-next:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 10px 26px rgba(249,115,22,.42); }
+.fab-wrap .btn-next:active { transform: translateY(0); }
+.fab-wrap.hidden { display: none; }
+
+/* ── 双列网格（桌面双列 / 移动单列） ── */
+.l-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+
+/* ── 代码 / mono 文本 ── */
+.l-mono, code, pre {
+  font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+}
+code {
+  font-size: 0.88em;
+  background: var(--pill-bg);
+  padding: 1px 6px; border-radius: 5px;
+  color: var(--accent);
+}
+pre{
+  background:#1E1E2E;color:#e2e8f0;border-radius:var(--radius-sm);
+  padding:16px 18px;overflow-x:auto;font-size:13px;line-height:1.65;margin:14px 0;
+}
+pre code{ background:none;padding:0;color:inherit; }
+
+/* ── 表格 ── */
+.lesson table{
+  width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;
+  background:var(--card);border-radius:var(--radius-sm);overflow:hidden;
+}
+.lesson th,.lesson td{
+  padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);
+}
+.lesson th{ background:var(--pill-bg);font-weight:800;color:var(--text-h);font-size:12.5px; }
+
+/* ── 课页顶栏右上角：课程首页 ── */
+.topbar-link{
+  display:flex;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:800;color:var(--sub);
+  padding:7px 13px;border-radius:999px;transition:.18s;white-space:nowrap;
+}
+.topbar-link:hover{background:var(--pill-bg);color:var(--text-h);}
+.topbar-link.accent{color:var(--accent);}
+.topbar-link.accent:hover{background:var(--accent-soft);}
+.lesson-topbar .home-link .logo-img{width:26px;height:26px;border-radius:50%;flex-shrink:0;box-shadow:0 1px 5px rgba(0,0,0,.14);}
+
+/* ── 字体缩放组 ── */
+.fz-group{
+  display:flex;border:1.5px solid var(--border-strong);border-radius:999px;
+  overflow:hidden;flex-shrink:0;
+}
+.fz-btn{
+  padding:6px 9px;font-size:11px;font-weight:800;border:none;cursor:pointer;
+  background:transparent;color:var(--sub);font-family:inherit;transition:.15s;
+}
+.fz-btn + .fz-btn{border-left:1px solid var(--border);}
+.fz-btn:hover{color:var(--text-h);background:var(--pill-bg);}
+.fz-btn.on{background:var(--accent-soft);color:var(--accent);}
+@media (max-width:560px){.fz-btn{padding:5px 6px;font-size:10px;}}
+
+/* ── 右下角浮动公众号卡（顺小栗 + 二维码）── */
+.qr-float{
+  position:fixed;right:16px;bottom:calc(96px + env(safe-area-inset-bottom));z-index:90;width:138px;
+  background:var(--card);border:1.5px solid var(--border);border-radius:16px;
+  padding:30px 12px 12px;text-align:center;
+  box-shadow:var(--shadow-pop);transition:.2s;
+}
+.qr-float:hover{transform:translateY(-3px);border-color:var(--accent-border);}
+.qr-float .qf-mascot{
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  width:44px;height:44px;border-radius:50%;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);border:2px solid var(--card);
+}
+.qr-float .qf-qr{width:100%;border-radius:10px;display:block;border:1px solid var(--border);}
+.qr-float .qf-t{font-size:11px;font-weight:900;color:var(--text-h);margin-top:9px;line-height:1.5;}
+.qr-float .qf-s{font-size:10px;color:var(--sub);margin-top:3px;line-height:1.5;}
+.qr-float .qf-close{
+  position:absolute;top:5px;right:7px;width:20px;height:20px;border:none;border-radius:50%;
+  background:transparent;color:var(--sub);font-size:14px;line-height:1;cursor:pointer;font-family:inherit;
+}
+.qr-float .qf-close:hover{background:var(--pill-bg);color:var(--text-h);}
+@media (max-width:640px){
+  .qr-float{width:112px;padding:26px 9px 9px;}
+  .qr-float .qf-t{font-size:10px;}
+  .qr-float .qf-s{display:none;}
+  .lesson-topbar .crumb{display:none;}
+}
+
+/* ── 滚动条 ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(128,128,128,.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(128,128,128,.5); }
+
+/* ── 移动端 ── */
+@media (max-width: 768px) {
+  .lesson { padding: 36px 18px 30px; }
+  .lesson-header h1 { font-size: 24px; }
+  .lesson-header .subtitle { font-size: 14px; }
+  .l-cols { grid-template-columns: 1fr; }
+  .l-card { padding: 15px 16px; }
+  .lesson-nav{ flex-direction:column; }
+  .lesson-nav a, .lesson-nav a.next{ max-width:100%; }
+  .fab-wrap .btn-next { width: 100%; max-width: 440px; padding: 14px 0; }
+  .lesson-topbar .crumb{ display:none; }
+}
+
+/* ── Skill 库推荐卡 ── */
+.skill-rec{
+  display:flex;align-items:center;gap:14px;margin-top:24px;
+  padding:15px 20px;border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--accent-soft),transparent 75%);
+  border:1.5px solid var(--accent-border);
+  transition:.2s;
+}
+.skill-rec:hover{ box-shadow:var(--shadow-pop); transform:translateY(-1px); }
+.skill-rec .sr-ico{
+  flex-shrink:0;width:36px;height:36px;border-radius:10px;background:#24292f;
+  display:flex;align-items:center;justify-content:center;
+}
+.skill-rec .sr-ico svg{ width:21px;height:21px;fill:#fff; }
+.skill-rec .sr-txt{ font-size:14px;line-height:1.7;color:var(--sub); }
+.skill-rec .sr-txt b{ color:var(--text-h); }
+.skill-rec .sr-txt a{
+  color:var(--accent);font-weight:800;text-decoration:none;
+  border-bottom:1.5px solid var(--accent-border);transition:.15s;
+}
+.skill-rec .sr-txt a:hover{ border-bottom-color:var(--accent); }
+@media (max-width: 768px){
+  .skill-rec{ align-items:flex-start; }
+  .skill-rec .sr-txt{ font-size:13px; }
+}

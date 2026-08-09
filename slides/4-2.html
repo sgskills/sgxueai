@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工具设计的艺术：给 AI 的“操作台” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="同样的查订单功能，好描述 vs 坏描述成功率差 3 倍——进阶篇把工具设计从“能用”讲到“好用"。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="工具设计的艺术：给 AI 的&quot;操作台&quot;">
+<meta property="og:description" content="好描述 vs 坏描述成功率差 3 倍。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-2.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .tool-lab{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .tl{border-radius:12px;padding:15px 17px;}
+  .tl h5{font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:9px;}
+  .tl.bad{background:rgba(220,38,38,.05);border:1.5px solid rgba(220,38,38,.28);}
+  .tl.bad h5{color:var(--danger);}
+  .tl.good{background:rgba(16,185,129,.05);border:1.5px solid rgba(16,185,129,.32);}
+  .tl.good h5{color:var(--success);}
+  .tl pre{margin:0 0 9px;font-size:11.5px;}
+  .tl .cm{font-size:11.5px;color:var(--sub);line-height:1.6;}
+  @media(max-width:768px){.tool-lab{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶</div>
+    <h1>工具设计的艺术：给 AI 的“操作台”</h1>
+    <p class="subtitle">2-6 节讲了工具调用的四步链路。进阶这一节解决的是工程深水区：工具设计得好不好，决定了 Agent 是“顺手”还是“烫手”。</p>
+    <div class="tag-row"><span class="tag">案例</span><span class="tag">技巧</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">三组对比，看懂“好用”长什么样</div>
+
+  <p class="reveal">同样的功能，两种设计，AI 的调用成功率天差地别：</p>
+
+  <div class="tool-lab reveal">
+    <div class="tl bad">
+      <h5>❌ 粒度混乱：一个工具包打天下</h5>
+      <pre>manage_order(action, params)
+// action 可以是 查询/修改/取消/备注……</pre>
+      <div class="cm">一个工具八个动作，AI 每次都要猜 action 怎么拼、params 塞什么——错一半。权限还没法分级（查询和取消混在一起，永远不敢全放）。</div>
+    </div>
+    <div class="tl good">
+      <h5>✅ 单一职责：一个工具一件事</h5>
+      <pre>query_order(order_id)
+add_order_note(order_id, note)
+// 取消订单？根本没有这个工具</pre>
+      <div class="cm">一个工具一件事，名字即说明。只读和写操作分开，权限天然好管——<b>没给的工具，AI 永远调不到</b>（呼应 2-8 幻觉工具）。</div>
+    </div>
+    <div class="tl bad">
+      <h5>❌ 报错没人话</h5>
+      <pre>→ 返回 {"code": 10403, "msg": null}</pre>
+      <div class="cm">AI 拿到 10403 只能瞎猜：是没权限？没这单？系统挂了？猜错方向就是连环翻车。</div>
+    </div>
+    <div class="tl good">
+      <h5>✅ 报错带“下一步”</h5>
+      <pre>→ {"error": "订单不存在",
+   "hint": "请向客人核对 12 位订单号"}</pre>
+      <div class="cm">错误信息直接告诉 AI 怎么自救——<b>hint 字段让 Agent 的“自我纠错”有了抓手</b>，不用人写死规则。</div>
+    </div>
+    <div class="tl bad">
+      <h5>❌ 返回一整车数据</h5>
+      <pre>→ 返回订单完整 JSON：87 个字段，
+   含身份证号、支付流水、内部备注……</pre>
+      <div class="cm">白板瞬间吃掉 2000 Token，敏感信息全泄露进上下文——成本和安全的双重事故。</div>
+    </div>
+    <div class="tl good">
+      <h5>✅ 返回“刚好够用”</h5>
+      <pre>→ { 状态: “已发货”, 物流: “中通 7735...”,
+     预计: “明天 18 点前” }</pre>
+      <div class="cm">只回 AI 答题需要的字段。<b>工具返回的每一个字都在烧 Token、都在冒泄露风险</b>——按需返回是基本修养。</div>
+    </div>
+  </div>
+
+  <div class="sec-label">工具设计的验收三问</div>
+
+  <ul>
+    <li class="reveal"><b>AI 不试错能调对吗？</b>——看名字和描述就该知道怎么调，需要试错的工具就是描述不合格。</li>
+    <li class="reveal"><b>失败了能自救吗？</b>——错误返回带不带“人话”和“下一步建议”。</li>
+    <li class="reveal"><b>它该看见的都看见、不该看的都没看见吗？</b>——返回字段最小化，敏感字段坚决不回。</li>
+  </ul>
+
+  <div class="sec-label">进阶一问：什么样的工具该优先封装成 MCP</div>
+
+  <p class="reveal">2-6 节提过 MCP 是“AI 界的 USB 口”。但不是什么工具都值得封——封装本身有成本。给你三个判断问题，<b>三个都答“是”，就优先封成 MCP</b>：</p>
+
+  <ul>
+    <li class="reveal"><b>会有两个以上的 Agent 或业务场景用它吗？</b>——客服 Agent 要查物流，运营 Agent 也要查物流，这种共用能力封一次处处即插即用；只服务一个流程的深度定制工具，直接挂就好，不必兴师动众。</li>
+    <li class="reveal"><b>这个能力稳定吗？</b>——查库存、查物流这种十年不变的“水电煤”最适合封；三天两头改规则的促销玩法，封完天天返工，不如先裸奔。</li>
+    <li class="reveal"><b>接口能标准化吗？</b>——输入输出清晰、不依赖特定系统方言的能力才封得住；和某套 ERP 深度耦合的查询，封了也移植不走。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    一句话：<b>MCP 封的是“ reusable 的水电煤”，不是“一次性的脚手架”。</b>先把你家被调用次数最多的三个只读工具拎出来——它们就是第一批候选。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>单一职责</b>：一个工具一件事，只读/写入分开，权限天然好管。</li>
+      <li><b>报错带 hint</b>：错误信息告诉 AI 怎么自救，自我纠错才有抓手。</li>
+      <li><b>返回最小化</b>：每个多余字段都在烧 Token、冒泄露风险。</li>
+      <li><b>验收三问</b>：不试错能调对吗、失败能自救吗、视野干净吗。</li>
+      <li><b>MCP 三问</b>：多场景共用吗、能力稳定吗、接口能标准化吗——三个“是”才值得封。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

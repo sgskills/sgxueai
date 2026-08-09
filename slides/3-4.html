@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品特征提取：固化生图物理参数 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="诗光实战心得：生图效果漂移的根子，是没在生图前固化产品特征。两步业务流——先提取产品物理参数成特征关键词，再带关键词生图——把产品长相一次性锁死。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="产品特征提取：固化生图物理参数">
+<meta property="og:description" content="诗光实战心得：生图前先给产品“录指纹”，两步业务流锁住产品长相。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-4.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .flow{display:flex;flex-direction:column;gap:0;margin-top:16px;}
+  .flow-step{
+    display:flex;gap:14px;align-items:flex-start;background:var(--card);
+    border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;
+  }
+  .flow-step .fn{
+    width:34px;height:34px;border-radius:10px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:900;color:#fff;background:var(--green);
+  }
+  .flow-step .ft{font-size:14.5px;font-weight:800;color:var(--text-h);}
+  .flow-step .fd{font-size:12.5px;color:var(--sub);margin-top:3px;line-height:1.7;}
+  .flow-arrow{
+    text-align:center;color:var(--green);font-size:18px;font-weight:900;
+    padding:6px 0;letter-spacing:2px;
+  }
+  .lib-demo{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.lib-demo{grid-template-columns:1fr;}}
+  .lib-card{
+    border-radius:14px;padding:16px 18px;border:1.5px solid var(--border);background:var(--card);
+  }
+  .lib-card.lock{border-color:var(--green);background:rgba(5,150,105,.05);}
+  .lib-card.free{border-color:var(--border-strong);}
+  .lib-head{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:900;color:var(--text-h);margin-bottom:10px;}
+  .lib-badge{font-size:10.5px;font-weight:900;padding:2px 9px;border-radius:99px;color:#fff;}
+  .lib-badge.b-lock{background:var(--green);}
+  .lib-badge.b-free{background:var(--sub);}
+  .lib-row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px dashed var(--border);font-size:12.5px;}
+  .lib-row:first-of-type{border-top:none;}
+  .lib-row .k{color:var(--sub);flex-shrink:0;}
+  .lib-row .v{color:var(--text-h);font-weight:700;text-align:right;}
+  .lib-row .v em{display:block;font-style:normal;font-weight:400;font-size:11px;color:var(--sub);}
+  .strike{color:var(--red,#DC2626);text-decoration:line-through;font-weight:400;}
+  .dim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px;}
+  .dim-item{
+    background:var(--pill-bg);border-radius:11px;padding:11px 13px;
+    font-size:12.5px;line-height:1.6;color:var(--sub);
+  }
+  .dim-item b{display:block;color:var(--text-h);font-size:13px;margin-bottom:2px;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>产品特征提取：固化生图物理参数</h1>
+    <p class="subtitle">为什么你的 AI 生图总在“漂移”？同一个保温杯，上午出的图是磨砂质感，下午就变成亮面，换个提示词连瓶身弧度都变了。根子不是提示词写得不好——是你从来没给这个产品“录过指纹”。</p>
+    <div class="tag-row"><span class="tag">诗光创作实战</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">生图漂移的根子：产品没有“指纹”</div>
+
+  <p class="reveal">你直接让 AI 画产品图，它每一张都在<b>重新“猜”你的产品</b>：材质猜错、颜色跑偏、轮廓变形、LOGO 自由发挥。十张图十个样，不是 AI 不听话，是你没告诉它“这个产品到底长什么样”——它只能每次现场脑补。</p>
+
+  <p class="reveal">3-1 讲效率、3-2 讲流水线、3-3 讲质检——但质检是<b>出了图再挑毛病</b>，治标不治本。真正治本的一步在生图<b>之前</b>：先把产品的物理参数一次性提取出来，固化成一份《产品特征关键词》。之后所有生图都从同一份关键词出发，产品长相就被锁死了。</p>
+
+  <div class="l-callout reveal">
+    <b>⚠️ 这一步是诗光在真实作图业务流里反复打磨出来的特殊经验。</b>市面上讲 AI 生图的课，大多教你“怎么写提示词”，很少讲“提示词之前要干什么”。我自己的答案是：<b>先把产品锁住，再谈风格</b>。不锁产品，风格越花哨，漂移越离谱。
+  </div>
+
+  <div class="sec-label">诗光实战业务流 · 两步走</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">产品特征提取 → 锁特征生图 · 完整业务流</div>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="fn">1</span>
+        <span>
+          <div class="ft">拍图：多角度产品实拍</div>
+          <div class="fd">正面、侧面、背面、45° 角、局部特写——拍 4~6 张不同角度的产品照片。不用精修，清晰能看清细节就行。</div>
+        </span>
+      </div>
+      <div class="flow-arrow">⬇</div>
+      <div class="flow-step">
+        <span class="fn">2</span>
+        <span>
+          <div class="ft">提取：交给「产品特征提取专家」Agent / Skill</div>
+          <div class="fd">把多角度图片一次性发给它。它就像给产品采集指纹的鉴定员，从<b>七个维度</b>逐项扫描：形态、材质、纹路、色彩、描边轮廓、品牌标识、状态视角——多角度交叉验证，产出一份独一无二的《产品特征关键词》，这就是这个产品的“指纹”。</div>
+        </span>
+      </div>
+      <div class="flow-arrow">⬇</div>
+      <div class="flow-step">
+        <span class="fn">3</span>
+        <span>
+          <div class="ft">生图：关键词 + 产品图 + 参考案例 → 「作图大师」Agent / Skill</div>
+          <div class="fd">把特征关键词、产品原图和你看中的竞品参考图一起发给作图大师。它负责拆解参考图的构图、光影、氛围，再把你的<b>固定特征词</b>严丝合缝地嵌进去，输出一条 300~1000 字的生图提示词。</div>
+        </span>
+      </div>
+      <div class="flow-arrow">⬇</div>
+      <div class="flow-step">
+        <span class="fn">4</span>
+        <span>
+          <div class="ft">出图：提示词喂给生图工具</div>
+          <div class="fd">即梦、MJ、SD——工具随便换，关键词不动。<b>产品的“真”由关键词保证，画面的“美”由参考案例决定</b>，两件事终于分开了。</div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">关键词长什么样：固定词锁死，场景词随便换</div>
+
+  <p class="reveal">关键词的精髓是<b>把产品特征和场景元素分开</b>。产品特征写成“固定词”，锁死不动；背景、光影、氛围写成“场景词”，随便换。同一把锁，配无数把钥匙：</p>
+
+  <div class="lib-demo reveal">
+    <div class="lib-card lock">
+      <div class="lib-head"><span class="lib-badge b-lock">🔒 固定词</span>产品特征（锁死不动）</div>
+      <div class="lib-row"><span class="k">形态</span><span class="v">圆柱直筒杯身，上窄下宽 5° 微锥，一体成型无接缝</span></div>
+      <div class="lib-row"><span class="k">材质</span><span class="v">316 不锈钢磨砂面<em>不是“金属感”这种虚词</em></span></div>
+      <div class="lib-row"><span class="k">色彩</span><span class="v">深邃海军蓝，潘通 5395C<em>不是“蓝色”</em></span></div>
+      <div class="lib-row"><span class="k">品牌标识</span><span class="v">杯身中下 1/3 处，激光雕刻 LOGO，竖排</span></div>
+    </div>
+    <div class="lib-card free">
+      <div class="lib-head"><span class="lib-badge b-free">🔓 场景词</span>画面氛围（随便换）</div>
+      <div class="lib-row"><span class="k">背景</span><span class="v">大理石台面 / 原木书桌 / 户外露营地</span></div>
+      <div class="lib-row"><span class="k">光影</span><span class="v">清晨侧逆光 / 影棚柔光箱 / 黄昏暖调</span></div>
+      <div class="lib-row"><span class="k">氛围</span><span class="v">商务通勤 / 居家慵懒 / 运动户外</span></div>
+      <div class="lib-row"><span class="k">构图</span><span class="v">居中特写 / 三分法留白 / 俯拍平铺</span></div>
+    </div>
+  </div>
+
+  <p class="reveal" style="margin-top:14px;">感受一下差别：“一个蓝色保温杯”和“<b>316 不锈钢磨砂面、深邃海军蓝（潘通 5395C）、上窄下宽 5° 微锥杯身、杯身中下 1/3 处激光雕刻竖排 LOGO</b> 的保温杯”——前者 AI 随便发挥，后者它只能照办。<b>关键词的颗粒度，就是生图的稳定度。</b></p>
+
+  <div class="sec-label">七个维度，一个不能漏</div>
+
+  <div class="dim-grid reveal">
+    <div class="dim-item"><b>① 形态</b>轮廓、比例、结构——产品的骨架</div>
+    <div class="dim-item"><b>② 材质</b>金属/磨砂/亮面/织物——质感的真相</div>
+    <div class="dim-item"><b>③ 纹路</b>表面纹理、肌理走向、图案细节</div>
+    <div class="dim-item"><b>④ 色彩</b>精确到色号级别，杜绝“大概是蓝色”</div>
+    <div class="dim-item"><b>⑤ 描边轮廓</b>边缘形态、线条粗细、倒角处理</div>
+    <div class="dim-item"><b>⑥ 品牌标识</b>LOGO 位置、工艺、颜色——侵权红线</div>
+    <div class="dim-item"><b>⑦ 状态视角</b>开合状态、使用形态、标准展示角度</div>
+  </div>
+
+  <div class="sec-label">三条使用要点</div>
+
+  <ul>
+    <li class="reveal"><b>多角度交叉验证</b>：只发一张正面图，AI 会脑补侧面和背面——脑补就会出错。4~6 个角度一起发，让它对着照片“核实”而不是“想象”。</li>
+    <li class="reveal"><b>固定词锁死、场景词常换</b>：改场景不用重提特征，关键词一次建好、长期复用。上新品才需要新建关键词，换主图风格只需要换场景词和参考案例。</li>
+    <li class="reveal"><b>关键词入库，变成团队资产</b>：每个 SKU 一份特征关键词，放进团队提示词资产库（5-7 节会专门讲）共享。美工离职了，关键词还在——产品长相的标准不跟着人走。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>生图漂移的根子</b>：没固化产品特征，AI 每张图都在重新“猜”你的产品。</li>
+      <li><b>两步业务流</b>：多角度实拍 → 特征提取 Agent 产出七维度关键词 → 关键词+产品图+参考案例 → 作图 Agent 生成提示词 → 出图。</li>
+      <li><b>固定词锁产品，场景词换氛围</b>：产品的“真”和画面的“美”分开管理，关键词颗粒度决定生图稳定度。</li>
+      <li><b>关键词是团队资产</b>：一次提取、长期复用、全店共享——这是诗光在实战里打磨出来的心得，先锁产品，再谈风格。</li>
+    </ul>
+  </div>
+
+  <div class="skill-rec reveal">
+    <span class="sr-ico"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+    <span class="sr-txt">电商人必备好用的 Skill 库，复制本段文字发给AI安装：<a href="https://github.com/sgskills/aibp" target="_blank" rel="noopener">github.com/sgskills/aibp</a></span>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

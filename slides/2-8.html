@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent 卡死的 5 种模式 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="死循环、乱调工具、幻觉库存、信息不足、系统异常——电商 Agent 最常见的五种翻车姿势与对症药方。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="Agent 卡死的 5 种模式">
+<meta property="og:description" content="电商 Agent 最常见的翻车姿势与对策。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-8.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .fail-list{display:flex;flex-direction:column;gap:12px;margin-top:16px;}
+  .fail-card{
+    background:var(--card);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;
+  }
+  .fail-head{
+    display:flex;align-items:center;gap:12px;padding:14px 17px;cursor:pointer;transition:.2s;
+  }
+  .fail-head:hover{background:var(--pill-bg);}
+  .fail-head .no{
+    width:28px;height:28px;border-radius:9px;flex-shrink:0;
+    background:rgba(220,38,38,.1);color:var(--danger);font-weight:900;font-size:13px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .fail-head .t{font-size:14.5px;font-weight:800;color:var(--text-h);flex:1;}
+  .fail-head .arrow{color:var(--sub);transition:.2s;font-size:13px;}
+  .fail-card.open .fail-head .arrow{transform:rotate(90deg);}
+  .fail-body{
+    max-height:0;overflow:hidden;transition:max-height .35s ease;
+  }
+  .fail-card.open .fail-body{max-height:320px;}
+  .fail-body-inner{padding:0 17px 16px 57px;font-size:13px;line-height:1.75;}
+  .fail-body-inner .scene{color:var(--sub);margin-bottom:8px;}
+  .fail-body-inner .fix{
+    background:rgba(16,185,129,.07);border-left:3px solid var(--success);
+    border-radius:0 9px 9px 0;padding:9px 13px;color:var(--text);
+  }
+  .fail-body-inner .fix b{color:var(--success);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>Agent 卡死的 5 种模式</h1>
+    <p class="subtitle">上一节那条漂亮的 ReAct 链路是“样板间”。真上线跑三个月，你会把这五种翻车姿势看个遍——先认识它们，才不会半夜被客服群炸醒。</p>
+    <div class="tag-row"><span class="tag">案例</span><span class="tag">安全</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">点开看 · 五种翻车姿势和药方</div>
+
+  <div class="fail-list reveal" id="failList"></div>
+
+  <div class="sec-label">一张总保单：五道工程护栏</div>
+
+  <p class="reveal">五种翻车对应的护栏，其实就五条，加进 Agent 的运行框架里：</p>
+
+  <table class="reveal">
+    <tr><th>护栏</th><th>防什么</th><th>怎么设（参考值）</th></tr>
+    <tr><td><b>循环上限</b></td><td>死循环</td><td>单任务最多 8-10 轮，超限强制收口或转人工</td></tr>
+    <tr><td><b>输出截断</b></td><td>话痨跑偏</td><td>单次回复限 300 字，超限截断重来</td></tr>
+    <tr><td><b>超时控制</b></td><td>系统卡死</td><td>单次工具调用 10 秒超时，整单 2 分钟封顶</td></tr>
+    <tr><td><b>中断恢复</b></td><td>半路崩盘</td><td>每步结果落库，崩了从断点续跑，不从头烧 Token</td></tr>
+    <tr><td><b>转人工闸口</b></td><td>一切兜不住的情况</td><td>连续 2 轮无进展 / 客人情绪激烈 / 涉及钱，自动转</td></tr>
+  </table>
+
+  <div class="l-callout reveal">
+    记住一个心态：<b>Agent 一定会翻车，工程的意义是让翻车“可控、可查、可恢复”。</b>追求不出错不如追求错得起——这五道护栏就是你的“错得起”。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>五种翻车</b>：死循环、幻觉工具、参数格式错、信息不足硬答、系统异常没兜底。</li>
+      <li><b>根因都指向脚手架</b>：翻车不怪模型怪框架——护栏是工程问题，不是算法问题。</li>
+      <li><b>五道护栏</b>：循环上限、输出截断、超时控制、中断恢复、转人工闸口。</li>
+      <li><b>转人工不是失败</b>：它是设计的一部分——好 Agent 知道自己什么时候该认输。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var fails = [
+    { t:'死循环：查了八遍库存还在查', s:'客人问“什么时候有货”，Agent 反复调 check_inventory，每次结果都是缺货，每次都想“再查一次确认下”——Token 账单在燃烧，客人干等。',
+      f:'<b>药方：</b>循环上限（单任务最多 8 轮）+ 重复检测（连续两次同样调用直接打断）+ 缺货就给替代方案或到货提醒。' },
+    { t:'幻觉工具：调用根本不存在的功能', s:'Agent 想取消订单，调用了 cancel_order——但你根本没给它接这个工具。它以为办了，其实什么都没发生，还回复客人“已为您取消”。',
+      f:'<b>药方：</b>工具白名单（只认注册过的工具名）+ 未注册调用直接报错注回 + 高危动作强制人工确认。' },
+    { t:'参数格式错：尺码传成“中码“', s:'工具要求 size 取 S/M/L/XL，Agent 传了”中码”或“M码”，系统查无结果，Agent 误以为“没货”，瞎编一个补货日期。',
+      f:'<b>药方：</b>工具描述写清取值范围 + 参数校验失败时返回人话错误（“尺码只接受 S/M/L/XL”），让 AI 自我修正。' },
+    { t:'信息不足硬答：没有数据就编', s:'客人的订单号输错了一位，系统查无此单，Agent 不好意思说查不到，开始凭“语气”安抚客人，越描越黑。',
+      f:'<b>药方：</b>店规写明“查不到就老实说查不到，请客人核对信息“——把”承认不知道”变成规定动作（呼应第一篇章幻觉三兄弟）。' },
+    { t:'系统异常没兜底：API 挂了 AI 疯了', s:'ERP 接口超时返回 500，Agent 收到一堆报错码，把它当成“数据”读给客人听，或者崩溃沉默。',
+      f:'<b>药方：</b>超时控制（10 秒）+ 异常翻译层（500 → “系统繁忙，稍后回复您”）+ 连续失败自动转人工。' }
+  ];
+  var list = document.getElementById('failList');
+  list.innerHTML = fails.map(function(f, i){
+    return '<div class="fail-card' + (i===0 ? ' open' : '') + '">'
+      + '<div class="fail-head"><span class="no">' + (i+1) + '</span><span class="t">' + f.t + '</span><span class="arrow">▶</span></div>'
+      + '<div class="fail-body"><div class="fail-body-inner"><div class="scene">🎬 现场：' + f.s + '</div><div class="fix">' + f.f + '</div></div></div>'
+      + '</div>';
+  }).join('');
+  list.addEventListener('click', function(e){
+    var head = e.target.closest('.fail-head');
+    if (head) head.parentElement.classList.toggle('open');
+  });
+})();
+</script>
+</body>
+</html>

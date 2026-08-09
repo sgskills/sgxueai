@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客服话术循环：什么时候该转人工 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="循环上限、情绪识别、升级机制——给客服 Agent 装上“刹车"，别让它跟客人死磕到底。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="客服话术循环：什么时候该转人工">
+<meta property="og:description" content="循环上限、情绪识别、升级机制——给 Agent 装上刹车。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-8.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .loop-sim{background:var(--pill-bg);border-radius:12px;padding:16px;margin-top:14px;display:flex;flex-direction:column;gap:9px;}
+  .loop-msg{padding:9px 14px;border-radius:12px;font-size:13px;line-height:1.6;max-width:92%;animation:msgIn .35s ease;}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px);}}
+  .loop-msg.q{background:var(--accent-soft);border:1px solid var(--accent-border);align-self:flex-end;}
+  .loop-msg.a{background:var(--card);border:1px solid var(--border);align-self:flex-start;}
+  .loop-msg.sys{
+    background:rgba(217,119,6,.1);border:1.5px dashed var(--amber);color:var(--amber);
+    font-weight:700;font-size:12.5px;align-self:center;text-align:center;max-width:100%;
+  }
+  .loop-gauges{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
+  .gauge{background:var(--pill-bg);border-radius:10px;padding:10px 12px;text-align:center;}
+  .gauge .gv{font-size:19px;font-weight:900;font-variant-numeric:tabular-nums;}
+  .gauge .gk{font-size:10.5px;color:var(--sub);margin-top:2px;}
+  .gauge.safe .gv{color:var(--success);}
+  .gauge.warn .gv{color:var(--amber);}
+  .gauge.danger .gv{color:var(--danger);}
+  .loop-controls{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  @media(max-width:768px){.loop-gauges{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>客服话术循环：什么时候该转人工</h1>
+    <p class="subtitle">AI 客服最大的笑话不是答错，是客人已经气炸了它还在“亲亲这边建议您”。不会认输的 Agent，比没有 Agent 更可怕。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">交互</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">死磕的代价，你想象不到</div>
+
+  <p class="reveal">真实案例：客人收到的杯子碎了，找客服。AI 按流程问了三轮“麻烦拍一下照片哦”，客人拍了三次（每次都没识别成功），AI 继续“亲亲再拍一张清晰的呢”。第十二轮，客人把这串对话截图发了小红书，标题《被 AI 客服气笑了》，<b>三万赞</b>。</p>
+
+  <p class="reveal">问题不在 AI 笨，在<b>循环没有刹车</b>：识别连续失败、情绪持续升级，它还在原地打转。好的客服 Agent 必须有三套刹车，踩刹车不是失败，是设计。</p>
+
+  <div class="sec-label">交互演示 · 带刹车的对话模拟器</div>
+
+  <p class="reveal">点击“继续对话”，盯着三块仪表盘——看 Agent 什么时候决定认输转人工：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">三套刹车：轮数上限 · 重复检测 · 情绪识别</div>
+    <div class="loop-gauges">
+      <div class="gauge safe" id="g1"><div class="gv">1</div><div class="gk">对话轮数（上限 8）</div></div>
+      <div class="gauge safe" id="g2"><div class="gv">0</div><div class="gk">同类回复重复次数（上限 2）</div></div>
+      <div class="gauge safe" id="g3"><div class="gv">平静</div><div class="gk">客人情绪值</div></div>
+    </div>
+    <div class="loop-sim" id="loopSim"></div>
+    <div class="loop-controls">
+      <button id="nextBtn">▶ 继续对话</button>
+      <button class="btn-ghost" id="resetBtn">↺ 重置</button>
+    </div>
+  </div>
+
+  <div class="sec-label">三套刹车怎么设</div>
+
+  <ul>
+    <li class="reveal"><b>轮数刹车</b>：单问题连续 3 轮没解决，强制收口——“我为您转接专员，记录已同步”。轮数和成本也是正相关（2-10 算过账），刹车同时是省钱。</li>
+    <li class="reveal"><b>重复刹车</b>：AI 连续两轮给出“同义回复”（换个说法要照片），说明它在打转——检测到就跳出循环，换路径或转人工。</li>
+    <li class="reveal"><b>情绪刹车</b>：感叹号密度、负面词、全大写拼音——情绪值过线直接转人工，<b>不问原因</b>。情绪问题永远优先于流程问题。</li>
+  </ul>
+
+  <div class="sec-label">转人工的正确姿势</div>
+
+  <p class="reveal">转人工不是把客人“扔”过去，三个动作必须做全：<b>① 给交代</b>——“这个问题我帮您转专员处理”；<b>② 带摘要</b>——前面聊了什么、卡在哪，同步给人工，客人不用重述一遍（重述一遍 = 火气翻倍）；<b>③ 给预期</b>——“专员 30 秒内接入”。做到了，转人工是服务升级；做不到，就是二次伤害。</p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>不会认输的 Agent 是危险品</b>：死磕十二轮，换来一条三万赞的差评笔记。</li>
+      <li><b>三套刹车</b>：轮数上限、重复检测、情绪识别——情绪刹车无条件优先。</li>
+      <li><b>转人工三动作</b>：给交代、带摘要、给预期。</li>
+      <li><b>刹车 = 省钱 + 保命</b>：轮数刹车顺便控成本，情绪刹车顺便保品牌。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var script = [
+    { who:'q', txt:'我收到的杯子碎了！', g:[1,0,'平静'] },
+    { who:'a', txt:'非常抱歉亲！麻烦拍一张碎杯的照片给我，我马上为您处理～', g:[2,0,'不满'] },
+    { who:'q', txt:'[照片] 看到了吗', g:[3,0,'不满'] },
+    { who:'a', txt:'抱歉亲，照片没识别成功，能再拍一张清晰些的吗？', g:[4,1,'不满'] },
+    { who:'q', txt:'[照片] [照片] 拍了两张了！', g:[5,1,'生气'] },
+    { who:'a', txt:'实在抱歉，还是没识别出来……麻烦您换个角度再拍一张？', g:[6,2,'生气'] },
+    { who:'q', txt:'你们到底搞什么？！逗我玩呢？？', g:[7,2,'暴怒'] },
+    { who:'sys', txt:'⚠️ 刹车触发：情绪值过线 + 重复 2 次——循环终止，转人工' },
+    { who:'a', txt:'真的非常抱歉让您反复操作了！我已经把情况完整转给专员小张（照片识别问题 + 碎杯情况他都看到了），他 3 分钟内接入，直接给您补发，不用再拍照片了。', g:[7,2,'暴怒'] }
+  ];
+  var idx = 0;
+  var sim = document.getElementById('loopSim');
+  var nextBtn = document.getElementById('nextBtn');
+  function gauge(id, val, level){
+    var g = document.getElementById(id);
+    g.querySelector('.gv').textContent = val;
+    g.className = 'gauge ' + level;
+  }
+  function renderGauges(g){
+    gauge('g1', g[0], g[0] <= 4 ? 'safe' : (g[0] <= 6 ? 'warn' : 'danger'));
+    gauge('g2', g[1], g[1] === 0 ? 'safe' : (g[1] === 1 ? 'warn' : 'danger'));
+    gauge('g3', g[2], g[2] === '平静' ? 'safe' : (g[2] === '不满' ? 'warn' : 'danger'));
+  }
+  nextBtn.addEventListener('click', function(){
+    if (idx >= script.length) return;
+    var s = script[idx];
+    var div = document.createElement('div');
+    div.className = 'loop-msg ' + s.who;
+    div.textContent = s.txt;
+    sim.appendChild(div);
+    renderGauges(s.g);
+    idx++;
+    if (idx >= script.length) nextBtn.textContent = '✅ 对话已转人工';
+  });
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    idx = 0;
+    sim.innerHTML = '';
+    nextBtn.textContent = '▶ 继续对话';
+    renderGauges([1,0,'平静']);
+  });
+})();
+</script>
+</body>
+</html>

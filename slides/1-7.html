@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>应对一：把提示词写成“岗位说明书” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="对抗幻觉的第一件武器：提示词约束。怎么写才有效？天花板在哪里？电商人一看就懂的提示词方法论。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="应对一：把提示词写成&quot;岗位说明书&quot;">
+<meta property="og:description" content="提示词约束怎么写才有效，以及它的天花板在哪。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-7.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .pb-checks{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+  .pb-check{
+    display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border-radius:10px;
+    border:1.5px solid var(--border);background:var(--bg);cursor:pointer;transition:.18s;
+  }
+  .pb-check:hover{border-color:var(--accent);}
+  .pb-check input{width:17px;height:17px;margin-top:2px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+  .pb-check .ct{font-size:13.5px;font-weight:700;color:var(--text-h);}
+  .pb-check .cd{font-size:12px;color:var(--sub);margin-top:2px;line-height:1.55;}
+  .pb-out{
+    background:#1E1E2E;color:#e2e8f0;border-radius:12px;padding:16px 18px;
+    font-family:"SF Mono","Fira Code",Menlo,Consolas,monospace;font-size:12.5px;line-height:1.85;
+    min-height:120px;white-space:pre-wrap;
+  }
+  .pb-out .empty{color:#6b7280;}
+  .pb-meter{display:flex;align-items:center;gap:12px;margin-top:14px;}
+  .pb-meter .track{flex:1;height:10px;border-radius:99px;background:var(--pill-bg);overflow:hidden;}
+  .pb-meter .fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#dc2626,#F97316,#10B981);width:8%;transition:width .5s;}
+  .pb-meter .pv{font-weight:900;color:var(--text-h);min-width:88px;font-size:13px;text-align:right;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座 · 幻觉应对 1/4</div>
+    <h1>把提示词写成“岗位说明书”</h1>
+    <p class="subtitle">对抗幻觉最便宜的第一件武器：用约束把 AI“猜”的空间压缩到最小。管用，但有天花板——这一节把两头都讲透。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">交互</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">为什么“写段文案”注定翻车</div>
+
+  <p class="reveal">回到第 1-3 节的接龙原理：你说“写段防晒衣文案”，AI 的候选池里装着全网几万条防晒衣文案——它可以猜抖音风、猜小红书风、猜中年男款、猜母婴款……<b>每一条路都“像真的”，你得到哪条全看运气。</b></p>
+
+  <p class="reveal">提示词约束的本质，就是<b>把候选池的口子收小</b>：你限定的条件越多，AI 能乱猜的方向就越少，输出就越接近你要的东西。这跟带员工一模一样——“写段文案”是甩锅，“岗位说明书”才是管理。</p>
+
+  <div class="sec-label">交互演示 · 搭一份提示词，看质量分变化</div>
+
+  <p class="reveal">下面是一个“写商品文案”的提示词装配台。勾选你想加进去的要素，右边的提示词和质量分实时变化——注意看每加一个要素，AI 的“乱猜空间”就小一圈：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">提示词装配台：给 AI 写一份岗位说明书</div>
+    <div class="pb-checks" id="pbChecks"></div>
+    <div class="pb-out" id="pbOut"></div>
+    <div class="pb-meter">
+      <div class="track"><div class="fill" id="pbFill"></div></div>
+      <div class="pv" id="pbPv">可用度 8%</div>
+    </div>
+  </div>
+
+  <div class="sec-label">五要素的记忆口诀：人、事、料、框、样</div>
+
+  <ul>
+    <li class="reveal"><b>人（角色）</b>：你是谁、写给谁看——“你是专做 25-35 岁女性防晒衣的抖音文案”。</li>
+    <li class="reveal"><b>事（任务）</b>：具体干什么、干多少——“写 3 条短视频口播开头，每条不超过 40 字”。</li>
+    <li class="reveal"><b>料（资料）</b>：必须基于的事实——“面料 UPF50+、冰丝、可机洗，价格 129 元”。<b>给了料，它就不用猜，幻觉少一半。</b></li>
+    <li class="reveal"><b>框（约束）</b>：不能做什么——“不许用「防晒黑」以外的功效词，不许编销量数据，不许提竞品”。</li>
+    <li class="reveal"><b>样（示例）</b>：照这个感觉来——贴 1-2 条你满意的爆款文案（Few-Shot，第二篇章细讲）。</li>
+  </ul>
+
+  <div class="sec-label">天花板：提示词管不了的事</div>
+
+  <p class="reveal">提示词是第一道防线，但别指望它包打天下。它有三个管不了：</p>
+
+  <ul>
+    <li class="reveal"><b>管不了“它不知道”</b>：你让它写一款新品的卖点却不给参数，约束写得再狠，它也只能编。<b>模型不知道自己不知道什么</b>——这是提示词最大的盲区。</li>
+    <li class="reveal"><b>管不了“实时变化”</b>：今天的平台规则、此刻的库存、刚刚的价格调整，提示词里写不进去的东西它永远慢半拍。</li>
+    <li class="reveal"><b>管不了“概率摇摆”</b>：同样的提示词跑两次，输出可能不一样。要稳定性，得调温度（下一节）；要事实准确，得上知识库（第 1-9 节）。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    记住这句话：<b>提示词负责“表达风格”，知识库负责“事实准确”，温度负责“发挥尺度”，评测负责“兜底验收”</b>。四件武器各管一段，后面三节挨个配齐。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>提示词的本质是收口子</b>：约束越具体，AI 乱猜的空间越小，输出越稳。</li>
+      <li><b>五要素口诀：人、事、料、框、样</b>——其中“料”（给事实）是降幻觉的第一功臣。</li>
+      <li><b>三大盲区</b>：不知道的事、实时变化的事、概率摇摆——提示词一个都管不了。</li>
+      <li><b>分工明确</b>：提示词管风格、知识库管事实、温度管尺度、评测管兜底。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var items = [
+    { k:'role', w:18, ct:'人 · 角色', cd:'你是专做 25-35 岁女性防晒衣的抖音文案',
+      txt:'你是「汐柠」防晒衣旗舰店的抖音文案，客群是 25-35 岁通勤女性。' },
+    { k:'task', w:15, ct:'事 · 任务', cd:'写 3 条短视频口播开头，每条 ≤40 字',
+      txt:'任务：为新款冰丝防晒衣写 3 条短视频口播开头，每条不超过 40 字。' },
+    { k:'data', w:30, ct:'料 · 资料（降幻觉关键）', cd:'只许用给定的真实参数：UPF50+、冰丝、可机洗、129 元',
+      txt:'已知事实（只许使用，不许添加）：UPF50+ 防晒、冰丝面料、可机洗、售价 129 元、有 M/L/XL 三个码。' },
+    { k:'rule', w:20, ct:'框 · 约束', cd:'禁功效词、禁编数据、禁提竞品',
+      txt:'约束：不使用“美白/抗衰”等功效词，不编造销量和评价数据，不提及任何竞品。' },
+    { k:'demo', w:9, ct:'样 · 示例', cd:'贴一条你满意的爆款风格给它抄',
+      txt:'参考风格：“通勤路上晒成两个色号？这件 129 的冰丝防晒衣我焊在身上了。”' }
+  ];
+  var checks = document.getElementById('pbChecks');
+  var out = document.getElementById('pbOut');
+  var fill = document.getElementById('pbFill');
+  var pv = document.getElementById('pbPv');
+
+  checks.innerHTML = items.map(function(it, i){
+    return '<label class="pb-check"><input type="checkbox" data-i="' + i + '"' + (i===0 ? ' checked' : '') + '>'
+      + '<span><span class="ct">' + it.ct + '</span><span class="cd">' + it.cd + '</span></span></label>';
+  }).join('');
+
+  function update(){
+    var score = 8, lines = [];
+    checks.querySelectorAll('input').forEach(function(cb){
+      var it = items[+cb.dataset.i];
+      if (cb.checked){ score += it.w; lines.push(it.txt); }
+    });
+    out.innerHTML = lines.length
+      ? lines.map(function(l){ return l.replace(/</g,'&lt;'); }).join('\n\n')
+      : '<span class="empty">// 什么都没勾选：AI 收到的只有一句“写段防晒衣文案”，随便猜吧……</span>';
+    score = Math.min(score, 100);
+    fill.style.width = score + '%';
+    var label = score < 30 ? '可用度 ' + score + '% · 开盲盒'
+      : score < 55 ? '可用度 ' + score + '% · 碰运气'
+      : score < 85 ? '可用度 ' + score + '% · 基本可控'
+      : '可用度 ' + score + '% · 稳定产出 ✅';
+    pv.textContent = label;
+  }
+  checks.addEventListener('change', update);
+  update();
+})();
+</script>
+</body>
+</html>

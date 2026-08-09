@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五层效能优化体系 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="从提示词瘦身到模型路由：五层效能优化落到运营的工作台——每周 20 小时琐事压到六七小时，省出的时间去选品、复盘、跟推广。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="五层效能优化体系">
+<meta property="og:description" content="AI 帮运营把时间从琐事里抢回来。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-11.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .layer-list{display:flex;flex-direction:column;gap:11px;margin-top:16px;}
+  .layer{
+    display:flex;gap:13px;align-items:center;background:var(--card);
+    border:1.5px solid var(--border);border-radius:13px;padding:13px 16px;
+    cursor:pointer;transition:.2s;
+  }
+  .layer:hover{border-color:var(--purple);}
+  .layer.off{opacity:.42;}
+  .layer .ln{
+    width:30px;height:30px;border-radius:9px;flex-shrink:0;font-weight:900;font-size:13px;
+    background:rgba(124,58,237,.12);color:var(--purple);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .layer .lt{flex:1;}
+  .layer .lt .n{font-size:14px;font-weight:800;color:var(--text-h);}
+  .layer .lt .d{font-size:12px;color:var(--sub);margin-top:2px;line-height:1.5;}
+  .layer .lt .fx{font-size:11.5px;font-weight:800;color:var(--success);margin-top:3px;display:block;line-height:1.5;}
+  .layer .save{font-size:12px;font-weight:900;color:var(--success);white-space:nowrap;}
+  .layer .sw{
+    width:38px;height:21px;border-radius:99px;background:var(--success);position:relative;flex-shrink:0;transition:.2s;
+  }
+  .layer .sw::after{
+    content:'';position:absolute;width:15px;height:15px;border-radius:50%;background:#fff;
+    top:3px;left:20px;transition:.2s;
+  }
+  .layer.off .sw{background:var(--pill-bg);}
+  .layer.off .sw::after{left:3px;}
+  .bill{margin-top:18px;background:var(--pill-bg);border-radius:13px;padding:17px 19px;text-align:center;}
+  .bill .bv{font-size:34px;font-weight:900;color:var(--purple);font-variant-numeric:tabular-nums;transition:.2s;}
+  .bill .bk{font-size:12px;color:var(--sub);margin-top:3px;}
+  .bill .saved{font-size:13px;font-weight:800;color:var(--success);margin-top:7px;}
+  .bill-bar{height:12px;border-radius:99px;background:var(--border);overflow:hidden;margin-top:12px;}
+  .bill-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--accent));border-radius:99px;transition:width .5s;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>五层效能优化体系</h1>
+    <p class="subtitle">上一节看清了 AI 的效率红利，这节落到运营的工作台上：五层动作，每层都帮你把时间从琐事里抢回来——账单瘦下来，只是顺带的奖励。</p>
+    <div class="tag-row"><span class="tag">技巧</span><span class="tag">交互</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先说清楚：这五层，是运营的一天</div>
+
+  <p class="reveal">别把效能优化当成技术名词。落到运营的工作台上，它就是这些事：让 AI 拉报表<b>一次答对不返工</b>、每日重复的数据询问<b>秒出结果</b>、周报 Agent 读完全月对话<b>不失忆</b>、客服 Agent <b>少转人工少擦屁股</b>、难的分析<b>一次做对</b>。一个运营每周花在拉数、整理、汇总、盯记录上的琐事时间，轻松超过 20 小时——<b>这五层，就是把这些小时一层一层抢回来。</b></p>
+
+  <div class="sec-label">交互演示 · 逐层开关，看运营的时间被抢回来</div>
+
+  <p class="reveal">假设你每周在琐事上花 <b>20 小时</b>（拉报表、整理评价、汇总数据、盯客服记录）。点开每一层，看耗时怎么往下掉、每层给运营带来什么效率——点击开关可以单独看每层：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">运营效能装配台 · 每周琐事 20 小时起步</div>
+    <div class="layer-list" id="layerList"></div>
+    <div class="bill">
+      <div class="bv" id="billV">20 小时</div>
+      <div class="bk">优化后每周琐事耗时</div>
+      <div class="bill-bar"><i id="billBar" style="width:100%"></i></div>
+      <div class="saved" id="billSaved"></div>
+    </div>
+  </div>
+
+  <div class="sec-label">五层的实施顺序建议</div>
+
+  <p class="reveal">别一上来就上模型路由这种工程活。按这个顺序来，每一层都给下一层打基础：</p>
+
+  <ul>
+    <li class="reveal"><b>第 1 周</b>：提示词瘦身——纯文字活，运营自己就能干，当天见效。</li>
+    <li class="reveal"><b>第 2 周</b>：流程收口——把客服 SOP 里“获取必要信息的最短路径”理出来，写进 Skill（2-9 节学的）。</li>
+    <li class="reveal"><b>第 3-4 周</b>：缓存 + 上下文压缩——这两个要开发配合，但都是成熟方案，别自研轮子。</li>
+    <li class="reveal"><b>跑稳之后</b>：模型分级路由——需要量出来各类问题的占比和难度，数据够了再切。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    效能优化的第一原则：<b>先堵“空转”，再谈“配置”。</b>返工少一轮、轮数少两轮，是纯赚的效率；动模型配置，是有代价的（效果可能掉）。琐事缠身的团队，九成是空转没堵住，而不是工具不够贵。抢回来的时间投到出业绩的地方——选品、复盘、跟推广，这才是效率红利最好的去处。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>五层动作</b>：提示词瘦身 → 流程收口 → 语义缓存 → 上下文压缩 → 模型分级路由。</li>
+      <li><b>效率是唯一的度量</b>：每周 20 小时琐事能压到六七个小时——不谈省了多少钱，只谈抢回多少时间。</li>
+      <li><b>先堵空转再谈配置</b>：少返工、少轮数是纯赚，动模型配置是有代价的。</li>
+      <li><b>抢回的时间投回业绩</b>：选品、复盘、跟推广——时间花在哪，增长出在哪。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var BASE = 20; // 运营每周琐事耗时（小时）
+  var layers = [
+    { n:'提示词瘦身', d:'运营场景：拉报表的指令从一大段啰嗦需求压成三行模板，AI 一次答对', fx:'效率：每次任务少返工 1-2 轮，出活快一倍', save:0.20 },
+    { n:'流程收口', d:'运营场景：客服 Agent 按最短路径问完关键信息，6 轮解决不再拖 12 轮', fx:'效率：转人工率下降，运营少擦屁股', save:0.30 },
+    { n:'语义缓存', d:'运营场景：“昨天卖了多少”“库存还剩几件”这类每日重复询问，命中缓存秒出', fx:'效率：高频问答零等待、口径永远一致', save:0.15 },
+    { n:'上下文压缩', d:'运营场景：周报 Agent 读完全月对话记录不失忆，前后口径一致', fx:'效率：长任务一次跑完，不推倒重来', save:0.12 },
+    { n:'模型分级路由', d:'运营场景：日常报表走主流档秒出，选品归因才动旗舰模型', fx:'效率：难的做对、快的更快，两头都不耽误', save:0.10 }
+  ];
+  var on = layers.map(function(){ return true; });
+  var list = document.getElementById('layerList');
+  list.innerHTML = layers.map(function(l, i){
+    return '<div class="layer" data-i="' + i + '">'
+      + '<span class="ln">' + (i+1) + '</span>'
+      + '<span class="lt"><span class="n">' + l.n + '</span><span class="d" style="display:block">' + l.d + '</span><span class="fx">' + l.fx + '</span></span>'
+      + '<span class="save">-' + Math.round(l.save*100) + '%</span>'
+      + '<span class="sw"></span></div>';
+  }).join('');
+  function calc(){
+    var hours = BASE;
+    layers.forEach(function(l, i){ if (on[i]) hours *= (1 - l.save); });
+    hours = Math.round(hours * 10) / 10;
+    document.getElementById('billV').textContent = hours + ' 小时';
+    document.getElementById('billBar').style.width = (hours/BASE*100) + '%';
+    var savedPct = Math.round((1 - hours/BASE)*100);
+    document.getElementById('billSaved').textContent = savedPct > 0
+      ? '已抢回 ' + (Math.round((BASE-hours)*10)/10) + ' 小时/周（琐事减少 ' + savedPct + '%）——拿去选品、复盘、跟推广'
+      : '全部关闭，看看琐事原本吃掉你多少时间';
+    list.querySelectorAll('.layer').forEach(function(el, i){
+      el.classList.toggle('off', !on[i]);
+    });
+  }
+  list.addEventListener('click', function(e){
+    var el = e.target.closest('.layer');
+    if (!el) return;
+    var i = +el.dataset.i;
+    on[i] = !on[i];
+    calc();
+  });
+  calc();
+})();
+</script>
+</body>
+</html>

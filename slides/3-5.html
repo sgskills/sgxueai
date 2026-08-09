@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG vs 直接生成：卖点回答对比 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="同一个“扫地机器人有什么卖点"，有无知识库左右分屏对比——RAG 在电商客服场景的实战落地第一课。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="RAG vs 直接生成：卖点回答对比">
+<meta property="og:description" content="同一个问题，有无知识库左右分屏对比。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-5.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .vs-q{
+    background:var(--accent-soft);border:1.5px solid var(--accent-border);border-radius:12px;
+    padding:12px 17px;font-size:14px;font-weight:800;color:var(--text-h);margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .vs-q .mic{font-size:18px;}
+  .vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .vs-side{border-radius:14px;padding:16px 18px;}
+  .vs-side h5{font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+  .vs-side.no{background:rgba(220,38,38,.05);border:1.5px solid rgba(220,38,38,.28);}
+  .vs-side.no h5{color:var(--danger);}
+  .vs-side.yes{background:rgba(16,185,129,.05);border:1.5px solid rgba(16,185,129,.32);}
+  .vs-side.yes h5{color:var(--success);}
+  .vs-answer{font-size:13px;line-height:1.85;color:var(--text);}
+  .vs-answer .dim{color:var(--sub);}
+  .vs-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px;}
+  .vs-tags span{font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:999px;}
+  .vs-side.no .vs-tags span{background:rgba(220,38,38,.1);color:var(--danger);}
+  .vs-side.yes .vs-tags span{background:rgba(16,185,129,.12);color:var(--success);}
+  .vs-switch{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .vs-switch button{
+    border:1.5px solid var(--border-strong);border-radius:999px;padding:7px 16px;
+    font-size:12.5px;font-weight:700;background:transparent;color:var(--sub);
+    cursor:pointer;font-family:inherit;transition:.2s;
+  }
+  .vs-switch button.on{background:var(--green);border-color:var(--green);color:#fff;}
+  @media(max-width:768px){.vs-grid{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson wide">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>RAG vs 直接生成：卖点回答对比</h1>
+    <p class="subtitle">第一篇章讲了 RAG 的原理，这一节不讲道理，只看疗效——三个真实客服问题，左右分屏，自己感受差距。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">案例</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">交互演示 · 三个问题，两种 AI</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">切换问题，看左右两边的回答</div>
+    <div class="vs-switch" id="qSwitch"></div>
+    <div class="vs-q"><span class="mic">🎙️</span><span id="qText"></span></div>
+    <div class="vs-grid">
+      <div class="vs-side no">
+        <h5>❌ 无知识库（闭卷）</h5>
+        <div class="vs-answer" id="ansNo"></div>
+        <div class="vs-tags" id="tagsNo"></div>
+      </div>
+      <div class="vs-side yes">
+        <h5>✅ 有商品知识库（开卷）</h5>
+        <div class="vs-answer" id="ansYes"></div>
+        <div class="vs-tags" id="tagsYes"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">三个问题暴露的三个差距</div>
+
+  <ul>
+    <li class="reveal"><b>参数精度</b>：闭卷的“大吸力、长续航”是品类套话；开卷的“5000Pa、75 天免倒尘”是能写进详情页的真卖点。<b>客人要的是数字，不是形容词。</b></li>
+    <li class="reveal"><b>适用判断</b>：闭卷版什么客人都说“适合您”；开卷版敢说“您家 60㎡ 其实基础款就够”——<b>敢劝退的客服才值得信任</b>，这背后是有真实参数撑腰。</li>
+    <li class="reveal"><b>政策一致性</b>：退换货政策这种事，闭卷版每次说法都可能不一样，落录音里就是纠纷证据；开卷版永远以知识库里的官方政策为准，<b>一百个客人同一个说法</b>。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    注意开卷版也有前提：<b>知识库里得有这份资料、还得检索得到</b>。资料乱、切块烂，开卷也一样翻车——这就是下一节“搭建商品知识库”要干的活。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>闭卷靠猜，开卷靠查</b>：同一个模型，接不接知识库，回答是两个物种。</li>
+      <li><b>三大差距</b>：参数精度、适用判断、政策一致性——都是转化和客诉的命门。</li>
+      <li><b>RAG 效果上限 = 知识库质量</b>：库烂则答烂，下一节专门建库。</li>
+      <li><b>适合走 RAG 的问题</b>：参数、政策、库存、案例——答案藏在你家资料里的那些。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var cases = [
+    { q:'这款扫地机器人有什么卖点？',
+      no:'亲，这款扫地机器人功能很强大的哦！<span class="dim">智能规划路线、扫拖一体、大吸力、长续航</span>，性价比特别高，很多客户都说好用～',
+      yes:'亲，F6 Pro 有三个核心卖点：① <b>5000Pa 吸力 + 拖布自动抬升</b>，地毯只扫不拖；② <b>75 天免倒尘</b>，集尘袋一年只换 4 次；③ <b>AI 结构光避障</b>，数据线、宠物便便都能绕开。120㎡ 以上或有宠物的大户型家庭特别适合。',
+      tn:['品类套话','零数字','无法决策'], ty:['参数精准','卖点具体','人群明确'] },
+    { q:'我家 60 平小户型，买哪款合适？',
+      no:'亲，我们家的扫地机器人都很适合小户型的呢！机身小巧灵活，您看喜欢哪款都可以放心入手哦～',
+      yes:'您家 60㎡，其实不用上 F6 Pro——<b>基础款 A1 就够了</b>：续航 90 分钟跑您家两遍都够，价格还省 800 块。Pro 版的大容量集尘对您是浪费。<b>建议 A1</b>，预算留着配个手持吸尘器更实用。',
+      tn:['什么都说好','等于没说','不信任感'], ty:['敢劝退','真替客人算','信任感爆棚'] },
+    { q:'用了两周不满意能退吗？',
+      no:'亲，我们支持七天无理由退换的哦～具体您看看详情页说明哈。',
+      yes:'可以的。咱店政策：<b>7 天无理由退 + 30 天质量问题换新</b>，您用两周不满意，只要机器无人为损坏、配件齐全，可以走“体验退”——我直接帮您预约上门取件，运费我们承担。',
+      tn:['政策模糊','踢回详情页','留纠纷隐患'], ty:['政策精确到天数','主动给动作','一百个客人一个说法'] }
+  ];
+  var cur = 0;
+  var sw = document.getElementById('qSwitch');
+  sw.innerHTML = cases.map(function(c, i){
+    return '<button data-i="' + i + '"' + (i===0 ? ' class="on"' : '') + '>问题 ' + (i+1) + '</button>';
+  }).join('');
+  function render(){
+    var c = cases[cur];
+    sw.querySelectorAll('button').forEach(function(b, k){ b.classList.toggle('on', k===cur); });
+    document.getElementById('qText').textContent = '客人：' + c.q;
+    document.getElementById('ansNo').innerHTML = c.no;
+    document.getElementById('ansYes').innerHTML = c.yes;
+    document.getElementById('tagsNo').innerHTML = c.tn.map(function(t){ return '<span>✗ ' + t + '</span>'; }).join('');
+    document.getElementById('tagsYes').innerHTML = c.ty.map(function(t){ return '<span>✓ ' + t + '</span>'; }).join('');
+  }
+  sw.addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if (b){ cur = +b.dataset.i; render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

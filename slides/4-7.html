@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>让 AI 优化 AI：提示词自动迭代 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="用评测结果反向优化提示词，业务流的自我进化闭环——扩展阅读。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="让 AI 优化 AI：提示词自动迭代">
+<meta property="og:description" content="用评测结果反向优化提示词的自我进化闭环。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-7.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .evo{margin-top:14px;text-align:center;}
+  .evo-ring{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:18px 0;}
+  .evo-node{width:118px;border-radius:13px;border:1.5px solid var(--border-strong);background:var(--card);
+    padding:13px 10px;transition:.3s;}
+  .evo-node .en-ico{font-size:22px;}
+  .evo-node .en-name{font-size:12.5px;font-weight:800;color:var(--text-h);margin-top:4px;}
+  .evo-node .en-sub{font-size:10.5px;color:var(--sub);margin-top:2px;line-height:1.5;}
+  .evo-node.lit{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 4px var(--accent-soft);transform:scale(1.06);}
+  .evo-arrow{font-size:18px;color:var(--sub);padding:0 8px;transition:.3s;}
+  .evo-arrow.lit{color:var(--accent);}
+  .evo-status{margin-top:8px;font-size:13px;font-weight:700;color:var(--sub);min-height:44px;line-height:1.7;}
+  .evo-status b{color:var(--accent);}
+  .evo-gen{display:inline-block;margin-top:6px;font-size:12px;font-weight:800;padding:5px 15px;border-radius:999px;
+    background:var(--pill-bg);border:1.5px solid var(--border);color:var(--text-h);}
+  .evo-gen b{color:var(--accent);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶 · 扩展阅读</div>
+    <h1>让 AI 优化 AI：提示词自动迭代</h1>
+    <p class="subtitle">4-5 节的回归测试是“人改提示词，机器验证”。这节往前再走一步：让机器把“改”这一步也包了。这是扩展阅读——不要求你现在就落地，但要知道这个闭环存在。</p>
+    <div class="tag-row"><span class="tag">概念</span><span class="tag">前沿</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">闭环长什么样：四环咬合</div>
+
+  <p class="reveal">把前面几节的零件拼起来——黄金测试集（4-5）、三层质检（4-4）、数据看板（4-6）——再加一个“优化器”，就咬合成一个自转的电飞轮：</p>
+
+  <div class="demo evo reveal" id="demo">
+    <div class="demo-title">自我进化闭环 · 点“转一圈”，看提示词怎么自己变好</div>
+    <div class="evo-ring">
+      <div class="evo-node" id="n0"><div class="en-ico">📝</div><div class="en-name">跑测试集</div><div class="en-sub">当前提示词 × 50 道真金题</div></div>
+      <div class="evo-arrow" id="a0">→</div>
+      <div class="evo-node" id="n1"><div class="en-ico">📊</div><div class="en-name">评出成绩</div><div class="en-sub">通过率 + 错题清单</div></div>
+      <div class="evo-arrow" id="a1">→</div>
+      <div class="evo-node" id="n2"><div class="en-ico">🔧</div><div class="en-name">AI 改提示词</div><div class="en-sub">分析错题 → 生成改进版</div></div>
+      <div class="evo-arrow" id="a2">→</div>
+      <div class="evo-node" id="n3"><div class="en-ico">⚖️</div><div class="en-name">对比裁决</div><div class="en-sub">新版 vs 旧版，好才换</div></div>
+    </div>
+    <div style="text-align:center;"><button id="btnEvo">▶ 转一圈</button></div>
+    <div class="evo-status" id="evoStatus">闭环待机中。注意第三环：改提示词的不是人，是另一个 AI。</div>
+    <div class="evo-gen">当前版本 <b id="genNum">v1.0</b> · 通过率 <b id="genScore">82%</b></div>
+  </div>
+
+  <p class="reveal">关键在第四环<b>“对比裁决”</b>：AI 改出来的新提示词，必须在测试集上打败旧版才能上岗——这跟 4-5 节“通过率低于线上版就驳回”是同一条铁律，只是执行者从人变成了程序。<b>人可以偷懒，程序不会放水。</b></p>
+
+  <div class="sec-label">为什么要标“扩展阅读”：三个前提不齐别碰</div>
+
+  <ul>
+    <li class="reveal"><b>前提一：测试集够硬</b>——50 道题如果本身就水了，AI 会学会“应付考试”而不是“做好客服”。垃圾进，垃圾出，自动闭环只会更快地生产垃圾。</li>
+    <li class="reveal"><b>前提二：评分标准够稳</b>——“答得好不好”如果每次都靠感觉，优化方向就是布朗运动。得分点必须先写死。</li>
+    <li class="reveal"><b>前提三：高危场景留人审</b>——售后承诺、价格话术、广告法红线，自动改出来的版本必须人工过一道（5-5 节的四条底线永远有效）。</li>
+  </ul>
+
+  <p class="reveal">所以现实的节奏是：<b>日常小优化让闭环自动跑，每 3-5 代人工抽查一次，大改版永远人来拍板</b>。AI 优化 AI，人管住“值不值得上线”这道闸门——这跟 3-11 节“哪些按钮不能让 AI 碰”是一脉相承的。</p>
+
+  <div class="l-callout reveal">
+    这个闭环真正的价值，不是省掉你改提示词的时间，而是<b>让“持续变好”从口号变成机制</b>：人在睡觉，电飞轮在转，每天早上你看到的不是“又过了一夜”，而是“通过率又涨了 0.5 个点”。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>四环闭环</b>：跑测试集 → 评成绩 → AI 改提示词 → 对比裁决，好才换。</li>
+      <li><b>裁决是灵魂</b>：新版必须在黄金测试集上打败旧版才能上岗。</li>
+      <li><b>三个前提</b>：测试集够硬、评分标准够稳、高危场景留人审——不齐别碰。</li>
+      <li><b>现实节奏</b>：日常自动跑、定期人抽查、大改人拍板。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var nodes=[0,1,2,3].map(function(i){return document.getElementById('n'+i);});
+  var arrows=[0,1,2].map(function(i){return document.getElementById('a'+i);});
+  var status=document.getElementById('evoStatus'),genNum=document.getElementById('genNum'),genScore=document.getElementById('genScore');
+  var btn=document.getElementById('btnEvo');
+  var gen=0,score=82,busy=false;
+  var msgs=[
+    '① 用当前提示词跑 50 道真金题……',
+    '② 评卷完成：找出 9 道错题，分析共性——售后政策题答得太模糊。',
+    '③ AI 优化器出手：针对错题共性，生成加强售后描述的新版提示词。',
+    '④ 裁决：新版重跑测试集，通过率更高 → 获准上岗 ✅'
+  ];
+  btn.addEventListener('click',function(){
+    if(busy)return;busy=true;
+    nodes.forEach(function(n){n.classList.remove('lit');});
+    arrows.forEach(function(a){a.classList.remove('lit');});
+    var step=0;
+    function tick(){
+      if(step>0){nodes[step-1].classList.remove('lit');if(step-1<3)arrows[step-1].classList.remove('lit');}
+      if(step>=4){
+        gen++;
+        var gain=1+Math.floor(Math.random()*3);
+        score=Math.min(97,score+gain);
+        genNum.textContent='v1.'+gen;
+        genScore.textContent=score+'%';
+        status.innerHTML='✅ 进化完成：上岗 <b>v1.'+gen+'</b>（通过率 '+score+'%，+'+gain+'）。'+(score>=95?'通过率逼近天花板，建议人工补充更难的测试题。':'再转一圈可以继续进化。');
+        busy=false;return;
+      }
+      nodes[step].classList.add('lit');
+      if(step<3)arrows[step].classList.add('lit');
+      status.textContent=msgs[step];
+      step++;
+      setTimeout(tick,1000);
+    }
+    tick();
+  });
+})();
+</script>
+</body>
+</html>

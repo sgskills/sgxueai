@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 生图的效率账怎么算 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="主图/详情页/海报批量生成：AI 帮你多出多少图、快了多少倍？实时计算可用图数量、出图耗时和提速倍数——批量上架前必算的一笔效率账。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="AI 生图的效率账怎么算">
+<meta property="og:description" content="算清 AI 帮你多出多少图、快多少倍。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-1.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .img-pickers{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .img-group .gt{font-size:12px;font-weight:800;color:var(--sub);letter-spacing:1px;margin-bottom:8px;}
+  .img-opts{display:flex;flex-direction:column;gap:8px;}
+  .img-opt{
+    display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;
+    border:1.5px solid var(--border);background:var(--bg);cursor:pointer;transition:.15s;
+    font-size:13px;font-weight:700;color:var(--text);
+  }
+  .img-opt:hover{border-color:var(--green);}
+  .img-opt.on{border-color:var(--green);background:rgba(5,150,105,.07);color:var(--green);}
+  .img-opt small{font-weight:600;color:var(--sub);font-size:11px;margin-left:auto;}
+  .img-qty{display:flex;align-items:center;gap:12px;margin:4px 0 16px;}
+  .img-qty label{font-size:13px;font-weight:700;color:var(--text-h);flex-shrink:0;}
+  .img-qty .val{font-weight:900;color:var(--green);min-width:64px;}
+  .img-outs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .io{background:var(--pill-bg);border-radius:11px;padding:13px;text-align:center;}
+  .io .v{font-size:20px;font-weight:900;color:var(--text-h);font-variant-numeric:tabular-nums;}
+  .io .k{font-size:11px;color:var(--sub);margin-top:2px;}
+  .io.big{background:rgba(5,150,105,.08);border:1.5px solid rgba(5,150,105,.3);}
+  .io.big .v{color:var(--green);font-size:23px;}
+  .img-note{margin-top:14px;font-size:12.5px;color:var(--sub);background:var(--pill-bg);border-radius:10px;padding:10px 14px;line-height:1.7;}
+  .img-note b{color:var(--text-h);}
+  @media(max-width:768px){.img-pickers{grid-template-columns:1fr;}.img-outs{grid-template-columns:1fr 1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>AI 生图的效率账怎么算</h1>
+    <p class="subtitle">美工出一套图按天算，AI 出一套图按分钟算——但快多少，取决于你的可用率。批量上架前，先把这笔效率账算明白。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">电商</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">生图为什么“快得不讲道理”</div>
+
+  <p class="reveal">传统美工做场景图：沟通需求、找素材、拍摄或合成、改稿，<b>熟练工一天也就 20 张上下</b>。AI 生图：写好提示词、套好模板，<b>一张图 30 秒到 2 分钟</b>，还能批量并发出 20 张。同样是要 200 张图，一边约 10 天，一边按小时算。</p>
+
+  <p class="reveal">但快是有前提的——生图有<b>废片率</b>：手部畸形、材质穿帮、LOGO 跑偏，出 10 张能用的可能只有 3-4 张。<b>真实效率 = 速度 × 可用率</b>——废片一半，你的时间红利就漏掉一半。这就是为什么下面计算器里我专门留了“可用率”这个变量。</p>
+
+  <div class="sec-label">交互演示 · 生图效率计算器</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">图片用途 × 分辨率 × 数量，实时算效率</div>
+    <div class="img-pickers">
+      <div class="img-group">
+        <div class="gt">① 图片用途</div>
+        <div class="img-opts" id="useOpts"></div>
+      </div>
+      <div class="img-group">
+        <div class="gt">② 分辨率档位</div>
+        <div class="img-opts" id="resOpts"></div>
+      </div>
+    </div>
+    <div class="img-qty">
+      <label>生成数量</label>
+      <input type="range" id="qty" min="10" max="2000" value="200" step="10">
+      <span class="val" id="qtyV">200 张</span>
+    </div>
+    <div class="img-qty">
+      <label>可用率（废片扣掉）</label>
+      <input type="range" id="usable" min="20" max="100" value="40" step="5">
+      <span class="val" id="usableV">40%</span>
+    </div>
+    <div class="img-outs">
+      <div class="io"><div class="v" id="oUsable">-</div><div class="k">本批可用图</div></div>
+      <div class="io"><div class="v" id="oAiTime">-</div><div class="k">AI 出图耗时</div></div>
+      <div class="io"><div class="v" id="oTrad">-</div><div class="k">传统美工同等产出</div></div>
+      <div class="io big"><div class="v" id="oSpeed">-</div><div class="k">提速倍数</div></div>
+    </div>
+    <div class="img-note" id="imgNote"></div>
+  </div>
+
+  <div class="sec-label">三个提速又不掉质的实战策略</div>
+
+  <ul>
+    <li class="reveal"><b>低分辨率打样，高分辨率定稿</b>：先用 1K 批量出 20 张挑构图，十几分钟搞定；入围的 3 张再拉 2K/4K——打样阶段直接快 3 倍。</li>
+    <li class="reveal"><b>主图和详情页分级配置</b>：主图拼点击率，值得高档慢工；详情页后几张的场景图，中档足够——别让整条流水线堵在慢档上。</li>
+    <li class="reveal"><b>提示词模板化，拉高可用率</b>：把验证过的构图、光线、材质描述固化成模板（只换商品变量），可用率从 40% 提到 70%——<b>同样的时间，可用图多出 75%</b>。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>生图的账用效率算</b>：AI 一分钟一张 vs 美工按天算——关键是你一周能上新多少 SKU。</li>
+      <li><b>真实效率 = 速度 × 可用率</b>：废片一半，时间红利就漏一半。</li>
+      <li><b>三招提效</b>：低档打样高档定稿、用途分级配置、模板化提可用率。</li>
+      <li><b>批量前先小批试跑</b>：拿 20 张测出真实可用率，再决定大批量怎么配。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var uses = [
+    { k:'main', ic:'🖼️', n:'主图', s:'点击率担当' },
+    { k:'detail', ic:'📄', n:'详情页', s:'走量场景图' },
+    { k:'poster', ic:'📢', n:'海报/活动图', s:'质感要求高' }
+  ];
+  var ress = [
+    { k:'1k', n:'1K（约 1024px）', s:'约 30 秒/张', sec:30 },
+    { k:'2k', n:'2K（约 2048px）', s:'约 60 秒/张', sec:60 },
+    { k:'4k', n:'4K（约 4096px）', s:'约 2 分钟/张', sec:150 }
+  ];
+  var use = 'main', res = '1k';
+  var uOpts = document.getElementById('useOpts');
+  var rOpts = document.getElementById('resOpts');
+  uOpts.innerHTML = uses.map(function(u){
+    return '<div class="img-opt" data-k="' + u.k + '"><span>' + u.ic + '</span>' + u.n + '<small>' + u.s + '</small></div>';
+  }).join('');
+  rOpts.innerHTML = ress.map(function(r){
+    return '<div class="img-opt" data-k="' + r.k + '">' + r.n + '<small>' + r.s + '</small></div>';
+  }).join('');
+  function fmtTime(mins){
+    if (mins >= 60) return (mins/60).toFixed(1) + ' 小时';
+    return Math.max(1, Math.round(mins)) + ' 分钟';
+  }
+  function render(){
+    uOpts.querySelectorAll('.img-opt').forEach(function(el){ el.classList.toggle('on', el.dataset.k === use); });
+    rOpts.querySelectorAll('.img-opt').forEach(function(el){ el.classList.toggle('on', el.dataset.k === res); });
+    var qty = +document.getElementById('qty').value;
+    var usable = +document.getElementById('usable').value;
+    document.getElementById('qtyV').textContent = qty + ' 张';
+    document.getElementById('usableV').textContent = usable + '%';
+    var sec = ress.filter(function(r){ return r.k === res; })[0].sec;
+    var usableQty = Math.round(qty * usable / 100);
+    var aiMins = qty * sec / 60 + qty * 10 / 60; // 生成 + 每张 10 秒人工质检
+    var tradHours = usableQty * (8 / 20); // 传统美工约 20 张/天（8 小时，含沟通改稿）
+    var tradDays = tradHours / 8;
+    var speedup = (tradHours * 60) / aiMins;
+    document.getElementById('oUsable').textContent = usableQty + ' 张';
+    document.getElementById('oAiTime').textContent = fmtTime(aiMins);
+    document.getElementById('oTrad').textContent = '约 ' + tradDays.toFixed(1) + ' 天';
+    document.getElementById('oSpeed').textContent = Math.round(speedup) + ' 倍';
+    var notes = {
+      main: '主图场景：<b>' + qty + ' 张生成 → ' + usableQty + ' 张可用</b>。建议先用 1K 打样挑构图，入围再升档——打样快 3 倍。',
+      detail: '详情页场景：走量图对分辨率要求低，<b>1K/2K 中档足够</b>——同样的时间，流水线多跑一倍的量。',
+      poster: '海报场景：质感即转化，<b>建议 2K 起步</b>，重点图 4K + 人工排版定稿。'
+    };
+    document.getElementById('imgNote').innerHTML = notes[use]
+      + ' 可用率从 ' + usable + '% 提到 70%，同样时间可用图多 <b>' + Math.round((70/usable - 1) * 100) + '%</b>——模板化是效率的第一杠杆（下一节讲）。';
+  }
+  uOpts.addEventListener('click', function(e){ var el = e.target.closest('.img-opt'); if (el){ use = el.dataset.k; render(); } });
+  rOpts.addEventListener('click', function(e){ var el = e.target.closest('.img-opt'); if (el){ res = el.dataset.k; render(); } });
+  document.getElementById('qty').addEventListener('input', render);
+  document.getElementById('usable').addEventListener('input', render);
+  render();
+})();
+</script>
+</body>
+</html>

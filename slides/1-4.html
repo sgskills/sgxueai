@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上下文窗口：AI 的“工作记忆” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="为什么客服 AI 聊着聊着就“忘事"？拖动滑块模拟对话变长，亲眼看 AI 怎么一步步”忘记“客人最初的要求。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="上下文窗口：AI 的&quot;工作记忆&quot;">
+<meta property="og:description" content="拖动滑块模拟对话变长，看 AI 怎么一步步&quot;忘记&quot;客人最初的要求。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-4.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .win-wrap{margin-top:16px;}
+  .win-bar{
+    display:flex;height:30px;border-radius:8px;overflow:hidden;
+    border:1.5px solid var(--border-strong);
+  }
+  .win-bar .seg{
+    display:flex;align-items:center;justify-content:center;
+    font-size:10.5px;font-weight:800;color:#fff;min-width:0;
+    overflow:hidden;white-space:nowrap;transition:flex-grow .4s;
+  }
+  .seg-sys{background:#475569;}
+  .seg-old{background:#94a3b8;transition:opacity .4s;}
+  .seg-new{background:var(--accent);}
+  .win-legend{display:flex;gap:14px;font-size:11.5px;color:var(--sub);margin-top:8px;flex-wrap:wrap;}
+  .win-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;}
+  .chat-sim{margin-top:18px;display:flex;flex-direction:column;gap:8px;max-height:250px;overflow:hidden;position:relative;}
+  .msg{
+    padding:8px 13px;border-radius:12px;font-size:13px;line-height:1.55;max-width:88%;
+    transition:opacity .5s, filter .5s;
+  }
+  .msg.user{background:var(--accent-soft);border:1px solid var(--accent-border);align-self:flex-end;}
+  .msg.ai{background:var(--pill-bg);align-self:flex-start;}
+  .msg.fading{opacity:.25;filter:grayscale(1);}
+  .msg.gone{display:none;}
+  .msg.key{box-shadow:0 0 0 2px var(--danger);}
+  .overflow-warn{
+    margin-top:14px;padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:700;
+    background:rgba(220,38,38,.08);border:1.5px solid rgba(220,38,38,.3);color:var(--danger);
+    display:none;
+  }
+  .overflow-warn.show{display:block;animation:pop .3s;}
+  @keyframes pop{from{transform:scale(.96);opacity:0;}}
+  .slider-row{display:flex;align-items:center;gap:12px;margin-top:16px;}
+  .slider-row label{font-size:13px;color:var(--sub);flex-shrink:0;font-weight:700;}
+  .slider-row .val{font-weight:900;color:var(--accent);min-width:70px;font-variant-numeric:tabular-nums;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座</div>
+    <h1>上下文窗口：AI 的“工作记忆”</h1>
+    <p class="subtitle">客服 AI 聊着聊着就忘了客人说过的话？不是它偷懒，是它的“脑子”只有那么大，装不下就扔。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">概念</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">从客服翻车现场说起</div>
+
+  <p class="reveal">这个场景你肯定不陌生：客人一上来就问“<b>我是敏感肌，孕妇能用吗？</b>”，AI 客服热情接待，聊了十几轮，又是推荐又是算满减。最后客人说“那就按刚才说的，选敏感肌能用的那套”，AI 回了一句：“亲，我们家所有产品都很好呢，您看上哪款啦？”</p>
+
+  <p class="reveal">客人当时就火了：<b>我第一句就说了敏感肌，你跟我聊了半小时白聊？</b></p>
+
+  <div class="l-callout reveal">
+    这就是<b>上下文窗口溢出</b>。AI 的“工作记忆”是一块固定大小的白板：对话每增加一轮，就往白板上多写几行；白板写满了，最早的内容就被擦掉，给新内容腾地方。<b>客人最关键的那句话，往往就是最先被擦掉的。</b>
+  </div>
+
+  <div class="sec-label">交互演示 · 亲手把 AI 的“白板”写满</div>
+
+  <p class="reveal">下面模拟一个客服对话。拖动滑块增加对话轮数，盯着那条红色边框的关键信息（客人第一句说的“敏感肌”），看它是怎么被挤出白板的：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">上下文窗口溢出模拟器</div>
+    <div class="slider-row">
+      <label>对话轮数</label>
+      <input type="range" id="turnSlider" min="2" max="20" value="4">
+      <span class="val" id="turnVal">4 轮</span>
+    </div>
+    <div class="win-wrap">
+      <div class="win-bar" id="winBar"></div>
+      <div class="win-legend">
+        <span><i style="background:#475569"></i>店规（System Prompt）</span>
+        <span><i style="background:#94a3b8"></i>早期对话（将被挤出）</span>
+        <span><i style="background:#F97316"></i>最近对话</span>
+      </div>
+    </div>
+    <div class="chat-sim" id="chatSim"></div>
+    <div class="overflow-warn" id="warn">
+      ⚠️ 白板已满！客人第 1 轮说的“敏感肌”被挤出去了——现在问 AI，它已经“不记得”这个关键信息了。
+    </div>
+  </div>
+
+  <div class="sec-label">看懂白板上的三个区域</div>
+
+  <ul>
+    <li class="reveal"><b>店规区（System Prompt）</b>：永远钉在白板顶上，不会被挤掉——这就是为什么重要的规矩要写在这里，而不是在对话里说。</li>
+    <li class="reveal"><b>早期对话区</b>：先进先出，对话越长，越早的内容越先被擦。客人的核心诉求、你随口交代的重要背景，都死在这。</li>
+    <li class="reveal"><b>最近对话区</b>：AI 的注意力天然偏向这里，所以它“记得住刚才，记不住开头”。</li>
+  </ul>
+
+  <div class="sec-label">不同模型，白板大小差很多</div>
+
+  <p class="reveal">白板大小就是常说的“上下文长度”，计量单位是 Token：廉价小模型通常只有 8K（按每页六七百汉字算，大概十几页文档）；主流模型 32K‑128K；旗舰大模型可以做到 100 万 Token。但注意两个坑：</p>
+
+  <ul>
+    <li class="reveal"><b>大白板 ≠ 记得牢</b>：窗口越长，AI 对中间内容的注意力越涣散（“中间遗忘”现象），关键信息埋在第 80 页跟丢了差不多。</li>
+    <li class="reveal"><b>大白板 = 大账单</b>：每一轮对话，整个白板内容都要重新计费一遍。客服对话拖到 20 轮，后面每轮都在为前面 19 轮的内容重复付费。</li>
+  </ul>
+
+  <div class="sec-label">电商实战的三条对策</div>
+
+  <ul>
+    <li class="reveal"><b>关键信息上墙</b>：客人身份、禁忌、核心诉求，一旦识别到就写进 System Prompt 或专门的状态区，别让它躺在对话流水里等死。</li>
+    <li class="reveal"><b>长对话定期“交班”</b>：聊到一定轮数，让 AI 把前面的要点总结成一段摘要，新开一局接着聊——这就是后面会讲的“上下文压缩”。</li>
+    <li class="reveal"><b>别给 AI 看无关流水</b>：查个物流而已，不用把过去三天的聊天记录都塞给它。喂得越少越准，还越省钱。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>上下文窗口 = AI 的工作记忆白板</b>：大小固定（按 Token 算），写满就擦最早的。</li>
+      <li><b>System Prompt 区永不掉</b>：重要规矩写这里，别写在对话流水里。</li>
+      <li><b>大窗口有两大坑</b>：中间遗忘 + 每轮重复计费，不是越大越好。</li>
+      <li><b>实战三对策</b>：关键信息上墙、长对话定期摘要交班、只喂相关内容。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var KEY_IDX = 0; // 第1条客人消息是关键信息
+  var script = [
+    ['user','你好，我是敏感肌，孕妇，想买套温和的水乳，有推荐吗？', true],
+    ['ai','您好呀～敏感肌和孕期护肤确实要特别小心，我帮您看看温和系列……'],
+    ['user','预算 300 以内吧'],
+    ['ai','没问题，300 以内可以配齐水+乳，我再帮您凑个满减……'],
+    ['user','赠品有吗？'],
+    ['ai','现在下单送小样三件套哦～'],
+    ['user','物流发哪家？'],
+    ['ai','默认中通，急件可以补差价发顺丰。'],
+    ['user','满减怎么算？'],
+    ['ai','满 199 减 20，满 299 减 40，您这套刚好够 299 档。'],
+    ['user','乳液能换成大瓶吗？'],
+    ['ai','可以呀，大瓶装补 30 元差价。'],
+    ['user','那精华要不要加？'],
+    ['ai','看您需求，精华主要功效是保湿维稳……'],
+    ['user','保质期多久？'],
+    ['ai','未开封三年，开封后建议半年内用完。'],
+    ['user','包装好看吗，想送人'],
+    ['ai','有礼盒装可以选，加 10 元配手提袋。'],
+    ['user','那就按刚才说的来一套'],
+    ['ai','好的亲，您看具体要哪一套呢？我们家款式都挺温和的～']
+  ];
+  var CAPACITY = 10; // 白板容量（条）
+  var slider = document.getElementById('turnSlider');
+  var turnVal = document.getElementById('turnVal');
+  var winBar = document.getElementById('winBar');
+  var chatSim = document.getElementById('chatSim');
+  var warn = document.getElementById('warn');
+
+  function update(){
+    var turns = +slider.value;           // 轮数（一轮=一问一答）
+    var count = Math.min(turns*2, script.length);
+    var shown = script.slice(0, count);
+    var keyGone = count > CAPACITY && KEY_IDX < count - CAPACITY;
+    var startIdx = Math.max(0, count - CAPACITY);
+
+    turnVal.textContent = turns + ' 轮';
+    // 窗口条
+    var sysPct = 18, visiblePct = 0, oldPct = 0;
+    var visibleCount = Math.min(count, CAPACITY);
+    visiblePct = visibleCount * 7;
+    oldPct = Math.max(0, (count - CAPACITY)) * 7;
+    winBar.innerHTML =
+      '<div class="seg seg-sys" style="flex-grow:' + sysPct + '">店规</div>'
+      + (oldPct ? '<div class="seg seg-old" style="flex-grow:' + oldPct + '">已挤出 ' + (count-CAPACITY) + ' 条</div>' : '')
+      + '<div class="seg seg-new" style="flex-grow:' + visiblePct + '">窗口内 ' + visibleCount + ' 条</div>';
+    // 对话
+    chatSim.innerHTML = shown.map(function(m, idx){
+      var cls = 'msg ' + m[0];
+      if (m[2]) cls += ' key';
+      if (idx < startIdx) cls += ' gone';
+      else if (idx < startIdx + 2 && count > CAPACITY) cls += ' fading';
+      return '<div class="' + cls + '">' + m[1] + '</div>';
+    }).join('');
+    warn.classList.toggle('show', keyGone);
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

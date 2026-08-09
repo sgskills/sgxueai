@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 协作三段式：说清 → 对齐 → 验收 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="为什么“帮我写个详情页”注定返工三次？任务下达的标准流程，团队人 AI 通用。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="AI 协作三段式：说清 → 对齐 → 验收">
+<meta property="og:description" content="任务下达的标准流程：说清、对齐、验收。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/5-1.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .seg-lab{margin-top:14px;}
+  .seg-brief{border-radius:11px;border:1.5px solid var(--border);background:var(--card);padding:13px 16px;
+    margin-bottom:10px;cursor:pointer;transition:.18s;font-size:13.5px;}
+  .seg-brief:hover{border-color:var(--accent-border);}
+  .seg-brief.sel{border-color:var(--accent);background:var(--accent-soft);}
+  .seg-brief b{color:var(--text-h);}
+  .seg-brief .sb-meta{font-size:11.5px;color:var(--sub);margin-top:3px;}
+  .seg-out{border-radius:11px;background:#1E1E2E;color:#cbd5e1;padding:15px 17px;font-size:12.5px;
+    line-height:1.9;min-height:130px;font-family:"SF Mono",Menlo,Consolas,monospace;}
+  .seg-out .miss{color:#f87171;font-weight:700;}
+  .seg-out .hit{color:#34d399;font-weight:700;}
+  .seg-out .dim{color:#64748b;}
+  .seg-score{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap;}
+  .seg-score .ss{flex:1;min-width:120px;text-align:center;border-radius:10px;padding:10px;background:var(--pill-bg);border:1.5px solid var(--border);}
+  .seg-score .ss .n{font-size:22px;font-weight:900;color:var(--text-h);}
+  .seg-score .ss .l{font-size:11px;color:var(--sub);font-weight:700;}
+  .seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+  .seg3 .s3{border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);background:var(--card);}
+  .seg3 .s3 .s3-num{width:28px;height:28px;border-radius:50%;background:var(--cyan);color:#fff;font-weight:900;
+    display:flex;align-items:center;justify-content:center;font-size:13px;margin-bottom:8px;}
+  .seg3 .s3 h4{font-size:14px;font-weight:800;color:var(--text-h);margin-bottom:4px;}
+  .seg3 .s3 p{font-size:12.5px;color:var(--sub);margin:0;line-height:1.7;}
+  @media(max-width:640px){.seg3{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第五篇章 · 电商团队 AI 协作规范</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第五篇章 · 电商团队 AI 协作规范</div>
+    <h1>AI 协作三段式：说清 → 对齐 → 验收</h1>
+    <p class="subtitle">前四篇你学会了怎么“建系统”。这一篇解决“人怎么用系统”——毕竟团队里不是人人都像你一样懂 AI。第一课：怎么下任务，才不返工。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">流程</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">一句话任务，为什么注定返工</div>
+
+  <p class="reveal">“帮我写个连衣裙详情页”——这句话你对 AI 说，AI 给你一版泛泛的“优雅气质女神范”；你对新来的美工说，他凭想象做一版，你摇摇头打回去。<b>问题不在执行者，在下任务的人</b>：你脑子里的“目标客群是 25-35 岁通勤女性、主打抗皱面料、客单价 300+ 要走质感路线”，一个字都没说出来。</p>
+
+  <div class="demo seg-lab reveal">
+    <div class="demo-title">任务下达对比台 · 点三种下法，看产出差距</div>
+    <div class="seg-brief sel" data-mode="bad"><b>下法 A：</b>“帮我写个连衣裙详情页”<span class="sb-meta">1 秒下完 · 全员最爱用</span></div>
+    <div class="seg-brief" data-mode="mid"><b>下法 B：</b>“写个连衣裙详情页，法式风，客群 25-35 岁”<span class="sb-meta">说了方向 · 没说底线</span></div>
+    <div class="seg-brief" data-mode="good"><b>下法 C：</b>“法式连衣裙，客群 25-35 通勤女，主打抗皱可机洗，客单 300+ 走质感路线；禁用「显瘦/女神」等烂大街词；先出 3 个卖点角度给我选，选定后再写正文”<span class="sb-meta">说清目标 · 约定节点</span></div>
+    <div class="seg-out" id="segOut"></div>
+    <div class="seg-score">
+      <div class="ss"><div class="n" id="nRound">3 次</div><div class="l">平均返工次数</div></div>
+      <div class="ss"><div class="n" id="nTime">2 天</div><div class="l">从下单到可用</div></div>
+      <div class="ss"><div class="n" id="nMood">😤</div><div class="l">协作情绪</div></div>
+    </div>
+  </div>
+
+  <div class="sec-label">三段式：把“会下任务”变成标准动作</div>
+
+  <div class="seg3 reveal">
+    <div class="s3">
+      <div class="s3-num">1</div>
+      <h4>说清</h4>
+      <p>目标、受众、底线、参考样例一次给全。检验标准：把这段话发给一个不了解项目的新人，他能复述出你要什么——对 AI 同理（这就是 2-1 角色设定 + 2-2 Few-Shot 的组合拳）。</p>
+    </div>
+    <div class="s3">
+      <div class="s3-num">2</div>
+      <h4>对齐</h4>
+      <p>不让执行者闷头干完再看。先出“3 个角度/2 个草图/1 个大纲”给你选——<b>方向歪了在草稿阶段就掰回来</b>，成本几乎为零；等全文写完再掰，就是返工。</p>
+    </div>
+    <div class="s3">
+      <div class="s3-num">3</div>
+      <h4>验收</h4>
+      <p>下任务时就约好验收标准：什么叫“过”。是“卖点角度选 1 个展开”，还是“违禁词零命中 + 字数达标”（4-4 的质检规则直接复用）。<b>没有验收标准的任务，交付永远靠猜</b>。</p>
+    </div>
+  </div>
+
+  <div class="l-callout reveal">
+    三段式对人对 AI 一模一样——这恰恰说明它不是什么“AI 技巧”，而是<b>管理基本功的显影液</b>。AI 时代暴露了一个真相：很多团队的返工，从来都不是能力问题，是任务质量不行。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>返工的病根在下任务</b>：你脑子里的背景，一个字都没说出来的部分，就是返工的部分。</li>
+      <li><b>说清</b>：目标/受众/底线/样例一次给全，新人能复述才算说清。</li>
+      <li><b>对齐</b>：先出草稿方向再展开，方向歪了在成本为零时掰回来。</li>
+      <li><b>验收</b>：下任务时就约好“什么叫过”，交付不靠猜。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var out=document.getElementById('segOut');
+  var nRound=document.getElementById('nRound'),nTime=document.getElementById('nTime'),nMood=document.getElementById('nMood');
+  var data={
+    bad:{
+      html:'<span class="dim">AI 输出：</span>\n"这款连衣裙优雅大方，气质女神必备，显瘦百搭，\n穿上它你就是人群中最美的焦点……"\n<span class="miss">✗ 客群模糊 · 卖点空洞 · 全是烂大街词 · 违禁风险词“最”</span>\n<span class="dim">→ 你打回去："不对，再写一版" → 循环开始</span>',
+      round:'3 次',time:'2 天',mood:'😤'
+    },
+    mid:{
+      html:'<span class="dim">AI 输出：</span>\n"法式茶歇裙，V 领收腰设计，适合 25-35 岁的你，\n通勤约会两不误……"\n<span class="hit">✓ 方向对了</span> <span class="miss">✗ 没提抗皱面料 · 质感调性不够 · 仍缺卖点支撑</span>\n<span class="dim">→ 返工 1-2 次：“面料卖点呢？调性再高级一点”</span>',
+      round:'1-2 次',time:'半天',mood:'😐'
+    },
+    good:{
+      html:'<span class="dim">AI 先出 3 个角度：</span>\n① 抗皱黑科技：出差塞行李箱，拿出来直接穿\n② 一裙两穿：通勤扣上腰带，下班换双鞋去约会\n③ 300+ 的价格，千元级的走线与垂感\n<span class="hit">✓ 你 30 秒选定角度①，AI 展开正文，一次过稿</span>',
+      round:'0 次',time:'40 分钟',mood:'😄'
+    }
+  };
+  function show(mode){
+    out.innerHTML=data[mode].html;
+    nRound.textContent=data[mode].round;
+    nTime.textContent=data[mode].time;
+    nMood.textContent=data[mode].mood;
+  }
+  document.querySelectorAll('.seg-brief').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.seg-brief').forEach(function(x){x.classList.remove('sel');});
+      b.classList.add('sel');show(b.getAttribute('data-mode'));
+    });
+  });
+  show('bad');
+})();
+</script>
+</body>
+</html>

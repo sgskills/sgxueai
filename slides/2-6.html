@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工具调用：让 Agent 会查库存、查物流 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="工具调用四步链路可视化：模型输出指令 → 系统解析执行 → 结果注回白板 → 组织语言回复。AI 的“手”是这么长出来的。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="工具调用：让 Agent 会查库存、查物流">
+<meta property="og:description" content="模型输出指令 → 系统执行 → 结果注回，四步链路可视化。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-6.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .tc-flow{display:flex;flex-direction:column;gap:0;margin-top:16px;}
+  .tc-step{
+    display:flex;gap:14px;align-items:flex-start;padding:13px 15px;border-radius:12px;
+    border:1.5px solid transparent;transition:.3s;opacity:.4;
+  }
+  .tc-step.active{opacity:1;border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.06);}
+  .tc-step.done{opacity:.85;}
+  .tc-step .no{
+    width:26px;height:26px;border-radius:50%;flex-shrink:0;margin-top:1px;
+    background:var(--pill-bg);color:var(--sub);font-size:12px;font-weight:900;
+    display:flex;align-items:center;justify-content:center;transition:.3s;
+  }
+  .tc-step.active .no{background:var(--purple);color:#fff;}
+  .tc-step.done .no{background:var(--success);color:#fff;}
+  .tc-step .st{font-size:13.5px;font-weight:800;color:var(--text-h);}
+  .tc-step .sd{font-size:12.5px;color:var(--sub);line-height:1.6;margin-top:2px;}
+  .tc-step code{font-size:11.5px;}
+  .tc-controls{display:flex;gap:10px;justify-content:center;margin-top:16px;}
+  .tc-reveal-note{font-size:12px;color:var(--sub);text-align:center;margin-top:10px;}
+  .bad-good{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+  .bg{border-radius:12px;padding:14px 16px;font-size:12.5px;line-height:1.75;}
+  .bg h5{font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:8px;}
+  .bg.bad{background:rgba(220,38,38,.06);border:1.5px solid rgba(220,38,38,.25);}
+  .bg.bad h5{color:var(--danger);}
+  .bg.good{background:rgba(16,185,129,.06);border:1.5px solid rgba(16,185,129,.3);}
+  .bg.good h5{color:var(--success);}
+  @media(max-width:768px){.bad-good{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>工具调用：让 Agent 会查库存、查物流</h1>
+    <p class="subtitle">AI 自己不会连你的 ERP——它只会“写纸条”，真正跑腿的是系统。看懂这条链路，就懂了 Agent 的“手”是怎么长出来的。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">动画</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先破除最大的误会</div>
+
+  <p class="reveal">很多人以为“AI 查了库存”是 AI 亲自钻进你的 ERP 系统翻了一遍。不是的。<b>大模型从头到尾只干一件事：生成文本。</b>它连网都上不了。</p>
+
+  <p class="reveal">真实链路是：AI 生成一条<b>特殊格式的文本</b>（比如 <code>查库存(连衣裙, M码)</code>），外面的系统看到这条文本，<b>替它</b>去查 ERP，把结果“贴回白板”，AI 再看着结果组织人话。<b>AI 是开条的，系统是跑腿的。</b></p>
+
+  <div class="sec-label">动画演示 · 一条“查库存”指令的四步旅程</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">客人问：“连衣裙 M 码还有货吗？”</div>
+    <div class="tc-flow" id="tcFlow"></div>
+    <div class="tc-controls">
+      <button id="tcPlay">▶ 播放四步链路</button>
+      <button class="btn-ghost" id="tcReset">↺ 重置</button>
+    </div>
+    <div class="tc-reveal-note">注意：第二步的 JSON 是 AI“写”出来的，第三步是系统“跑”回来的——AI 全程没有碰过数据库。</div>
+  </div>
+
+  <div class="sec-label">工具从哪来？五种常见的“接法”</div>
+
+  <p class="reveal">“接工具”不是玄学，行业里就五种主流接法。你不需要会写，但<b>验收和提需求时要认得它们</b>：</p>
+
+  <table class="reveal">
+    <tr><th>接法</th><th>连什么</th><th>一句话说明</th></tr>
+    <tr><td><b>平台开放 API</b></td><td>店铺订单、商品、库存、物流</td><td>淘宝/京东/抖店开放平台的官方接口，最正规最稳定，需要申请应用授权</td></tr>
+    <tr><td><b>企业系统 API</b></td><td>ERP、OMS、WMS、客服系统</td><td>自家系统开的接口，查库存查物流的主力通道</td></tr>
+    <tr><td><b>MCP 接口</b></td><td>一切按 MCP 标准封装的工具</td><td>“AI 界的 USB 口”：工具方封装一次，各家 Agent 即插即用，不用逐个定制对接</td></tr>
+    <tr><td><b>数据库直连</b></td><td>订单库、商品库、会员库</td><td>开只读账号直接查库，最快最灵活，但权限必须卡死，得有技术看护</td></tr>
+    <tr><td><b>RPA / 低代码连接</b></td><td>没有 API 的老系统、后台页面</td><td>影刀、集简云这类工具模拟人点页面取数，不用开发，代价是慢和脆</td></tr>
+  </table>
+
+  <div class="l-callout reveal">
+    运营视角记一句：<b>你的 Agent 能长出几只“手”，取决于你家系统有哪些接口。</b>接 AI 之前先盘家底——店铺有平台 API，ERP 有没有接口，工具生态支不支持 MCP。家底越开放，Agent 越能干。
+  </div>
+
+  <div class="sec-label">工具描述：成功率的隐形决定者</div>
+
+  <p class="reveal">同一个“查库存”功能，给 AI 的工具说明书写得好不好，调用成功率能差出 3 倍：</p>
+
+  <div class="bad-good reveal">
+    <div class="bg bad">
+      <h5>❌ 坏描述</h5>
+      <code>名称：query<br>功能：查询<br>参数：input</code><br><br>
+      AI 看到这东西一脸懵：查什么？参数传商品名还是货号？M 码写成“M”还是“M码”？只能靠猜——猜错就是查无结果。
+    </div>
+    <div class="bg good">
+      <h5>✅ 好描述</h5>
+      <code>名称：check_inventory<br>功能：查询指定商品的实时库存<br>参数：sku_name（商品全称，如“法式碎花连衣裙”）、size（尺码，取值 S/M/L/XL）<br>返回：库存数量 + 预计补货日期</code><br><br>
+      名称说人话、参数有取值范围、返回字段写明白——AI 照单抓药，一调一个准。
+    </div>
+  </div>
+
+  <div class="sec-label">给电商团队的三个落地建议</div>
+
+  <ul>
+    <li class="reveal"><b>第一批工具只上“只读”的</b>：查订单、查库存、查物流——查错了没损失。写操作（建单、退款）等只读的跑稳了再上，而且要加人工确认。</li>
+    <li class="reveal"><b>工具说明书当员工手册写</b>：名称说人话、参数给取值范围、附一个调用示例——你带实习生怎么写 SOP，就怎么写工具描述。</li>
+    <li class="reveal"><b>失败要有“人话”返回</b>：查不到时别让系统返回“null”，返回“该商品 M 码缺货，预计 8 月 12 日补货”——AI 拿到人话，才能对客人说出人话。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>AI 开条，系统跑腿</b>：模型只生成指令文本，真正的查询是外围系统干的。</li>
+      <li><b>四步链路</b>：输出指令 → 解析执行 → 结果注回白板 → 组织人话回复。</li>
+      <li><b>五种接法</b>：平台 API、企业系统 API、MCP、数据库直连、RPA/低代码——家底越开放，Agent 越能干。</li>
+      <li><b>工具描述定成败</b>：好描述 vs 坏描述，成功率差 3 倍——当员工手册写。</li>
+      <li><b>先只读后写入</b>：第一批工具上查询类，写操作加人工确认闸口。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var steps = [
+    ['① AI 判断“该用工具了“','客人的问题需要实时数据，AI 在输出里写下一道”指令”而不是直接回答。'],
+    ['② AI 写出调用指令','生成结构化文本：<code>{"tool": "check_inventory", "sku_name": "法式碎花连衣裙", "size": "M"}</code>——这只是一段文本，还没有任何查询发生。'],
+    ['③ 系统解析并执行','外围程序读到这段 JSON，替 AI 去查 ERP：<code>{"stock": 37, "restock": null}</code>——真正碰数据库的是它。'],
+    ['④ 结果贴回白板，AI 组织回复','查询结果写进上下文，AI 看着结果说人话：“M 码还有 37 件现货，今天下单 48 小时内发出～”']
+  ];
+  var flow = document.getElementById('tcFlow');
+  flow.innerHTML = steps.map(function(s, i){
+    return '<div class="tc-step" data-i="' + i + '"><span class="no">' + (i+1) + '</span>'
+      + '<div><div class="st">' + s[0] + '</div><div class="sd">' + s[1] + '</div></div></div>';
+  }).join('');
+  var timer = null;
+  function reset(){
+    clearInterval(timer); timer = null;
+    flow.querySelectorAll('.tc-step').forEach(function(el){ el.classList.remove('active','done'); });
+  }
+  function play(){
+    reset();
+    var i = 0;
+    timer = setInterval(function(){
+      if (i > 0){ flow.children[i-1].classList.remove('active'); flow.children[i-1].classList.add('done'); }
+      if (i >= steps.length){ clearInterval(timer); timer = null; return; }
+      flow.children[i].classList.add('active');
+      i++;
+    }, 1300);
+  }
+  document.getElementById('tcPlay').addEventListener('click', play);
+  document.getElementById('tcReset').addEventListener('click', reset);
+  if (window.lessonOnView) lessonOnView(flow, play, 0.4);
+})();
+</script>
+</body>
+</html>

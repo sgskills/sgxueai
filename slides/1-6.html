@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幻觉演示：AI 编出来的“卖点” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="问 AI 一款不存在的产品，它能给你编出全套参数。电商人必须认识的三类幻觉：事实错误、自信编造、知识截止。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="幻觉演示：AI 编出来的&quot;卖点&quot;">
+<meta property="og:description" content="问 AI 一款不存在的产品，它能给你编出全套参数——三类幻觉现场演示。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-6.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .h-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .h-tabs button{
+    border:1.5px solid var(--border-strong);border-radius:999px;padding:7px 18px;
+    font-size:13px;font-weight:700;background:transparent;color:var(--sub);
+    cursor:pointer;font-family:inherit;transition:.2s;
+  }
+  .h-tabs button.on{background:var(--danger);border-color:var(--danger);color:#fff;}
+  .h-chat{background:var(--pill-bg);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+  .h-bubble{padding:10px 15px;border-radius:14px;font-size:13.5px;line-height:1.7;max-width:94%;}
+  .h-bubble.q{background:var(--accent-soft);border:1px solid var(--accent-border);align-self:flex-end;}
+  .h-bubble.a{background:var(--card);border:1px solid var(--border);align-self:flex-start;}
+  .h-bubble .who{font-size:10.5px;font-weight:800;color:var(--sub);display:block;margin-bottom:3px;}
+  .fake-mark{
+    background:rgba(220,38,38,.12);color:var(--danger);border-radius:5px;
+    padding:0 4px;font-weight:800;border-bottom:2px solid var(--danger);cursor:help;
+  }
+  .h-verdict{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:13px;font-weight:700;
+    background:rgba(220,38,38,.07);border:1.5px solid rgba(220,38,38,.28);color:var(--danger);
+  }
+  .h-why{margin-top:12px;font-size:12.5px;color:var(--sub);line-height:1.7;background:var(--pill-bg);border-radius:10px;padding:11px 14px;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座</div>
+    <h1>幻觉演示：AI 编出来的“卖点”</h1>
+    <p class="subtitle">AI 最危险的本事不是犯错，而是<b>犯错的时候理直气壮</b>。这一节，带你现场抓包。</p>
+    <div class="tag-row"><span class="tag">案例</span><span class="tag">安全</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先做一个实验</div>
+
+  <p class="reveal">你现在就可以打开任何一个 AI 对话框，问它：<b>“帮我介绍一下「舒云雀」牌洗地机的核心卖点。”</b></p>
+
+  <p class="reveal">“舒云雀”这个牌子是我刚编的，世界上不存在。但 AI 大概率不会说“我不认识”，它会煞有介事地告诉你：洗拖一体、智能感应、续航 60 分钟、母婴家庭适用……参数齐全，卖点动人，直接就能当详情页用。</p>
+
+  <div class="l-callout reveal">
+    这就是<b>幻觉（Hallucination）</b>。回忆一下第 1-3 节：AI 是台接龙机器，它的天职是“猜出最像真的下一个字”，<b>不是“告诉你真话”</b>。当它不知道答案时，它不会停下——它只会猜一段“最像答案的答案”。
+  </div>
+
+  <div class="sec-label">现场抓包 · 电商人必见的三类幻觉</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">点击切换三类幻觉，红色下划线 = AI 现编的内容</div>
+    <div class="h-tabs">
+      <button class="on" data-h="0">① 自信编造</button>
+      <button data-h="1">② 张冠李戴</button>
+      <button data-h="2">③ 知识过时</button>
+    </div>
+    <div class="h-chat" id="hChat"></div>
+    <div class="h-verdict" id="hVerdict"></div>
+    <div class="h-why" id="hWhy"></div>
+  </div>
+
+  <div class="sec-label">幻觉在电商场景的四个高发区</div>
+
+  <ul>
+    <li class="reveal"><b>商品参数</b>：问 AI“这款电饭煲功率多少”，它会给一个“最常见的功率”——而不是你这款的真实功率。直接上架就是虚假宣传。</li>
+    <li class="reveal"><b>竞品数据</b>：让 AI 做竞品分析，销量、价格、评分张口就来，全是“像真的”的估计值。拿去汇报要出大事。</li>
+    <li class="reveal"><b>平台规则</b>：“天猫现在满减退款怎么算”？平台规则一年改几次，AI 的记忆停在训练那天。</li>
+    <li class="reveal"><b>用户评价</b>：让 AI“总结这款产品的差评”，如果你没给它真实评论数据，它会编一批“典型差评”给你。</li>
+  </ul>
+
+  <div class="sec-label">为什么 AI 不能“不知道就说不知道”</div>
+
+  <p class="reveal">因为在训练的时候，“给出像模像样的回答”得到的奖励，远远高于“老实承认不知道”。它被训练成了一个<b>不懂装懂的老油条</b>——这不是 bug，是它“太想让你满意”的性格决定的。</p>
+
+  <p class="reveal">所以治本的方法只有一个思路：<b>别让它猜，给它查</b>。这正是接下来三节要讲的四种应对方案——提示词约束、温度控制、RAG 知识库、人工评测。</p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>幻觉 = AI 猜了一段“最像答案的答案”</b>：不知道也不停嘴，语气越自信越危险。</li>
+      <li><b>三类高发幻觉</b>：自信编造、张冠李戴、知识过时——商品参数和平台规则是重灾区。</li>
+      <li><b>根因在训练机制</b>：“像样回答”的奖励高于“承认不知道”，AI 天生不懂装懂。</li>
+      <li><b>治本思路</b>：别让它猜，给它查——接下来三节逐个讲应对武器。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var cases = [
+    {
+      chat: [
+        ['q','你','介绍下“舒云雀”洗地机的卖点'],
+        ['a','AI','舒云雀洗地机主打<span class="fake-mark" title="牌子和参数全是现编的">洗拖一体 + 智能脏污感应</span>，<span class="fake-mark" title="编的">续航 60 分钟</span>，<span class="fake-mark" title="编的">噪音低至 58 分贝</span>，特别适合有娃家庭，<span class="fake-mark" title="编的">京东好评率 98%</span>……']
+      ],
+      verdict: '⚠️ “舒云雀”根本不存在——但只要名字“像个牌子”，AI 就能给你编出全套卖点。',
+      why: '为什么：训练语料里有几万篇洗地机评测，AI 把“洗地机卖点”的平均模样猜了出来，套在你给的牌子上。它不知道这个牌子不存在，它只知道“后面该接卖点”。'
+    },
+    {
+      chat: [
+        ['q','你','我们竞品“星辰电吹风”卖多少钱？'],
+        ['a','AI','星辰电吹风目前售价<span class="fake-mark" title="把别家的价格安到它头上了">299 元</span>，主打<span class="fake-mark" title="张冠李戴">11 万转高速马达</span>，月销<span class="fake-mark" title="瞎估的">2 万+</span>……']
+      ],
+      verdict: '⚠️ 张冠李戴：AI 把“高速电吹风”这个品类的典型参数和价格，安在了你问的这个品牌头上。',
+      why: '为什么：AI 的记忆是“品类印象”而非“具体商品档案”。它见过太多 299 元、11 万转的电吹风，于是默认你家竞品也长这样。查竞品必须给它真实数据源。'
+    },
+    {
+      chat: [
+        ['q','你','今年 618 天猫满减规则是什么？'],
+        ['a','AI','今年 618 天猫跨店满减是<span class="fake-mark" title="这是去年的规则">每满 300 减 50</span>，叠加店铺券，预售定金<span class="fake-mark" title="已过时">立减翻倍</span>……']
+      ],
+      verdict: '⚠️ 知识过时：AI 的记忆停在训练截止日，今年改过的规则它一无所知，但语气依然笃定。',
+      why: '为什么：模型训练完就“冻结”了（第 1-2 节），之后发生的一切它都不知道。涉及活动时间、价格、政策的问题，必须以你提供的最新信息为准。'
+    }
+  ];
+  var chatEl = document.getElementById('hChat');
+  var verdictEl = document.getElementById('hVerdict');
+  var whyEl = document.getElementById('hWhy');
+  var tabs = document.querySelectorAll('.h-tabs button');
+
+  function show(i){
+    var c = cases[i];
+    tabs.forEach(function(b, k){ b.classList.toggle('on', k === i); });
+    chatEl.innerHTML = c.chat.map(function(b){
+      return '<div class="h-bubble ' + b[0] + '"><span class="who">' + b[1] + '</span>' + b[2] + '</div>';
+    }).join('');
+    verdictEl.textContent = c.verdict;
+    whyEl.textContent = c.why;
+  }
+  tabs.forEach(function(b, i){ b.addEventListener('click', function(){ show(i); }); });
+  show(0);
+})();
+</script>
+</body>
+</html>

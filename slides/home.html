@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 电商基础从入门到掌握 · 课程首页 | 诗光聊AI电商 公益项目</title>
+<meta name="description" content="诗光聊AI电商公益项目：面向电商运营操盘手的免费 AI 课程，7 大篇章、64 个交互知识点，覆盖 Prompt 工程、客服 Agent、AI 生图、店铺知识库、成本优化与团队协作 SOP。">
+<meta name="keywords" content="AI电商,电商AI课程,客服Agent,AI生图,业务流智能体,张诗光,诗光聊AI电商">
+<meta name="author" content="张诗光">
+<link rel="canonical" href="https://sgxueai.com/slides/home.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI 电商基础从入门到掌握 · 诗光聊AI电商 公益项目">
+<meta property="og:description" content="从 Prompt 到业务流智能体，建立电商 AI 基础认知。7 大篇章、64 个交互知识点。">
+<meta property="og:url" content="https://sgxueai.com/slides/home.html">
+<meta property="og:image" content="https://sgxueai.com/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+/* 主题初始化（避免闪烁） */
+(function(){
+  try{
+    var t = localStorage.getItem('aibp_course_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  }catch(e){ document.documentElement.setAttribute('data-theme','light'); }
+})();
+</script>
+<style>
+/* ══════════ 设计令牌 ══════════ */
+:root,[data-theme="light"]{
+  --bg:#faf7f2; --bg-soft:#f3efe8; --card:#ffffff;
+  --text:#1c1c1e; --text-h:#111827; --sub:#6b7280;
+  --accent:#F97316; --accent-soft:rgba(249,115,22,.08); --accent-border:rgba(249,115,22,.25);
+  --border:rgba(0,0,0,.07); --border-strong:rgba(0,0,0,.12);
+  --shadow:0 1px 3px rgba(0,0,0,.05);
+  --shadow-pop:0 12px 40px rgba(194,100,20,.12);
+  --pill-bg:rgba(0,0,0,.05);
+}
+[data-theme="dark"]{
+  --bg:#161412; --bg-soft:#1d1a17; --card:#221f1b;
+  --text:#e7e5e4; --text-h:#fafaf9; --sub:#a8a29e;
+  --accent:#fb923c; --accent-soft:rgba(251,146,60,.12); --accent-border:rgba(251,146,60,.35);
+  --border:rgba(255,255,255,.08); --border-strong:rgba(255,255,255,.16);
+  --shadow:0 1px 3px rgba(0,0,0,.3);
+  --shadow-pop:0 12px 40px rgba(0,0,0,.45);
+  --pill-bg:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+  line-height:1.7;-webkit-font-smoothing:antialiased;
+  transition:background .25s,color .25s;
+}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+/* ══════════ 顶部导航 ══════════ */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.topbar-inner{display:flex;align-items:center;gap:16px;height:58px;}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;color:var(--text-h);}
+.brand .logo-img{width:32px;height:32px;border-radius:50%;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.brand .logo{
+  width:30px;height:30px;border-radius:9px;flex-shrink:0;
+  background:linear-gradient(135deg,#F97316,#ea580c);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:13px;font-weight:900;letter-spacing:.5px;
+  box-shadow:0 3px 10px rgba(249,115,22,.35);
+}
+.brand small{font-weight:600;color:var(--sub);font-size:12px;margin-left:2px;}
+.topbar nav{margin-left:auto;display:flex;gap:4px;align-items:center;}
+.topbar nav a{
+  padding:7px 13px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--sub);
+  transition:.2s;
+}
+.topbar nav a:hover{background:var(--pill-bg);color:var(--text-h);}
+.theme-btn{
+  width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+  background:transparent;color:var(--sub);display:flex;align-items:center;justify-content:center;
+  transition:.2s;font-size:17px;
+}
+.theme-btn:hover{background:var(--pill-bg);color:var(--text-h);}
+[data-theme="light"] .ico-moon{display:block;}
+[data-theme="light"] .ico-sun{display:none;}
+[data-theme="dark"] .ico-moon{display:none;}
+[data-theme="dark"] .ico-sun{display:block;}
+
+/* ══════════ Hero ══════════ */
+.hero{padding:72px 0 44px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{
+  content:'';position:absolute;inset:-120px 0 auto;height:340px;pointer-events:none;
+  background:radial-gradient(ellipse 60% 100% at 50% 0%,rgba(249,115,22,.14),transparent 70%);
+}
+.hero .badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--accent-soft);border:1px solid var(--accent-border);
+  color:var(--accent);font-size:12.5px;font-weight:700;
+  padding:5px 14px;border-radius:999px;margin-bottom:20px;position:relative;
+}
+.hero h1{
+  font-size:clamp(30px,5.4vw,50px);font-weight:900;line-height:1.25;color:var(--text-h);
+  letter-spacing:-.5px;position:relative;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(120deg,#F97316,#ea580c 60%,#dc2626);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero .sub{
+  font-size:clamp(14px,2vw,17px);color:var(--sub);margin:16px auto 0;max-width:620px;position:relative;
+}
+.hero .cta-row{margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-primary{
+  background:linear-gradient(135deg,#F97316,#ea580c);color:#fff;border:none;
+  padding:13px 34px;border-radius:999px;font-size:15px;font-weight:700;cursor:pointer;
+  box-shadow:0 8px 24px rgba(249,115,22,.35);transition:.18s;font-family:inherit;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(249,115,22,.45);}
+.btn-ghost{
+  background:var(--card);color:var(--text);border:1.5px solid var(--border-strong);
+  padding:12px 28px;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;
+  transition:.18s;font-family:inherit;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-github{
+  background:#24292f;color:#fff;border:1.5px solid #24292f;
+  padding:12px 28px;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;
+  transition:.18s;font-family:inherit;display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+}
+.btn-github:hover{background:#000;transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);}
+.btn-github svg{width:19px;height:19px;fill:currentColor;flex-shrink:0;}
+.hero-mascot-wrap{position:absolute;right:3%;bottom:-14px;z-index:1;}
+.hero-mascot{
+  width:210px;height:auto;display:block;
+  filter:drop-shadow(0 14px 24px rgba(120,60,0,.22));
+  animation:mascotFloat 4.2s ease-in-out infinite;pointer-events:none;
+}
+@keyframes mascotFloat{0%,100%{transform:translateY(0) rotate(-1.2deg);}50%{transform:translateY(-12px) rotate(1.2deg);}}
+.mascot-bubble{
+  position:absolute;bottom:calc(100% - 14px);right:196px;
+  background:var(--card);border:1.5px solid var(--accent-border);
+  color:var(--text-h);font-size:13px;font-weight:700;white-space:nowrap;
+  padding:8px 14px;border-radius:14px 14px 4px 14px;
+  box-shadow:0 8px 24px rgba(194,100,20,.16);
+  animation:bubblePop .55s .7s cubic-bezier(.34,1.56,.64,1) both,bubbleFloat 4.2s 1.6s ease-in-out infinite;
+}
+.mascot-bubble::after{
+  content:'';position:absolute;right:6px;bottom:-6px;width:12px;height:12px;
+  background:var(--card);border-right:1.5px solid var(--accent-border);border-bottom:1.5px solid var(--accent-border);
+  transform:rotate(30deg);
+}
+@keyframes bubblePop{from{opacity:0;transform:scale(.6) translateY(8px);}to{opacity:1;transform:scale(1) translateY(0);}}
+@keyframes bubbleFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+@media (max-width:1060px){.hero-mascot-wrap{display:none;}}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ══════════ 统计条 ══════════ */
+.stats{
+  display:flex;justify-content:center;gap:0;margin:14px auto 0;max-width:720px;
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  box-shadow:var(--shadow);overflow:hidden;position:relative;
+}
+.stats .stat{flex:1;padding:18px 8px;text-align:center;}
+.stats .stat + .stat{border-left:1px solid var(--border);}
+.stats .num{font-size:26px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums;}
+.stats .lbl{font-size:12px;color:var(--sub);margin-top:2px;font-weight:600;}
+
+/* ══════════ 篇章区块 ══════════ */
+.parts{padding:56px 0 20px;display:flex;flex-direction:column;gap:26px;}
+.part-block{
+  background:var(--card);border:1.5px solid var(--border);border-radius:22px;
+  overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s;
+}
+.part-block:hover{box-shadow:var(--shadow-pop);}
+.part-head{
+  display:flex;align-items:flex-start;gap:16px;padding:24px 26px 18px;
+  border-left:5px solid var(--pc,#F97316);
+}
+.part-head .pnum{
+  font-size:11.5px;font-weight:800;letter-spacing:1.2px;color:var(--pc,#F97316);
+  background:color-mix(in srgb,var(--pc,#F97316) 10%,transparent);
+  padding:4px 11px;border-radius:999px;white-space:nowrap;margin-top:3px;
+}
+.part-head h2{font-size:21px;font-weight:800;color:var(--text-h);line-height:1.4;}
+.part-head .pdesc{font-size:13.5px;color:var(--sub);margin-top:5px;max-width:680px;}
+.part-head .pmeta{
+  margin-left:auto;text-align:right;flex-shrink:0;font-size:12px;color:var(--sub);
+  display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+}
+.pbar{width:110px;height:6px;border-radius:99px;background:var(--pill-bg);overflow:hidden;}
+.pbar i{display:block;height:100%;border-radius:99px;background:var(--pc,#F97316);transition:width .5s;}
+.topics{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:14px;padding:6px 22px 24px;
+}
+.topic-card{
+  border:1.5px solid var(--border);border-radius:16px;padding:16px 18px;
+  background:var(--bg-soft);transition:.2s;
+}
+.topic-card h4{font-size:14.5px;font-weight:800;color:var(--text-h);display:flex;align-items:center;gap:8px;}
+.topic-card h4 .tno{
+  width:20px;height:20px;border-radius:6px;font-size:11px;font-weight:900;
+  background:color-mix(in srgb,var(--pc,#F97316) 14%,transparent);
+  color:var(--pc,#F97316);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.topic-card .tdesc{font-size:12px;color:var(--sub);margin:4px 0 10px;}
+.lesson-list{display:flex;flex-direction:column;gap:6px;}
+.lesson-item{
+  display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:10px;
+  font-size:13px;font-weight:600;color:var(--text);transition:.15s;
+  border:1px solid transparent;
+}
+a.lesson-item:hover{background:var(--card);border-color:var(--border-strong);transform:translateX(2px);}
+.lesson-item .dot{
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  background:var(--border-strong);
+}
+.lesson-item.done .dot{background:#10B981;box-shadow:0 0 0 3px rgba(16,185,129,.18);}
+.lesson-item.done{color:var(--sub);}
+.lesson-item .ltitle{flex:1;line-height:1.45;}
+.lesson-item .tag{
+  font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;flex-shrink:0;
+  background:color-mix(in srgb,var(--pc,#F97316) 12%,transparent);
+  color:var(--pc,#F97316);
+}
+.lesson-item.locked{opacity:.48;cursor:default;}
+.lesson-item.locked .tag{background:var(--pill-bg);color:var(--sub);}
+
+/* ══════════ 适合谁 ══════════ */
+.forwho{padding:52px 0 8px;text-align:center;}
+.forwho .kicker{
+  display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:2px;color:var(--accent);
+  background:var(--accent-soft);border:1px solid var(--accent-border);
+  padding:4px 14px;border-radius:999px;margin-bottom:16px;
+}
+.forwho h2{font-size:clamp(24px,3.6vw,34px);font-weight:900;color:var(--text-h);letter-spacing:-.5px;}
+.forwho .fw-sub{font-size:14px;color:var(--sub);margin-top:10px;}
+.fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:30px auto 0;text-align:left;max-width:1080px;}
+.fw-card{
+  background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:22px 22px 18px;
+  transition:.2s;position:relative;overflow:hidden;
+}
+.fw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--fwc,var(--accent));}
+.fw-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-pop);}
+.fw-card .fw-ico{
+  width:40px;height:40px;border-radius:12px;font-size:19px;
+  background:color-mix(in srgb,var(--fwc,var(--accent)) 12%,transparent);
+  display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+}
+.fw-card h4{font-size:16px;font-weight:800;color:var(--text-h);}
+.fw-card p{font-size:13px;color:var(--sub);margin-top:8px;line-height:1.75;}
+.fw-card .fw-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+.fw-card .fw-tags span{
+  font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;
+  background:color-mix(in srgb,var(--fwc,var(--accent)) 10%,transparent);
+  color:var(--fwc,var(--accent));
+}
+.fw-card .fw-go{
+  display:inline-block;margin-top:14px;font-size:13px;font-weight:800;
+  color:var(--fwc,var(--accent));
+}
+.fw-card .fw-go:hover{text-decoration:underline;}
+
+/* ══════════ 结业证书板块 ══════════ */
+.cert-sec{padding:56px 0 10px;}
+.cert-sec .cs-head{text-align:center;margin-bottom:32px;}
+.cert-sec .cs-head h2{font-size:clamp(24px,3.6vw,34px);font-weight:900;color:var(--text-h);letter-spacing:-.5px;margin-top:16px;}
+.cert-sec .cs-head p{font-size:14px;color:var(--sub);margin-top:10px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.8;}
+.cs-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:center;}
+.cs-preview{
+  position:relative;
+  background:
+    linear-gradient(rgba(150,115,70,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(150,115,70,.07) 1px,transparent 1px),
+    linear-gradient(175deg,#fdf3e3 0%,#fbf9f4 42%);
+  background-size:24px 24px,24px 24px,cover;
+  border:1.5px solid rgba(194,103,12,.35);border-radius:18px;
+  padding:30px 30px 24px;color:#1c1c1e;box-shadow:0 14px 44px rgba(60,40,10,.12);
+  transform:rotate(-.6deg);transition:.25s;
+}
+.cs-preview:hover{transform:rotate(0) translateY(-3px);}
+.cs-preview .csp-kicker{font-size:10px;font-weight:700;letter-spacing:2.5px;color:#a16207;text-align:center;}
+.cs-preview .csp-title{font-size:26px;font-weight:900;text-align:center;margin-top:10px;letter-spacing:4px;}
+.cs-preview .csp-line{width:52px;height:2px;background:#d97706;margin:14px auto 0;}
+.cs-preview .csp-congrats{font-size:12px;color:#78716c;text-align:center;margin-top:18px;}
+.cs-preview .csp-name{font-size:24px;font-weight:900;text-align:center;margin-top:6px;}
+.cs-preview .csp-name i{display:block;width:120px;height:1.5px;background:#d97706;margin:6px auto 0;}
+.cs-preview .csp-body{font-size:11.5px;color:#57534e;text-align:center;margin-top:14px;line-height:1.8;}
+.cs-preview .csp-badge{
+  display:inline-block;font-size:10px;font-weight:800;letter-spacing:1px;color:#a16207;
+  background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.35);
+  padding:3px 12px;border-radius:999px;margin-top:12px;
+}
+.cs-preview .csp-foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px;font-size:9.5px;color:#a8a29e;line-height:1.7;}
+.cs-preview .csp-seal{
+  width:58px;height:58px;flex-shrink:0;transform:rotate(-7deg);
+}
+.cs-preview .csp-mascot{position:absolute;top:-26px;right:22px;width:64px;transform:rotate(4deg);filter:drop-shadow(0 6px 12px rgba(120,60,0,.2));}
+.cs-points{display:flex;flex-direction:column;gap:14px;}
+.cs-point{display:flex;gap:13px;align-items:flex-start;}
+.cs-point .cs-ico{
+  flex-shrink:0;width:34px;height:34px;border-radius:11px;font-size:15px;
+  background:var(--accent-soft);border:1px solid var(--accent-border);
+  display:flex;align-items:center;justify-content:center;
+}
+.cs-point b{font-size:14.5px;color:var(--text-h);display:block;}
+.cs-point p{font-size:12.5px;color:var(--sub);margin:3px 0 0;line-height:1.7;}
+.cs-progress{margin-top:6px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:15px 18px;}
+.cs-progress .csp-row{display:flex;align-items:center;gap:12px;}
+.cs-progress .csp-track{flex:1;height:9px;border-radius:99px;background:var(--pill-bg);overflow:hidden;}
+.cs-progress .csp-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#F97316,#ea580c);width:0%;transition:width .8s cubic-bezier(.22,.9,.3,1);}
+.cs-progress .csp-num{font-size:13px;font-weight:900;color:var(--text-h);white-space:nowrap;}
+.cs-progress .csp-hint{font-size:11.5px;color:var(--sub);margin-top:8px;}
+.cs-cta{margin-top:18px;text-align:center;}
+
+@media (max-width:860px){
+  .fw-grid{grid-template-columns:1fr;}
+  .cs-grid{grid-template-columns:1fr;gap:26px;}
+}
+
+/* ══════════ 底部 ══════════ */
+/* ── Skill 库推荐卡（首页） ── */
+.skill-rec{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 24px;border-radius:16px;
+  background:linear-gradient(135deg,var(--accent-soft),transparent 75%);
+  border:1.5px solid var(--accent-border);transition:.2s;
+}
+.skill-rec:hover{box-shadow:0 10px 34px rgba(194,100,20,.14);transform:translateY(-2px);}
+.skill-rec .sr-ico{flex-shrink:0;width:42px;height:42px;border-radius:11px;background:#24292f;display:flex;align-items:center;justify-content:center;}
+.skill-rec .sr-ico svg{width:24px;height:24px;fill:#fff;}
+.skill-rec .sr-txt{font-size:14.5px;line-height:1.7;color:var(--sub);}
+.skill-rec .sr-txt b{color:var(--text-h);}
+.skill-rec .sr-txt a{color:var(--accent);font-weight:800;text-decoration:none;border-bottom:1.5px solid var(--accent-border);transition:.15s;}
+.skill-rec .sr-txt a:hover{border-bottom-color:var(--accent);}
+@media(max-width:640px){.skill-rec{align-items:flex-start;}.skill-rec .sr-txt{font-size:13.5px;}}
+
+.footer{margin-top:64px;border-top:1px solid var(--border);padding:38px 0 46px;}
+.footer-grid{display:flex;gap:36px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;}
+.footer .f-brand{font-weight:800;font-size:15px;color:var(--text-h);}
+.footer .f-line{font-size:12.5px;color:var(--sub);margin-top:6px;max-width:420px;}
+.qr-box{
+  display:flex;align-items:center;gap:14px;background:var(--card);
+  border:1.5px dashed var(--accent-border);border-radius:16px;padding:14px 18px;
+}
+.qr-box .qr-ph{
+  width:76px;height:76px;border-radius:10px;background:var(--accent-soft);
+  display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--accent);
+  font-weight:700;text-align:center;line-height:1.4;flex-shrink:0;
+}
+.qr-box .qr-txt{font-size:12.5px;color:var(--sub);}
+.qr-box .qr-txt b{color:var(--text-h);display:block;font-size:13.5px;}
+
+/* ══════════ reveal ══════════ */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.show{opacity:1;transform:none;}
+
+@media (max-width:768px){
+  .topbar nav a{display:none;}
+  .hero{padding:52px 0 34px;}
+  .part-head{flex-wrap:wrap;}
+  .part-head .pmeta{margin-left:0;flex-direction:row;align-items:center;gap:10px;}
+  .topics{grid-template-columns:1fr;}
+  .stats .num{font-size:21px;}
+}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="home.html">
+      <img class="logo-img" src="mascot/favicon-64.png" alt="顺小栗">
+      <span>诗光聊AI电商<small>公益项目</small></span>
+    </a>
+    <nav>
+      <a href="#parts">课程地图</a>
+      <a href="../index.html">首页</a>
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题" title="切换浅色 / 深色">
+        <span class="ico-moon">🌙</span><span class="ico-sun">☀️</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="badge">🔥 顺为科技出品 · 免费开放</span>
+    <h1>AI 电商基础<em>从入门到掌握</em></h1>
+    <p class="sub">从 Prompt 到业务流智能体，建立电商 AI 基础认知。<br>一个做了十几年电商的老炮，把 AI 这门新手艺给你讲明白。</p>
+    <div class="cta-row">
+      <button class="btn-primary" id="startBtn">▶ 开始学习</button>
+      <a class="btn-github" href="https://github.com/sgskills" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>GitHub</a>
+    </div>
+    <div class="hero-mascot-wrap">
+      <div class="mascot-bubble">Hi~欢迎来到 诗光学AI</div>
+      <img class="hero-mascot" src="mascot/mascot-hero-t.png" alt="顺小栗为你加油">
+    </div>
+    <div class="stats" id="statsBar" style="margin-top:34px;">
+      <div class="stat"><div class="num" id="stParts">-</div><div class="lbl">课程篇章</div></div>
+      <div class="stat"><div class="num" id="stLessons">-</div><div class="lbl">知识点</div></div>
+      <div class="stat"><div class="num" id="stInteractive">-</div><div class="lbl">交互演示</div></div>
+      <div class="stat"><div class="num" id="stDone">0</div><div class="lbl">已完成</div></div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <section class="forwho reveal">
+    <span class="kicker">FOR WHO</span>
+    <h2>这门课适合谁</h2>
+    <p class="fw-sub">不同背景有不同的学法。对号入座，从最适合你的地方切入。</p>
+    <div class="fw-grid">
+      <div class="fw-card" style="--fwc:#2563EB;">
+        <div class="fw-ico">🎯</div>
+        <h4>电商运营/从业者</h4>
+        <p>每天用 AI 写文案、做分析、做诊断、做报表，但效果时好时坏。想搞懂底层机制、给 AI 产出建质检体系，让效果稳定可复制。</p>
+        <div class="fw-tags"><span>认知底座</span><span>质检体系</span><span>成本优化</span></div>
+        <a class="fw-go" href="0-intro.html">从开学第一课按序学 →</a>
+      </div>
+      <div class="fw-card" style="--fwc:#F97316;">
+        <div class="fw-ico">🚀</div>
+        <h4>创业者/管理者</h4>
+        <p>想用 AI 杠杆放大产能，又关心每一分投入的成本、现金流和真实毛利——要杠杆，不要泡沫。</p>
+        <div class="fw-tags"><span>AI 杠杆</span><span>现金流</span><span>毛利口径</span></div>
+        <a class="fw-go" href="5-1.html">直达团队应用篇 →</a>
+      </div>
+      <div class="fw-card" style="--fwc:#0D9488;">
+        <div class="fw-ico">🎓</div>
+        <h4>团队HR/培训负责人</h4>
+        <p>公司要给设计师、人事、运营、产品开发等角色做 AI 基础培训，但大家缺乏系统的学习路径。</p>
+        <div class="fw-tags"><span>员工培训</span><span>学习地图</span><span>结业验收</span></div>
+        <a class="fw-go" href="0-intro.html">从开学第一课按序学 →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="parts" id="parts"><!-- 由 course-data.js 渲染 --></div>
+
+  <section class="cert-sec reveal">
+    <div class="cs-head">
+      <span class="kicker" style="display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:2px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-border);padding:4px 14px;border-radius:999px;">CERTIFICATE</span>
+      <h2>学完全部课程，给你一张结业证书</h2>
+      <p>课程免费，证书也免费。它不代表任何机构的资质认证，<br>只是给愿意把每一节课都认真学完的你，一个看得见的记号。</p>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-preview">
+        <img class="csp-mascot" src="mascot/mascot-hero-t.png" alt="顺小栗">
+        <div class="csp-kicker">CERTIFICATE OF COMPLETION</div>
+        <div class="csp-title">结业证书</div>
+        <div class="csp-line"></div>
+        <div class="csp-congrats">祝贺</div>
+        <div class="csp-name">你的名字<i></i></div>
+        <div class="csp-body">已完成《AI 电商基础从入门到掌握》全部课程<br>并通过结业考试</div>
+        <div style="text-align:center;"><span class="csp-badge">COMPLETED</span></div>
+        <div class="csp-foot">
+          <span>证书编号：AIBP-2026-SAMPLE<br>诗光聊AI电商 入门课</span>
+          <svg class="csp-seal" viewBox="0 0 100 100" aria-hidden="true">
+            <defs><path id="sealArcT" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(37,99,235,.65)" stroke-width="2"/>
+            <circle cx="50" cy="50" r="34" fill="none" stroke="rgba(37,99,235,.4)" stroke-width="1"/>
+            <text font-size="10.5" font-weight="800" fill="rgba(30,86,210,.92)" letter-spacing="1.5"><textPath href="#sealArcT" startOffset="2%">SGXUEAI · CERTIFIED ·</textPath></text>
+            <g fill="none" stroke="rgba(37,99,235,.85)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M38,44 L50,37 L62,44 L50,51 Z"/>
+              <path d="M38,52 L50,45.5 L62,52 L50,58.5"/>
+              <path d="M38,60 L50,53.5 L62,60 L50,66.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <div class="cs-points">
+          <div class="cs-point">
+            <div class="cs-ico">✅</div>
+            <div><b>每节课点一次「完成本节」</b><p>进度存在你自己的浏览器里，换设备会丢，别轻易丢。</p></div>
+          </div>
+          <div class="cs-point">
+            <div class="cs-ico">🔒</div>
+            <div><b>全部学完 + 通过结业考试，才能领</b><p><span id="csTotalTxt">64</span> 节课一节不能少，考试 90 分过线。一人一张，证书带唯一编号。</p></div>
+          </div>
+          <div class="cs-point">
+            <div class="cs-ico">✍️</div>
+            <div><b>名字由你自己填</b><p>考完之后输入你的名字或昵称，证书实时生成，可下载 PNG 晒朋友圈。</p></div>
+          </div>
+        </div>
+        <div class="cs-progress" style="margin-top:18px;">
+          <div class="csp-row">
+            <div class="csp-track"><div class="csp-fill" id="csFill"></div></div>
+            <span class="csp-num" id="csNum">0 / 64</span>
+          </div>
+          <div class="csp-hint" id="csHint">你的学习进度——学满了，考试大门才会打开。</div>
+        </div>
+        <div class="cs-cta">
+          <a class="btn-primary" href="final-exam.html" style="text-decoration:none;">看看我的考试进度 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="margin-top:60px;">
+    <div class="skill-rec">
+      <span class="sr-ico"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+      <span class="sr-txt"><b>学完想继续进阶？</b>电商人必备好用的 Skill 库，复制本段文字发给AI安装：<a href="https://github.com/sgskills/aibp" target="_blank" rel="noopener">github.com/sgskills/aibp</a></span>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="f-brand">《AI 电商基础从入门到掌握》</div>
+      <div class="f-line">
+        诗光聊AI电商 公益项目<br>
+        鸣谢：洛小山 · 鸣谢公益 AI 学习网站：xueai.app
+      </div>
+    </div>
+    <div class="qr-box">
+      <img src="wechat-qr.png" alt="诗光聊AI电商公众号二维码" style="width:76px;height:76px;border-radius:10px;flex-shrink:0;display:block;">
+      <div class="qr-txt"><b>诗光聊AI电商</b>扫码关注公众号<br>获取更多 AI 电商实战干货</div>
+    </div>
+  </div>
+</footer>
+
+<script src="course-data.js"></script>
+<script>
+(function(){
+  'use strict';
+  var PROGRESS_KEY = 'aibp_course_progress_v1';
+
+  function getProgress(){
+    try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY)||'{}'); }catch(e){ return {}; }
+  }
+
+  /* ── 主题切换 ── */
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var cur = document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', cur);
+    try{ localStorage.setItem('aibp_course_theme', cur); }catch(e){}
+  });
+
+  /* ── 渲染课程地图 ── */
+  var C = window.COURSE;
+  var progress = getProgress();
+  var totalLessons = 0, totalInteractive = 0, totalDone = 0, totalReady = 0;
+  var firstReady = null, lastLearned = progress.__last || null;
+
+  var html = '';
+  C.parts.forEach(function(part, pi){
+    var pLessons = 0, pDone = 0;
+    var topicsHtml = '';
+    part.topics.forEach(function(topic, ti){
+      var items = '';
+      topic.lessons.forEach(function(ls){
+        var isExam = (ls.file === 'exam.html' || ls.file === 'final-exam.html');
+        /* 考试类条目（阶段自测 / 结业考试）是自愿挑战，不计入"必须完成"的课数与进度 */
+        if (!isExam) { pLessons++; totalLessons++; }
+        if (ls.tag === '交互' || ls.tag === '动画') totalInteractive++;
+        var isDone = !!progress[ls.file];
+        var isReady = !!ls.ready;
+        if (isReady) {
+          totalReady++;
+          if (!firstReady) firstReady = ls.file;
+        }
+        if (isDone && !isExam){ pDone++; totalDone++; }
+        var cls = 'lesson-item' + ((isDone || isExam) ? ' done' : '') + (isReady ? '' : ' locked');
+        var inner = (isExam ? '<span class="dot" style="opacity:.35"></span>' : '<span class="dot"></span>')
+                  + '<span class="ltitle">' + ls.title + '</span>'
+                  + '<span class="tag">' + (isReady ? ls.tag : '更新中') + '</span>';
+        items += isReady
+          ? '<a class="' + cls + '" href="' + ls.file + '" title="' + ls.desc + '">' + inner + '</a>'
+          : '<span class="' + cls + '" title="' + ls.desc + '（页面制作中，敬请期待）">' + inner + '</span>';
+      });
+      topicsHtml += '<div class="topic-card">'
+        + '<h4><span class="tno">' + (ti+1) + '</span>' + topic.title + '</h4>'
+        + '<div class="tdesc">' + topic.desc + '</div>'
+        + '<div class="lesson-list">' + items + '</div></div>';
+    });
+    var pct = pLessons ? Math.round(pDone/pLessons*100) : 0;
+    html += '<section class="part-block reveal" style="--pc:' + part.color + '">'
+      + '<div class="part-head">'
+      +   '<span class="pnum">' + part.num + '</span>'
+      +   '<div><h2>' + part.title + '</h2><div class="pdesc">' + part.desc + '</div></div>'
+      +   '<div class="pmeta"><span>' + pDone + ' / ' + pLessons + ' 已完成</span>'
+      +   '<span class="pbar"><i style="width:' + pct + '%"></i></span></div>'
+      + '</div>'
+      + '<div class="topics">' + topicsHtml + '</div>'
+      + '</section>';
+  });
+  document.getElementById('parts').innerHTML = html;
+
+  /* ── 统计 ── */
+  document.getElementById('stParts').textContent = C.parts.length;
+  document.getElementById('stLessons').textContent = totalLessons - 2; /* 知识点口径：排除阶段自测与结业考试两个条目 */
+  document.getElementById('stInteractive').textContent = totalInteractive;
+  document.getElementById('stDone').textContent = totalDone;
+
+  /* ── 结业证书板块进度 ── */
+  var learnable = totalLessons - 2; /* 排除阶段自测与结业考试两个条目 */
+  var csNum = document.getElementById('csNum');
+  if (csNum) {
+    csNum.textContent = totalDone + ' / ' + learnable;
+    document.getElementById('csFill').style.width = Math.min(100, Math.round(totalDone/learnable*100)) + '%';
+    document.getElementById('csHint').textContent = totalDone >= learnable
+      ? '🎉 全部学完！去结业考试，领你的证书吧。'
+      : '你的学习进度——学满了，考试大门才会打开。';
+    var csTotalTxt = document.getElementById('csTotalTxt');
+    if (csTotalTxt) csTotalTxt.textContent = learnable;
+  }
+
+  /* ── 开始学习按钮：优先续学 ── */
+  document.getElementById('startBtn').addEventListener('click', function(){
+    var target = (lastLearned && progress[lastLearned]) ? lastLearned : (firstReady || 'home.html');
+    this.textContent = '正在进入…';
+    window.location.href = target;
+  });
+  if (lastLearned && progress[lastLearned]) {
+    document.getElementById('startBtn').innerHTML = '▶ 继续学习';
+  }
+
+  /* ── 滚动渐入 ── */
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target); }
+      });
+    }, { threshold: .06 });
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('show'); });
+  }
+})();
+</script>
+</body>
+</html>

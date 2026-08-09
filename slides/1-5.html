@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Prompt：给 AI 立的“店规” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="为什么同一款模型，别人家的客服井井有条，你家的满嘴跑火车？差别就在 System Prompt 这张“店规”上。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="System Prompt：给 AI 立的&quot;店规&quot;">
+<meta property="og:description" content="同一个客人问题，有无店规的 AI 客服回答天差地别——案例对比。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-5.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .toggle-row{display:flex;gap:0;margin:6px 0 18px;border-radius:999px;background:var(--pill-bg);padding:4px;width:max-content;}
+  .toggle-row button{
+    border:none;border-radius:999px;padding:8px 22px;font-size:13.5px;font-weight:700;
+    background:transparent;color:var(--sub);cursor:pointer;font-family:inherit;transition:.2s;
+  }
+  .toggle-row button.on{background:var(--accent);color:#fff;box-shadow:0 3px 10px rgba(249,115,22,.3);}
+  .chat-panel{background:var(--pill-bg);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+  .bubble{padding:10px 15px;border-radius:14px;font-size:13.5px;line-height:1.65;max-width:92%;}
+  .bubble.q{background:var(--accent-soft);border:1px solid var(--accent-border);align-self:flex-end;}
+  .bubble.a{background:var(--card);border:1px solid var(--border);align-self:flex-start;}
+  .bubble .who{font-size:10.5px;font-weight:800;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.5px;}
+  .bubble .bad{color:var(--danger);font-weight:700;}
+  .bubble .good{color:var(--success);font-weight:700;}
+  .rule-doc{
+    background:var(--card);border:1.5px dashed var(--accent-border);border-radius:12px;
+    padding:16px 20px;font-size:13px;line-height:1.9;margin-top:14px;
+  }
+  .rule-doc .rt{font-weight:900;color:var(--accent);font-size:12px;letter-spacing:1px;margin-bottom:8px;}
+  .score-row{display:flex;gap:10px;margin-top:14px;}
+  .score-card{flex:1;border-radius:10px;padding:12px 14px;text-align:center;font-size:12px;}
+  .score-card.bad{background:rgba(220,38,38,.07);border:1px solid rgba(220,38,38,.25);color:var(--danger);}
+  .score-card.good{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.3);color:var(--success);}
+  .score-card b{display:block;font-size:18px;font-weight:900;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座</div>
+    <h1>System Prompt：给 AI 立的“店规”</h1>
+    <p class="subtitle">同一款模型，别人家的 AI 客服井井有条，你家的满嘴跑火车——差别不在模型，在开工前有没有“立规矩”。</p>
+    <div class="tag-row"><span class="tag">案例</span><span class="tag">交互</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">新店员上岗第一天</div>
+
+  <p class="reveal">你招了个新客服，学历很高、反应极快、读过全网所有的客服话术。上岗第一天，你会怎么做？</p>
+
+  <p class="reveal">肯定不会直接把他推到旺旺前面说“自己发挥”。你会先交代：<b>我们店卖什么的、客人都是谁、什么话能说什么话不能说、搞不定的找谁</b>。这套岗前交代，就是 System Prompt——<b>每次对话开始前，永远钉在 AI 白板最顶上的那张“店规”</b>（还记得上一节的白板吗？这个区域永远不会被挤掉）。</p>
+
+  <div class="sec-label">案例对比 · 同一个客人，两种回答</div>
+
+  <p class="reveal">客人问：<b>“这个面霜孕妇能用吗？”</b>点下面的开关，看没立店规和立了店规的天壤之别：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">同一模型 · 同一问题 · 唯一差别是有无 System Prompt</div>
+    <div class="toggle-row">
+      <button id="btnNo" class="on">❌ 没立店规</button>
+      <button id="btnYes">✅ 立了店规</button>
+    </div>
+    <div class="chat-panel" id="chatPanel"></div>
+    <div class="score-row" id="scoreRow"></div>
+    <div class="rule-doc" id="ruleDoc" style="display:none;">
+      <div class="rt">📋 这家店的 System Prompt（节选）</div>
+      你是「雾芙」护肤店的客服小芙，客群是 25-40 岁女性，客单价 150-400 元。<br>
+      ① 涉及孕妇、哺乳期、婴幼儿的问题，一律不承诺“可以用”，统一回复：建议咨询医生后再使用，并推荐客人查看详情页的成分表；<br>
+      ② 不夸大功效，不说“美白”“祛斑”等医疗用语，用“提亮肤色”“淡化印痕”替代；<br>
+      ③ 客人犹豫时，主推 269 元的明星套装，强调 7 天无理由退换；<br>
+      ④ 拿不准的问题，回复“我帮您转专业顾问”，不要自己编。
+    </div>
+  </div>
+
+  <div class="sec-label">店规为什么这么好使</div>
+
+  <p class="reveal">三个原因，都和我们前面讲的底层机制扣得上：</p>
+
+  <ul>
+    <li class="reveal"><b>位置最高</b>：它在白板最顶上，永远不会被对话流水挤掉——上一节讲的上下文溢出，影响不到它。</li>
+    <li class="reveal"><b>它是“前文”的一部分</b>：还记得概率接龙吗？店规就是每轮猜字前都在场的“前文”，每一次生成都被它拽着走。</li>
+    <li class="reveal"><b>零额外成本改动</b>：不用训练模型，不用改代码，改一段文字就能让 AI 换一家“店”。</li>
+  </ul>
+
+  <div class="sec-label">写店规的四个要素</div>
+
+  <ul>
+    <li class="reveal"><b>身份</b>：你是谁家的客服（品牌、品类、客群、价格带）——决定它用什么口吻说话。</li>
+    <li class="reveal"><b>红线</b>：绝对不能说什么（医疗用语、承诺、虚假活动）——先写禁止项，比写期望项更管用。</li>
+    <li class="reveal"><b>动作</b>：遇到什么情况做什么动作（犹豫推套装、售后转人工）——给判断标准，别给模糊要求。</li>
+    <li class="reveal"><b>兜底</b>：拿不准怎么办（转人工 / 查知识库）——没有兜底条款的 AI，拿不准就现编。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    一句话总结：<b>System Prompt 是 AI 员工的“劳动合同 + 员工手册”</b>。你不写，它就按“全网平均水平”干活；你写得越像你店里的金牌客服手册，它就越像你的金牌客服。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>System Prompt = 钉在白板顶上的店规</b>：每次对话都在场，永不掉线，零成本可改。</li>
+      <li><b>同一模型天壤之别</b>：没店规的 AI 信口承诺，有店规的 AI 守红线、会主推、懂兜底。</li>
+      <li><b>四要素</b>：身份、红线、动作、兜底——先写“不能做什么”，再写“该做什么”。</li>
+      <li><b>店规要抄金牌客服</b>：把你店里最好客服的判断标准，原原本本写进去。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var panel = document.getElementById('chatPanel');
+  var scores = document.getElementById('scoreRow');
+  var ruleDoc = document.getElementById('ruleDoc');
+  var btnNo = document.getElementById('btnNo');
+  var btnYes = document.getElementById('btnYes');
+
+  var noRule = {
+    chat: [
+      ['q','客人','这个面霜孕妇能用吗？'],
+      ['a','AI 客服','亲，可以的！我们这款面霜成分很温和的，很多孕妈都在用，补水保湿效果特别好，放心入手哦～ <span class="bad">🚨 信口承诺功效，万一客人过敏，差评+投诉+赔偿等着你</span>']
+    ],
+    score: '<div class="score-card bad"><b>✗</b>违规承诺</div>'
+         + '<div class="score-card bad"><b>✗</b>夸大功效</div>'
+         + '<div class="score-card bad"><b>✗</b>没有兜底</div>'
+  };
+  var yesRule = {
+    chat: [
+      ['q','客人','这个面霜孕妇能用吗？'],
+      ['a','客服小芙','亲亲，孕期护肤确实要特别谨慎呢～按照店规，孕期和哺乳期的产品使用<b>建议您先咨询医生</b>再决定哦。您可以先看下详情页的完整成分表，这款不含酒精和香精，日常敏感肌反馈都很温和。现在搭配 269 元明星套装还有 7 天无理由退换，用了不合适随时退～ <span class="good">✓ 守红线 ✓ 给动作 ✓ 有兜底</span>']
+    ],
+    score: '<div class="score-card good"><b>✓</b>守住红线</div>'
+         + '<div class="score-card good"><b>✓</b>主推引导</div>'
+         + '<div class="score-card good"><b>✓</b>留了退路</div>'
+  };
+
+  function show(withRule){
+    var d = withRule ? yesRule : noRule;
+    btnNo.classList.toggle('on', !withRule);
+    btnYes.classList.toggle('on', withRule);
+    panel.innerHTML = d.chat.map(function(b){
+      return '<div class="bubble ' + b[0] + '"><span class="who">' + b[1] + '</span>' + b[2] + '</div>';
+    }).join('');
+    scores.innerHTML = d.score;
+    ruleDoc.style.display = withRule ? 'block' : 'none';
+  }
+  btnNo.addEventListener('click', function(){ show(false); });
+  btnYes.addEventListener('click', function(){ show(true); });
+  show(false);
+})();
+</script>
+</body>
+</html>

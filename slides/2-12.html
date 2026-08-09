@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多模型选型决策矩阵 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="文案/图片/客服/数据分析 × 省钱/平衡/效果优先——两个选择，一键给出推荐模型组合、预估成本和理由。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="多模型选型决策矩阵">
+<meta property="og:description" content="任务类型 × 预算等级，一键给出推荐模型 + 预估成本 + 理由。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-12.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .mx-pickers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+  .mx-group .gt{font-size:12px;font-weight:800;color:var(--sub);letter-spacing:1px;margin-bottom:8px;}
+  .mx-opts{display:flex;flex-direction:column;gap:8px;}
+  .mx-opt{
+    display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;
+    border:1.5px solid var(--border);background:var(--bg);cursor:pointer;transition:.15s;
+    font-size:13px;font-weight:700;color:var(--text);
+  }
+  .mx-opt:hover{border-color:var(--purple);}
+  .mx-opt.on{border-color:var(--purple);background:rgba(124,58,237,.07);color:var(--purple);}
+  .mx-opt .ic{font-size:17px;}
+  .mx-opt small{font-weight:600;color:var(--sub);font-size:11px;margin-left:auto;}
+  .mx-result{
+    background:linear-gradient(135deg,rgba(124,58,237,.08),transparent 70%);
+    border:1.5px solid rgba(124,58,237,.35);border-radius:14px;padding:18px 21px;
+  }
+  .mx-result .rec{font-size:16px;font-weight:900;color:var(--text-h);line-height:1.5;}
+  .mx-result .rec span{color:var(--purple);}
+  .mx-meta{display:flex;gap:10px;margin-top:13px;flex-wrap:wrap;}
+  .mx-meta .mm{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:8px 14px;font-size:12px;}
+  .mx-meta .mm b{display:block;font-size:15px;font-weight:900;color:var(--text-h);}
+  .mx-reason{margin-top:12px;font-size:13px;line-height:1.75;color:var(--sub);}
+  .mx-reason b{color:var(--text-h);}
+  .mx-warn{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--amber);background:rgba(217,119,6,.08);border-radius:9px;padding:9px 13px;display:none;}
+  .mx-warn.show{display:block;}
+  @media(max-width:768px){.mx-pickers{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>多模型选型决策矩阵</h1>
+    <p class="subtitle">“我们家该用哪个模型？”——这问题没有标准答案，但有决策框架：看任务、看预算，两轴一定，答案自动浮出来。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">技巧</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先建立选型的核心直觉</div>
+
+  <p class="reveal">模型市场现在像个手机市场：旗舰机性能强但贵，千元机便宜但够用。<b>电商团队最容易犯的错，是全部任务都用旗舰机</b>——客服自动回复“包邮吗”也动用最强模型，相当于开跑车送外卖。</p>
+
+  <p class="reveal">正确姿势是<b>按任务配模型</b>：任务越“错得起”（创意草稿）、越简单（FAQ），越该用便宜模型；任务越“错不起”（售后判断）、越复杂（数据分析），越值得上旗舰。再叠加预算约束，选型就是一道填空题。</p>
+
+  <div class="sec-label">交互演示 · 两轴选型器</div>
+
+  <p class="reveal">选任务类型、选预算等级，看推荐组合和理由：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">模型选型决策矩阵（推荐为通用原则，具体型号以你实际采购为准）</div>
+    <div class="mx-pickers">
+      <div class="mx-group">
+        <div class="gt">① 任务类型</div>
+        <div class="mx-opts" id="taskOpts"></div>
+      </div>
+      <div class="mx-group">
+        <div class="gt">② 预算等级</div>
+        <div class="mx-opts" id="budgetOpts"></div>
+      </div>
+    </div>
+    <div class="mx-result">
+      <div class="rec" id="mxRec"></div>
+      <div class="mx-meta" id="mxMeta"></div>
+      <div class="mx-reason" id="mxReason"></div>
+      <div class="mx-warn" id="mxWarn"></div>
+    </div>
+  </div>
+
+  <div class="sec-label">选型之外的三条军规</div>
+
+  <ul>
+    <li class="reveal"><b>别把鸡蛋放一个篮子</b>：核心流程至少备一个可切换的替代模型——某家限流、涨价、降智的时候，你有退路。</li>
+    <li class="reveal"><b>每季度重测一次</b>：模型市场三个月一洗牌，今天的“性价比之王”可能下个季度就被新品打爆。选型是动态决策，不是一锤子买卖。</li>
+    <li class="reveal"><b>用你自己的题测，别看跑分</b>：拿 50 条你店里的真实问题去测候选模型（第四篇章的“黄金测试集”会细讲），比任何评测榜单都诚实。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>选型两轴</b>：任务的容错度和复杂度 × 预算等级——交叉点就是答案。</li>
+      <li><b>最大浪费 = 全任务旗舰</b>：简单活用经济档，旗舰只干贵活（呼应模型分级路由）。</li>
+      <li><b>生图单独算账</b>：主图可以中档，详情页和海报再拉满——别全程顶配。</li>
+      <li><b>选型是动态的</b>：每季度用自己的题重测，备好可切换的备胎模型。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var tasks = [
+    { k:'copy', ic:'✍️', n:'文案生成', s:'标题/详情页/笔记' },
+    { k:'image', ic:'🎨', n:'图片生成', s:'主图/详情页/海报' },
+    { k:'cs', ic:'🎧', n:'客服对话', s:'售前/售后 Agent' },
+    { k:'data', ic:'📊', n:'数据分析', s:'报表/选品/归因' }
+  ];
+  var budgets = [
+    { k:'save', ic:'💰', n:'省钱优先', s:'能跑就行' },
+    { k:'balance', ic:'⚖️', n:'平衡档', s:'性价比第一' },
+    { k:'best', ic:'👑', n:'效果优先', s:'不差钱要好货' }
+  ];
+  // 矩阵：[task][budget] = { rec, cost, reason, warn }
+  var M = {
+    copy: {
+      save:   { rec:'<span>经济档文本模型</span>（温度 0.5 + 强范文约束）', cost:'¥50-150/月', fit:'够用', reason:'文案是“错得起”的活：生成 10 条挑 3 条，单条质量弱点没关系。<b>用 Few-Shot 范文补足模型差距</b>——便宜模型 + 好范文 ≈ 中档模型裸奔。' },
+      balance:{ rec:'<span>主流档文本模型</span>', cost:'¥150-400/月', fit:'推荐', reason:'性价比甜点区：一次成稿率明显更高，改稿轮次少，<b>算上人工改稿时间反而更便宜</b>。大多数店铺文案任务的默认答案。' },
+      best:   { rec:'<span>旗舰文本模型</span>写终稿 + 经济档出草稿', cost:'¥300-800/月', fit:'预算充足', reason:'旗舰模型在“网感”和品牌调性上确实高一档。<b>省钱打法：经济档批量出 20 条草稿，旗舰只精修入围的 3 条</b>——效果拉满，账单可控。', warn:'别全量用旗舰写所有文案——那是跑车送外卖。' }
+    },
+    image: {
+      save:   { rec:'<span>中档生图模型</span> + 固定提示词模板', cost:'¥100-300/月', fit:'够用', reason:'主图对创意要求不高（白底/场景 + 产品），中档模型 + 固化模板足够。<b>省下的钱投到详情页</b>，那里才是转化战场。' },
+      balance:{ rec:'主图<span>中档</span> + 详情页/海报<span>高档</span>', cost:'¥300-800/月', fit:'推荐', reason:'分级用图：主图走量用中档，<b>详情页和海报是“门面”，质感差距客人一眼能看出来</b>，这里上高档。下一篇章会细算生图的效率账。' },
+      best:   { rec:'<span>旗舰生图模型</span>全流程 + 人工精修', cost:'¥800-2000/月', fit:'预算充足', reason:'旗舰模型在材质、光影、手部细节上翻车率最低，<b>配合人工精修岗做最后 10%</b>。适合高客单、视觉驱动的类目（服饰、美妆、家居）。', warn:'再高配的图也要过 3-3 节讲的“生图质检清单”。' }
+    },
+    cs: {
+      save:   { rec:'<span>经济档模型</span>接 FAQ + 复杂问题转主流档', cost:'¥100-300/月', fit:'够用但有边界', reason:'"包邮吗"“几天到”这类问题占咨询量 60-70%，经济档完全够。<b>但必须配好转接规则</b>：涉及钱、情绪、售后的，立刻升级模型或转人工——客服是“错不起”场景，别全省。', warn:'省钱档客服一定要把 2-4 节的三层防御配齐。' },
+      balance:{ rec:'<span>主流档模型</span>主力接待 + 经济档分流 FAQ', cost:'¥300-800/月', fit:'推荐', reason:'主流档在“听懂人话”和“说人话”上最均衡，配合 RAG 知识库，解决率能到 85%+。<b>这是大多数店铺客服 Agent 的标配。</b>' },
+      best:   { rec:'<span>旗舰模型</span>处理售后/投诉 + 主流档售前', cost:'¥800-2000/月', fit:'高客单店铺', reason:'售后和投诉是客服里“一句话值千金”的场景——处理不好就是差评+平台介入。<b>高客单店铺值得在这些对话上用旗舰</b>，售前常规咨询主流档足够。' }
+    },
+    data: {
+      save:   { rec:'<span>主流档模型</span> + 你提供干净的表格', cost:'¥100-300/月', fit:'够用', reason:'数据分析省钱的正确姿势不是换弱模型，而是<b>减少它的思考量</b>：Excel 先整理好、问题问具体（“哪个 SKU 毛利掉了”而不是“帮我看看生意”）。弱模型做分析，编数字的风险太大。', warn:'数据分析不建议用经济档——幻觉数字进了决策就是事故。' },
+      balance:{ rec:'<span>旗舰模型</span>做归因 + 主流档做日常报表', cost:'¥300-800/月', fit:'推荐', reason:'日常报表格式化程度高，主流档够；<b>归因分析、选品判断是“推理密集型”任务，旗舰模型的链式推理明显更可靠</b>——这类判断错一次的代价远超模型差价。' },
+      best:   { rec:'<span>旗舰推理模型</span> + 人工复核双保险', cost:'¥500-1500/月', fit:'大店/品牌方', reason:'旗舰推理模型会“先想再答”，复杂归因的准确率最高。<b>但记住：任何 AI 给出的数字都要能回溯到原始报表</b>——第四篇章的核心假设分析就是干这个的。' }
+    }
+  };
+  var task = 'copy', budget = 'balance';
+  var tOpts = document.getElementById('taskOpts');
+  var bOpts = document.getElementById('budgetOpts');
+  tOpts.innerHTML = tasks.map(function(t){
+    return '<div class="mx-opt" data-k="' + t.k + '"><span class="ic">' + t.ic + '</span>' + t.n + '<small>' + t.s + '</small></div>';
+  }).join('');
+  bOpts.innerHTML = budgets.map(function(b){
+    return '<div class="mx-opt" data-k="' + b.k + '"><span class="ic">' + b.ic + '</span>' + b.n + '<small>' + b.s + '</small></div>';
+  }).join('');
+  function render(){
+    tOpts.querySelectorAll('.mx-opt').forEach(function(el){ el.classList.toggle('on', el.dataset.k === task); });
+    bOpts.querySelectorAll('.mx-opt').forEach(function(el){ el.classList.toggle('on', el.dataset.k === budget); });
+    var r = M[task][budget];
+    document.getElementById('mxRec').innerHTML = '推荐组合：' + r.rec;
+    document.getElementById('mxMeta').innerHTML =
+      '<div class="mm"><b>' + r.cost + '</b>参考月成本</div>'
+      + '<div class="mm"><b>' + r.fit + '</b>适配度</div>';
+    document.getElementById('mxReason').innerHTML = r.reason;
+    var w = document.getElementById('mxWarn');
+    if (r.warn){ w.textContent = '⚠️ ' + r.warn; w.classList.add('show'); }
+    else w.classList.remove('show');
+  }
+  tOpts.addEventListener('click', function(e){
+    var el = e.target.closest('.mx-opt'); if (el){ task = el.dataset.k; render(); }
+  });
+  bOpts.addEventListener('click', function(e){
+    var el = e.target.closest('.mx-opt'); if (el){ budget = el.dataset.k; render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据看板：AI 业务流的量化管理 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="结论准确率、人工返工率、Token 单耗——用天猫运营的数据分析场景，讲清运营智能体的 KPI 怎么定、看板怎么搭。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="数据看板：AI 业务流的量化管理">
+<meta property="og:description" content="结论准确率、人工返工率、Token 单耗——运营智能体的 KPI 怎么定。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-6.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .kpi-lab{margin-top:14px;}
+  .kpi-ctl{margin-bottom:16px;}
+  .kpi-ctl label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--text-h);margin:10px 0 4px;}
+  .kpi-ctl label output{color:var(--accent);font-weight:900;}
+  .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px;}
+  .kpi-card{border-radius:12px;border:1.5px solid var(--border);background:var(--card);padding:14px 15px;text-align:center;transition:.25s;}
+  .kpi-card .kc-name{font-size:11.5px;font-weight:800;letter-spacing:.5px;color:var(--sub);}
+  .kpi-card .kc-val{font-size:26px;font-weight:900;margin:6px 0 2px;transition:.25s;}
+  .kpi-card .kc-line{font-size:11px;color:var(--sub);}
+  .kpi-card.good{border-color:rgba(16,185,129,.45);background:rgba(16,185,129,.05);}
+  .kpi-card.good .kc-val{color:var(--success);}
+  .kpi-card.warn{border-color:rgba(217,119,6,.45);background:rgba(217,119,6,.06);}
+  .kpi-card.warn .kc-val{color:var(--amber);}
+  .kpi-card.bad{border-color:rgba(220,38,38,.45);background:rgba(220,38,38,.05);}
+  .kpi-card.bad .kc-val{color:var(--danger);}
+  .kpi-verdict{margin-top:14px;font-size:13px;font-weight:700;line-height:1.8;padding:13px 16px;border-radius:11px;
+    background:var(--accent-soft);border:1.5px solid var(--accent-border);color:var(--text);min-height:52px;}
+  .kpi-verdict b{color:var(--accent);}
+  @media(max-width:640px){.kpi-grid{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶</div>
+    <h1>数据看板：AI 业务流的量化管理</h1>
+    <p class="subtitle">拿一个天猫运营的真场景来说：你让运营智能体每周出一份店铺经营诊断——流量结构、推广投产、竞品动向，最后给优化建议。它干得怎么样，怎么衡量？“感觉还行”不是管理——这节给你三个核心指标，直接抄。</p>
+    <div class="tag-row"><span class="tag">电商</span><span class="tag">管理</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">运营智能体的三个核心 KPI</div>
+
+  <ul>
+    <li class="reveal"><b>结论准确率</b>：诊断报告里的结论，经你抽样复核“站得住”的占比——这是 AI 的“业绩”。AI 做数据分析，<b>最重要的不是快，是结论不能错</b>：投产比算错一个点，你整个月的推广策略都可能被带偏。及格线 80%，优秀 90%。</li>
+    <li class="reveal"><b>人工返工率</b>：报告被运营打回重做的占比——这是 AI 的“求助率”。偶尔打回是正常的，人写报告也得改；但返工率持续偏高，说明它根本没理解你的分析框架。</li>
+    <li class="reveal"><b>Token 单耗</b>：平均每份报告烧多少 Token——这是 AI 的“饭量”（2-10 附有 Token 账速算）。饭量突然暴涨，多半是哪里出了死循环或上下文失控。</li>
+  </ul>
+
+  <div class="sec-label">动手调调看：三个指标的联动关系</div>
+
+  <div class="demo kpi-lab reveal">
+    <div class="demo-title">天猫运营分析看板模拟器 · 拖动滑块，看健康度变化</div>
+    <div class="kpi-ctl">
+      <label>提示词质量（越右越好）<output id="oQ">60</output></label>
+      <input type="range" id="rQ" min="0" max="100" value="60">
+      <label>上下文完整度（背景与数据喂得全不全）<output id="oK">50</output></label>
+      <input type="range" id="rK" min="0" max="100" value="50">
+      <label>分析深度（每任务平均推理步数）<output id="oT">8 步</output></label>
+      <input type="range" id="rT" min="3" max="20" value="8">
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card" id="cSolve">
+        <div class="kc-name">结论准确率</div>
+        <div class="kc-val" id="vSolve">--%</div>
+        <div class="kc-line">及格线 80% / 优秀 90%</div>
+      </div>
+      <div class="kpi-card" id="cTrans">
+        <div class="kc-name">人工返工率</div>
+        <div class="kc-val" id="vTrans">--%</div>
+        <div class="kc-line">健康 &lt; 20% / 预警 &gt; 35%</div>
+      </div>
+      <div class="kpi-card" id="cToken">
+        <div class="kc-name">Token 单耗</div>
+        <div class="kc-val" id="vToken">--</div>
+        <div class="kc-line">每份报告均耗 / 警戒 12000</div>
+      </div>
+    </div>
+    <div class="kpi-verdict" id="kpiVerdict"></div>
+  </div>
+
+  <p class="reveal">多拖几组组合你会发现一个反直觉的事：<b>分析深度浅不一定是省事，可能是偷懒</b>——3 步就给你出结论的 AI，多半只看了表面数据；真正的诊断要“下钻”：从流量看到转化、从转化看到SKU、从SKU看到推广词。但深度也不能无限加，每深一步都在烧 Token。<b>准确率和单耗的平衡点，就是你要找的管理水位。</b></p>
+
+  <div class="sec-label">看板怎么搭：先手工，再自动</div>
+
+  <ul>
+    <li class="reveal"><b>第 1 个月：手工周报</b>——每周抽 5 条 AI 结论人工复核，Excel 里记三个指标。别嫌土，这一步是让你建立“手感”，知道正常水位在哪。</li>
+    <li class="reveal"><b>第 2 个月：自动日报</b>——用 4-3 节的长任务 Agent，每天凌晨自动算好三个指标发群里。异常（返工率突增 50%）自动 @ 你。</li>
+    <li class="reveal"><b>长期：指标联动改进</b>——准确率跌了 → 查上下文完整度，是不是背景数据没喂全（3-6、3-7 节）；Token 单耗涨了 → 查上下文压缩（3-9 节）；返工率涨了 → 查提示词和质检漏斗（4-4、4-5 节）。<b>每个指标异动，都要有一条对应的排查路径</b>。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    看板的终极意义不是“监控 AI”，是<b>让 AI 的改进可衡量</b>：上周把店铺口径定义补进了上下文，结论准确率 78% → 84%，这 6 个点就是你的运营功力。没有看板，所有优化都是玄学。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>三指标</b>：结论准确率（业绩）、人工返工率（求助率）、Token 单耗（饭量）。</li>
+      <li><b>准确率是第一指标</b>：数据分析的结论错了，速度再快也是负资产。</li>
+      <li><b>深度与成本要找平衡</b>：浅了是偷懒，深了烧钱——管理就是找水位。</li>
+      <li><b>每个异动都要有排查路径</b>：准确率→上下文完整度、单耗→上下文压缩、返工→提示词与质检。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var rQ=document.getElementById('rQ'),rK=document.getElementById('rK'),rT=document.getElementById('rT');
+  var oQ=document.getElementById('oQ'),oK=document.getElementById('oK'),oT=document.getElementById('oT');
+  var vS=document.getElementById('vSolve'),vTr=document.getElementById('vTrans'),vTk=document.getElementById('vToken');
+  var cS=document.getElementById('cSolve'),cTr=document.getElementById('cTrans'),cTk=document.getElementById('cToken');
+  var verdict=document.getElementById('kpiVerdict');
+  function update(){
+    var q=+rQ.value,k=+rK.value,t=+rT.value;
+    oQ.textContent=q;oK.textContent=k;oT.textContent=t+' 步';
+    var acc=Math.round(35+q*0.32+k*0.3+t*0.9);
+    acc=Math.max(30,Math.min(97,acc));
+    var rework=Math.max(5,Math.min(60,100-acc-22));
+    var token=Math.round(1800+t*850+(100-q)*22);
+    vS.textContent=acc+'%';
+    vTr.textContent=rework+'%';
+    vTk.textContent=token.toLocaleString();
+    cS.className='kpi-card '+(acc>=90?'good':(acc<80?'bad':'warn'));
+    cTr.className='kpi-card '+(rework<20?'good':(rework>35?'bad':'warn'));
+    cTk.className='kpi-card '+(token<6000?'good':(token>12000?'bad':'warn'));
+    var msg;
+    if(acc>=90&&token<6000){msg='🏆 <b>金牌运营搭子</b>：结论准、饭量还小。把这套提示词和上下文配置存档——这就是你未来的基准线。';}
+    else if(acc<80){msg='🚨 <b>准确率不及格</b>：优先补上下文（拖右边第二个滑块试试）——背景数据喂不全，是 AI 分析跑偏最常见的病根。';}
+    else if(token>12000){msg='💸 <b>Token 单耗爆表</b>：分析路径太绕或提示词太肥——回看 2-11 五层效能优化和 3-9 上下文压缩。';}
+    else if(rework>35){msg='🔧 <b>返工率太高</b>：AI 没 get 到你的分析框架。把诊断报告的呈现格式和口径定义写进提示词，再用 4-5 的黄金测试集卡上线。';}
+    else{msg='👌 <b>基本健康</b>：还有优化空间。试把上下文完整度拖到 80 以上，看准确率能涨几个点——这就是数据驱动的优化。';}
+    verdict.innerHTML=msg;
+  }
+  [rQ,rK,rT].forEach(function(r){r.addEventListener('input',update);});
+  update();
+})();
+</script>
+</body>
+</html>

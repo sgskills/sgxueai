@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式人工智能：“接龙”概率生成揭秘 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="AI 写商品文案不是“想”出来的，是一个字一个字“猜”出来的。逐字生成动画带你看清概率接龙的真相。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="生成式人工智能：&quot;接龙&quot;概率生成揭秘">
+<meta property="og:description" content="逐字生成动画：看 AI 怎么一个字一个字&quot;猜&quot;出你的商品文案。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-3.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .gen-box{
+    background:var(--pill-bg);border-radius:12px;padding:18px 20px;
+    font-size:16px;line-height:2;min-height:64px;letter-spacing:.5px;
+  }
+  .gen-box .cursor{
+    display:inline-block;width:2px;height:1.1em;background:var(--accent);
+    vertical-align:-2px;animation:blink .7s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  .cands{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+  .cand{display:flex;align-items:center;gap:10px;font-size:13.5px;}
+  .cand .word{width:56px;font-weight:800;color:var(--text-h);text-align:right;}
+  .cand .barwrap{flex:1;height:20px;background:var(--pill-bg);border-radius:6px;overflow:hidden;}
+  .cand .bar{
+    height:100%;border-radius:6px;background:var(--sub);
+    width:0;transition:width .6s cubic-bezier(.22,1,.36,1);
+    display:flex;align-items:center;justify-content:flex-end;
+    color:#fff;font-size:10.5px;font-weight:800;padding-right:6px;white-space:nowrap;
+  }
+  .cand.top .bar{background:var(--accent);}
+  .gen-controls{margin-top:16px;display:flex;gap:10px;justify-content:center;}
+  .step-note{font-size:12px;color:var(--sub);text-align:center;margin-top:10px;min-height:18px;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座</div>
+    <h1>生成式人工智能：“接龙”概率生成揭秘</h1>
+    <p class="subtitle">AI 写出一条爆款标题，不是“想”出来的，是一个字一个字“猜”出来的。看懂这个过程，你就懂了 AI 一半。</p>
+    <div class="tag-row"><span class="tag">动画</span><span class="tag">概念</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先纠正一个直觉</div>
+
+  <p class="reveal">看 AI 写详情页，洋洋洒洒一大段，很多人会产生一种错觉：<b>它先在脑子里构思好全文，再一口气写出来</b>——就像你先打腹稿再动笔。</p>
+
+  <p class="reveal">完全不是。AI 没有任何“腹稿”。它干的事情，跟你小时候玩的<b>成语接龙</b>一模一样：看前面有什么，猜下一个字最可能是什么，写上；再看前面（包括刚写的那个字），再猜下一个……如此循环，直到猜出“结束”。</p>
+
+  <div class="sec-label">动画演示 · 一条标题是怎么“猜”出来的</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">指令：给一款防晒衣写一条抖音标题</div>
+    <div class="gen-box"><span id="genText"></span><span class="cursor"></span></div>
+    <div class="cands" id="cands"></div>
+    <div class="gen-controls">
+      <button id="stepBtn">▶ 猜下一个字</button>
+      <button class="btn-ghost" id="autoBtn">⏩ 自动播放</button>
+      <button class="btn-ghost" id="resetBtn">↺ 重来</button>
+    </div>
+    <div class="step-note" id="stepNote">每点一次，看 AI 如何从候选字里“押注”</div>
+  </div>
+
+  <div class="sec-label">看懂这三点，你就比 90% 的人懂 AI</div>
+
+  <ul>
+    <li class="reveal"><b>每个位置都有一张“赔率表”</b>。AI 不是拍脑袋，它给每个候选字都算了概率，然后从高概率的字里挑一个。这就是为什么它写的东西大多“通顺但平庸”——概率最高的永远是最大路货的表达。</li>
+    <li class="reveal"><b>落子无悔，错了不回头</b>。一旦某个字被写下，后面所有猜测都要顺着它走。开头猜偏了，后面只会越偏越远——这就是 AI 文案“越写越跑题”的根源。</li>
+    <li class="reveal"><b>前文决定后文</b>。你给的提示词就是“前文”，前文里的信息越准，后面的猜测就越准。<b>提示词工程的全部意义，就是把 AI 的第一颗棋子摆对位置。</b></li>
+  </ul>
+
+  <div class="l-callout reveal">
+    所以“AI 写作”这个词本身就带误导。它不是作家，是一台<b>超级接龙机器</b>——读过全网文本，见过无数“防晒衣标题”长什么样，然后把你这条猜得八九不离十。理解了这点，后面要讲的温度、幻觉、提示词，全都顺理成章。
+  </div>
+
+  <div class="sec-label">对电商人的两个直接启发</div>
+
+  <ul>
+    <li class="reveal"><b>想要惊喜，就给约束</b>：不约束，AI 只会给你“概率最高的平庸”。想要差异化，必须在提示词里把人群、场景、调性钉死，逼它走低概率但更精准的路。</li>
+    <li class="reveal"><b>开头写错，整段重来</b>：AI 生成的文案第一句就跑偏？别指望它后半段能拐回来，直接改提示词重生成，比让它“修改”更省 Token。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>AI 生成 = 逐字押注</b>：看前文 → 算候选字概率 → 挑一个 → 再循环，没有腹稿。</li>
+      <li><b>通顺来自高概率</b>：最大路货的表达概率最高，这就是“AI 味”的来源。</li>
+      <li><b>落子无悔</b>：开头偏了只会越偏越远，改提示词重生成比让 AI 修改更划算。</li>
+      <li><b>提示词决定第一颗棋子</b>：前文越准，后文越准——这是提示词工程的底层逻辑。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  // 每个生成步骤：最终字 + 候选赔率表
+  var steps = [
+    { ch: '夏', cands: [['夏',72],['防',18],['这',6],['今',4]] },
+    { ch: '天', cands: [['天',81],['季',11],['日',5],['热',3]] },
+    { ch: '出', cands: [['出',63],['不',14],['别',12],['怕',11]] },
+    { ch: '门', cands: [['门',88],['晒',7],['怕',5]] },
+    { ch: '怕', cands: [['怕',45],['晒',30],['黑',15],['热',10]] },
+    { ch: '晒', cands: [['晒',79],['黑',12],['伤',9]] },
+    { ch: '黑', cands: [['黑',84],['伤',10],['老',6]] },
+    { ch: '？', cands: [['？',52],['！',31],['，',17]] },
+    { ch: '这', cands: [['这',67],['一',20],['有',13]] },
+    { ch: '件', cands: [['件',90],['款',10]] },
+    { ch: '防', cands: [['防',58],['冰',22],['轻',20]] },
+    { ch: '晒', cands: [['晒',77],['晒',20],['晒',3]] },
+    { ch: '衣', cands: [['衣',93],['服',7]] },
+    { ch: '我', cands: [['我',48],['它',27],['谁',25]] },
+    { ch: '穿', cands: [['穿',61],['测',21],['推',18]] },
+    { ch: '了', cands: [['了',70],['一',18],['整',12]] },
+    { ch: '整', cands: [['整',83],['三',10],['一',7]] },
+    { ch: '个', cands: [['个',91],['夏',9]] },
+    { ch: '月', cands: [['月',66],['夏',24],['季',10]] },
+    { ch: '！', cands: [['！',57],['～',26],['。',17]] }
+  ];
+  var genText = document.getElementById('genText');
+  var candsEl = document.getElementById('cands');
+  var note = document.getElementById('stepNote');
+  var i = 0, timer = null;
+
+  function render(){
+    if (i >= steps.length){
+      note.textContent = '✅ 生成完毕——一条标题，20 次押注，每一步你都能看到赔率表。';
+      stopAuto();
+      return;
+    }
+    var s = steps[i];
+    genText.textContent = steps.slice(0, i).map(function(x){return x.ch;}).join('');
+    var max = Math.max.apply(null, s.cands.map(function(c){return c[1];}));
+    candsEl.innerHTML = s.cands.map(function(c, k){
+      var pct = c[1];
+      return '<div class="cand' + (k===0 ? ' top' : '') + '">'
+        + '<span class="word">' + c[0] + '</span>'
+        + '<span class="barwrap"><span class="bar" style="width:' + pct + '%">' + pct + '%</span></span>'
+        + '</div>';
+    }).join('');
+    note.textContent = '第 ' + (i+1) + ' 字：押注「' + s.ch + '」（概率 ' + s.cands[0][1] + '%）';
+    genText.textContent = steps.slice(0, i+1).map(function(x){return x.ch;}).join('');
+    i++;
+  }
+  function stopAuto(){ if (timer){ clearInterval(timer); timer = null; } }
+
+  document.getElementById('stepBtn').addEventListener('click', function(){ stopAuto(); render(); });
+  document.getElementById('autoBtn').addEventListener('click', function(){
+    if (timer){ stopAuto(); this.textContent = '⏩ 自动播放'; return; }
+    this.textContent = '⏸ 暂停';
+    if (i >= steps.length){ i = 0; genText.textContent = ''; candsEl.innerHTML = ''; }
+    timer = setInterval(function(){
+      if (i >= steps.length){ stopAuto(); document.getElementById('autoBtn').textContent = '⏩ 自动播放'; return; }
+      render();
+    }, 900);
+  });
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    stopAuto(); document.getElementById('autoBtn').textContent = '⏩ 自动播放';
+    i = 0; genText.textContent = ''; candsEl.innerHTML = '';
+    note.textContent = '每点一次，看 AI 如何从候选字里“押注”';
+  });
+
+  // 进入视野自动播放一遍
+  if (window.lessonOnView){
+    lessonOnView(document.querySelector('.gen-box'), function(){
+      document.getElementById('autoBtn').click();
+    }, 0.5);
+  }
+})();
+</script>
+</body>
+</html>

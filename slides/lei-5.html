@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>毛利口径：别把流水当利润 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="推广贡献盈亏怎么算？一张表看清每个链接的真实赚钱能力——别把流水当利润。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="毛利口径：别把流水当利润">
+<meta property="og:description" content="一张表看清每个链接的真实赚钱能力。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/lei-5.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .gp{margin-top:14px;}
+  .gp-ctl label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--text-h);margin:11px 0 4px;}
+  .gp-ctl label output{color:var(--accent);}
+  .gp-table{margin-top:14px;}
+  .gp-table table{font-size:12.5px;}
+  .gp-table td:last-child,.gp-table th:last-child{text-align:right;font-weight:800;}
+  .gp-row-profit td{background:rgba(16,185,129,.07);font-weight:900;}
+  .gp-row-profit td:last-child{font-size:15px;}
+  .gp-row-profit.loss td{background:rgba(220,38,38,.07);}
+  .gp-verdict{margin-top:12px;font-size:13px;font-weight:700;line-height:1.8;padding:13px 16px;border-radius:11px;
+    background:var(--pill-bg);border:1.5px solid var(--border);min-height:52px;}
+  .gp-verdict b{color:var(--accent);}
+  .gp-verdict.loss{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.4);}
+  .gp-verdict.loss b{color:var(--danger);}
+  .gp-verdict.win{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.4);}
+  .gp-verdict.win b{color:var(--success);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">加餐篇 · 团队应用加餐</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">加餐篇 · 团队应用加餐</div>
+    <h1>毛利口径：别把流水当利润</h1>
+    <p class="subtitle">“这个月做了 100 万”——然后呢？流水 100 万的店，可能赚 15 万，也可能亏 8 万。区别全在一个东西上：你会不会算“口径”。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">加餐</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">一个链接的真实赚钱能力，要扒掉五层皮</div>
+
+  <p class="reveal">售价 100 多元的男鞋，直觉上“成本 40，赚 60”？太天真了。从流水到真利润，要一层层扒：</p>
+
+  <ul>
+    <li class="reveal"><b>第一层 · 产品成本</b>：皮料、鞋底、加工、包装——这是人人都记得的一层。</li>
+    <li class="reveal"><b>第二层 · 平台扣点 + 支付手续费</b>：天猫扣 5% 上下，支付渠道再咬一口——流水越大这块越疼。</li>
+    <li class="reveal"><b>第三层 · 物流仓储</b>：快递费、包材、仓库分摊，一双 5-8 元是常态。</li>
+    <li class="reveal"><b>第四层 · 退货损耗</b>：男鞋退货率常见 20% 左右（尺码不合是主因）——退回来的每一双都在吃掉卖出那双的利润（运费、折旧、二次上架）。</li>
+    <li class="reveal"><b>第五层 · 推广费</b>：最深的一层。直通车烧掉的钱必须摊到每一笔成交上——这就是“推广贡献盈亏”的口径。</li>
+  </ul>
+
+  <div class="sec-label">动手扒一次：这双男鞋到底赚不赚钱</div>
+
+  <div class="demo gp reveal">
+    <div class="demo-title">真实利润计算器 · 拖滑块，看“赚钱”变“亏钱”的瞬间</div>
+    <div class="gp-ctl">
+      <label>售价<output id="oPrice">129 元</output></label>
+      <input type="range" id="rPrice" min="59" max="199" value="129">
+      <label>产品成本（面辅料+加工+包装）<output id="oCost">42 元</output></label>
+      <input type="range" id="rCost" min="20" max="100" value="42">
+      <label>推广费占比（烧掉流水的几成）<output id="oAd">20%</output></label>
+      <input type="range" id="rAd" min="0" max="45" value="20">
+      <label>退货率（男鞋常见 20% 左右）<output id="oRet">20%</output></label>
+      <input type="range" id="rRet" min="5" max="60" value="20">
+    </div>
+    <div class="gp-table">
+      <table>
+        <tr><th>口径层级</th><th>金额（每双成交）</th></tr>
+        <tr><td>售价（流水）</td><td id="t0">--</td></tr>
+        <tr><td>− 产品成本</td><td id="t1">--</td></tr>
+        <tr><td>− 平台扣点 5% + 支付 0.6%</td><td id="t2">--</td></tr>
+        <tr><td>− 物流仓储（固定 7 元）</td><td id="t3">--</td></tr>
+        <tr><td>− 退货损耗摊销</td><td id="t4">--</td></tr>
+        <tr><td>− 推广费摊销</td><td id="t5">--</td></tr>
+        <tr class="gp-row-profit" id="rowProfit"><td><b>= 推广后贡献盈亏</b></td><td id="t6">--</td></tr>
+      </table>
+    </div>
+    <div class="gp-verdict" id="gpVerdict"></div>
+  </div>
+
+  <p class="reveal">试一组“老板最爱吹的数字”：售价 129、成本 42——毛利率 67%，听着很美吧？把推广拖到 30%、退货拖到 40%，再看最后一行：<b>每卖一件，亏 1 块多</b>。流水越大，亏得越多。这就是为什么“百万流水”和“赚钱”之间隔着一张口径表。</p>
+
+  <div class="sec-label">口径落地：每个链接一张“体检表”</div>
+
+  <ul>
+    <li class="reveal"><b>每周更新</b>：售价、成本、扣点、物流、退货率、推广占比六个数，每周从后台抄一遍——五个是事实，只有“赚钱能力”是算出来的。</li>
+    <li class="reveal"><b>两个决策线</b>：贡献盈亏 &lt; 0 的链接，要么提价降推广，要么清掉；贡献盈亏 &gt; 0 但微薄的链接，警惕它占着库存和推广位（呼应上一课《现金流：电商老板的生死线》）。</li>
+    <li class="reveal"><b>推广看“贡献”不看 ROI</b>：ROI 2.5 不一定赚钱——要把退货和全口径成本塞进去算。报表里的 ROI 是“流水的倍数”，贡献盈亏才是“口袋的钱”。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    这张表我建议你今晚就建：Excel 六行公式，10 分钟的事。建完把你 Top 5 链接挨个填一遍——<b>我见过太多老板填完这张表，当场决定砍掉两个“销量担当”</b>。销量担当，有时候是亏损担当。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>流水 ≠ 利润</b>：售价到真利润要扒五层皮：成本、扣点、物流、退货、推广。</li>
+      <li><b>退货是隐形杀手</b>：男鞋 20% 左右的退货率，意味着每双成交都在为退货运费买单。</li>
+      <li><b>推广看贡献盈亏</b>：ROI 是流水倍数，塞进出口径成本后才是真赚钱能力。</li>
+      <li><b>每周一张体检表</b>：六个数 10 分钟，亏损链接无所遁形。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var rP=document.getElementById('rPrice'),rC=document.getElementById('rCost'),
+      rA=document.getElementById('rAd'),rR=document.getElementById('rRet');
+  var oP=document.getElementById('oPrice'),oC=document.getElementById('oCost'),
+      oA=document.getElementById('oAd'),oR=document.getElementById('oRet');
+  var verdict=document.getElementById('gpVerdict'),row=document.getElementById('rowProfit');
+  function fmt(n){return (n<0?'-':'')+'¥'+Math.abs(n).toFixed(1);}
+  function update(){
+    var price=+rP.value,cost=+rC.value,adPct=+rA.value,retPct=+rR.value;
+    oP.textContent=price+' 元';oC.textContent=cost+' 元';oA.textContent=adPct+'%';oR.textContent=retPct+'%';
+    var fee=price*0.056;
+    var ship=7;
+    var retLoss=price*(retPct/100)*0.35;   // 退货损耗摊销：运费+折旧，按退货率×35%折算
+    var adCost=price*(adPct/100);
+    var profit=price-cost-fee-ship-retLoss-adCost;
+    document.getElementById('t0').textContent=fmt(price);
+    document.getElementById('t1').textContent=fmt(-cost);
+    document.getElementById('t2').textContent=fmt(-fee);
+    document.getElementById('t3').textContent=fmt(-ship);
+    document.getElementById('t4').textContent=fmt(-retLoss);
+    document.getElementById('t5').textContent=fmt(-adCost);
+    document.getElementById('t6').textContent=fmt(profit)+' / 件';
+    row.className='gp-row-profit'+(profit<0?' loss':'');
+    if(profit<0){
+      verdict.className='gp-verdict loss';
+      verdict.innerHTML='🚨 <b>每卖一件亏 '+Math.abs(profit).toFixed(1)+' 元。</b>销量越高亏得越快——这个链接要么提价、要么砍推广、要么清掉，没有第四条路。';
+    }else if(profit<price*0.08){
+      verdict.className='gp-verdict';
+      verdict.innerHTML='⚠️ 每双赚 <b>'+profit.toFixed(1)+' 元</b>，利润率不足 8%。看着在赚，其实很脆——推广费涨一点、退货率高一点就翻绿。这种链接占着库存位，不如把资源让给更健康的款。';
+    }else{
+      verdict.className='gp-verdict win';
+      verdict.innerHTML='✅ 每双净赚 <b>'+profit.toFixed(1)+' 元</b>，口径健康。这才叫“能打的链接”——敢备货、敢加推广、睡得着觉。';
+    }
+  }
+  [rP,rC,rA,rR].forEach(function(r){r.addEventListener('input',update);});
+  update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent：能干活的 AI 员工 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="Agent 和普通聊天 AI 差在哪？Plan / Tool / Memory / Act 四大能力，用“客服的一天”讲透智能体的本质。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="Agent：能干活的 AI 员工">
+<meta property="og:description" content="Plan / Tool / Memory / Act 四大能力，用客服的一天讲透。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-5.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+  .ab-card{
+    background:var(--card);border:1.5px solid var(--border);border-radius:14px;
+    padding:17px 19px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;
+  }
+  .ab-card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:var(--shadow-pop);}
+  .ab-card.open{border-color:var(--purple);}
+  .ab-card .ic{font-size:24px;}
+  .ab-card .t{font-size:15.5px;font-weight:900;color:var(--text-h);margin:8px 0 3px;}
+  .ab-card .en{font-size:11px;color:var(--purple);font-weight:800;letter-spacing:1px;}
+  .ab-card .d{font-size:12.5px;color:var(--sub);margin-top:7px;line-height:1.6;}
+  .ab-card .ex{
+    max-height:0;overflow:hidden;transition:max-height .35s ease,margin .35s;
+    font-size:12.5px;line-height:1.75;color:var(--text);
+    border-top:1px dashed var(--border-strong);margin-top:0;padding-top:0;
+  }
+  .ab-card.open .ex{max-height:200px;margin-top:10px;padding-top:10px;}
+  .ab-card .ex b{color:var(--purple);}
+  @media(max-width:768px){.ab-grid{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>Agent：能干活的 AI 员工</h1>
+    <p class="subtitle">聊天 AI 是“顾问”，Agent 是“员工”——顾问只动嘴，员工能动手。区别就在四大能力上。</p>
+    <div class="tag-row"><span class="tag">概念</span><span class="tag">交互</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">一个真实场景看出差距</div>
+
+  <p class="reveal">客人发来一句：“我上周买的裙子买大了，想换小一码，顺便问问明天能到吗？”</p>
+
+  <p class="reveal"><b>普通聊天 AI</b>：回一段“建议您申请换货哦，换货流程一般是……”——说得都对，但事情一件没办。</p>
+
+  <p class="reveal"><b>客服 Agent</b>：识别意图（换货+催物流）→ 拆任务 → 查订单系统确认尺码和库存 → 创建换货单 → 查物流时效 → 组织语言回复客人“换货单已建好，M 码有货，明天能到”。<b>它不是在“聊”这件事，它在“办”这件事。</b></p>
+
+  <div class="sec-label">交互 · 点开四大能力，看客服的一天</div>
+
+  <div class="ab-grid reveal" id="abGrid"></div>
+
+  <div class="sec-label">Agent 的本质 = 大模型 + 脚手架</div>
+
+  <p class="reveal">拆开看，Agent 没什么神秘的：<b>大脑还是那个会幻觉、会忘事的大模型</b>，变的是外面包的这层“脚手架”——</p>
+
+  <ul>
+    <li class="reveal">系统帮它<b>拆任务</b>（Plan），而不是指望它一口气答对所有事</li>
+    <li class="reveal">系统给它<b>接工具</b>（Tool），查库存、查物流、建工单，手就有了</li>
+    <li class="reveal">系统帮它<b>管记忆</b>（Memory），白板要满了就压缩，重要信息上墙</li>
+    <li class="reveal">系统让它<b>真执行</b>（Act），每一步都有记录、能回滚、有权限边界</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    所以对电商老板来说，<b>“做 Agent”不等于“训练模型”</b>——你 90% 的工作是在设计脚手架：给它什么工具、定什么流程、划什么权限。这正是你的运营经验能直接迁移的地方：<b>你会带人，就会带 Agent。</b>
+  </div>
+
+  <div class="sec-label">什么任务值得做成 Agent</div>
+
+  <ul>
+    <li class="reveal"><b>值得</b>：高频、有标准流程、要动多个系统（客服接待、售后处理、评价回复、库存预警）</li>
+    <li class="reveal"><b>不值得</b>：低频、没流程、全靠灵感（年度品牌策略、双 11 主视觉创意）——这些用聊天 AI 辅助人就行</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>Agent = 能办事的 AI</b>：Plan 拆任务、Tool 动手、Memory 记事、Act 执行。</li>
+      <li><b>本质是模型 + 脚手架</b>：大脑没变，变的是外面的流程和工具封装。</li>
+      <li><b>你的经验直接迁移</b>：设计 Agent ≈ 带团队——定流程、配工具、划权限。</li>
+      <li><b>高频有流程的活才值得 Agent 化</b>：低频创意活留给“人 + 聊天 AI”。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var cards = [
+    { ic:'🧭', t:'拆任务', en:'PLAN · 规划', d:'把复杂请求拆成一串可执行的小步骤',
+      ex:'<b>客服的一天：</b>客人说“买大了想换货顺便催物流”，Agent 拆成：① 查订单 ② 确认换货尺码库存 ③ 建换货单 ④ 查物流时效 ⑤ 汇总回复——而不是回一句“建议换货”。' },
+    { ic:'🔧', t:'用工具', en:'TOOL · 工具调用', d:'会操作外部系统：查订单、查库存、发工单',
+      ex:'<b>客服的一天：</b>嘴上说着“帮您查一下”，手上真的调用了订单系统 API——AI 输出一条结构化指令，系统执行后把真实数据喂回来。下一节专门拆这条链路。' },
+    { ic:'🧠', t:'记得事', en:'MEMORY · 记忆', d:'短期记对话，长期记客史，白板满了会交班',
+      ex:'<b>客服的一天：</b>记得客人 10 分钟前说过“敏感肌”（短期），老客来了能调出“上次买过抗皱套装”（长期）——白板 + 知识库的组合拳，第一篇章的武器在这合体。' },
+    { ic:'⚡', t:'真执行', en:'ACT · 行动', d:'把决定变成动作：建单、改状态、发通知',
+      ex:'<b>客服的一天：</b>换货单不是“建议客人自己点”，而是 Agent 直接在系统里建好，把单号发给客人——当然，权限边界内的动作才行（还记得 2-4 的高危清单吗）。' }
+  ];
+  var grid = document.getElementById('abGrid');
+  grid.innerHTML = cards.map(function(c, i){
+    return '<div class="ab-card" data-i="' + i + '"><div class="ic">' + c.ic + '</div>'
+      + '<div class="t">' + c.t + '</div><div class="en">' + c.en + '</div>'
+      + '<div class="d">' + c.d + '</div><div class="ex">' + c.ex + '</div></div>';
+  }).join('');
+  grid.addEventListener('click', function(e){
+    var card = e.target.closest('.ab-card');
+    if (card) card.classList.toggle('open');
+  });
+})();
+</script>
+</body>
+</html>

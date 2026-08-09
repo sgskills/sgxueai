@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill：把 SOP 喂给 Agent | 诗光聊AI电商 入门课</title>
+<meta name="description" content="Skill = 流程说明 + 工具指引。把“产品数据分析 SOP"变成 Agent 的肌肉记忆——解剖一个真实 Skill 的结构设计。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="Skill：把 SOP 喂给 Agent">
+<meta property="og:description" content="把产品数据分析套路变成 Agent 的肌肉记忆。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-9.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .sk-file{
+    background:#1E1E2E;border-radius:14px;overflow:hidden;margin-top:16px;
+  }
+  .sk-file-head{
+    display:flex;align-items:center;gap:8px;padding:10px 16px;
+    background:rgba(255,255,255,.06);color:#a6adc8;font-size:12px;font-weight:700;
+    font-family:"SF Mono",Menlo,monospace;
+  }
+  .sk-file-head::before{content:'📄';}
+  .sk-section{border-top:1px solid rgba(255,255,255,.07);}
+  .sk-sec-head{
+    display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;
+    color:#e2e8f0;font-size:13px;font-weight:800;transition:.2s;user-select:none;
+  }
+  .sk-sec-head:hover{background:rgba(255,255,255,.04);}
+  .sk-sec-head .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .sk-sec-head .arrow{margin-left:auto;color:#6b7280;font-size:11px;transition:.2s;}
+  .sk-section.open .sk-sec-head .arrow{transform:rotate(90deg);}
+  .sk-sec-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .sk-section.open .sk-sec-body{max-height:400px;}
+  .sk-sec-inner{padding:0 18px 16px 37px;}
+  .sk-code{
+    font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12px;line-height:1.8;
+    color:#cdd6f4;white-space:pre-wrap;background:rgba(0,0,0,.25);
+    border-radius:9px;padding:12px 14px;margin-bottom:10px;
+  }
+  .sk-why{font-size:12.5px;line-height:1.7;color:#a6adc8;}
+  .sk-why b{color:#f9e2af;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>Skill：把 SOP 喂给 Agent</h1>
+    <p class="subtitle">你团队里最强的运营分析一个产品转化下滑，有一套固定打法——这套打法写成文档，就是 Agent 的 Skill。这一节解剖一个真实 Skill 的骨架。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">概念</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">为什么需要 Skill 这层东西</div>
+
+  <p class="reveal">一个链接的转化率连续两周往下掉。没有 Skill 的 Agent 怎么分析？看心情——今天怪主图、明天怪价格、后天让你换详情页，<b>全看白板上当时装着什么</b>。跟没有方法论的新运营一模一样：会看数据，没套路。</p>
+
+  <p class="reveal">Skill 就是给 Agent 装的“套路”：<b>一份结构化的流程说明书</b>，告诉它什么情况走什么流程、每步用什么工具、红线在哪。写一次，Agent 每次遇到同类任务都照章执行——<b>这就是把金牌运营的经验变成组织的资产</b>，跟你带团队做 SOP 沉淀是同一个动作。</p>
+
+  <div class="sec-label">解剖 · 一个“产品优化诊断” Skill 的骨架</div>
+
+  <p class="reveal">点开每个部分，看它写什么、为什么这么设计：</p>
+
+  <div class="sk-file reveal" id="skFile">
+    <div class="sk-file-head">SKILL.md · 产品优化诊断（product-optimization-analysis）</div>
+  </div>
+
+  <div class="sec-label">好 Skill vs 坏 Skill</div>
+
+  <ul>
+    <li class="reveal"><b>好 Skill 给判断标准，坏 Skill 给模糊要求</b>：“分析一下为什么卖得不好”是废话，“先拉 30 天数据→对比类目均值→按漏斗定位病灶层”才是标准。</li>
+    <li class="reveal"><b>好 Skill 写清边界，坏 Skill 只写流程</b>：样本不足不下结论、只出诊断不动手改价——<b>不写边界，Agent 就敢拿着三天数据让你砍品</b>。</li>
+    <li class="reveal"><b>好 Skill 会被迭代</b>：每次复盘把验证过的新打法补进 Skill——它是活的 SOP，不是写完就进棺材的文档。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    把你团队最常用的三个分析套路找出来——产品体检、活动复盘、推广诊断——它们就是你 Agent 化的第一批 Skill。<b>写 Skill 这件事，运营操盘手比程序员写得好</b>，因为关键是业务判断，不是代码。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>Skill = Agent 的 SOP</b>：结构化流程说明书，写一次，次次照章执行。</li>
+      <li><b>骨架五段</b>：触发条件 → 流程步骤 → 工具指引 → 红线边界 → 兜底转人工。</li>
+      <li><b>好 Skill 给判断标准</b>：具体步骤 + 明确边界 + 持续迭代，三样缺一不可。</li>
+      <li><b>运营写 Skill 比程序员强</b>：沉淀的是业务判断，代码只是载体。</li>
+    </ul>
+  </div>
+
+  <div class="skill-rec reveal">
+    <span class="sr-ico"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+    <span class="sr-txt">电商人必备好用的 Skill 库，复制本段文字发给AI安装：<a href="https://github.com/sgskills/aibp" target="_blank" rel="noopener">github.com/sgskills/aibp</a></span>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var secs = [
+    { name:'① 触发条件（什么时候用）', color:'#89b4fa',
+      code:'当运营提出以下信号时启用本 Skill：\n- 单品体检（“这个链接最近怎么样”“帮我看看这个品”）\n- 指标异动（“转化率掉了”“流量突然涨/跌了”）\n- 优化决策（“详情页要不要改”“这个品还值不值得推”）',
+      why:'<b>为什么：</b>Agent 首先要会“识别任务类型”——触发条件写得越具体，Skill 越不会乱用。把产品诊断和普通闲聊分开，是流程分流的第一步。' },
+    { name:'② 流程步骤（按什么顺序办）', color:'#a6e3a1',
+      code:'1. 调 query_sales_data 拉近 30 天核心指标（访客、转化率、客单价、退款率）\n2. 与前 30 天、类目均值双对比，找出恶化最快的指标\n3. 按「流量—转化—客单—复购」漏斗定位病灶层\n4. 针对病灶层给 2 个可执行优化动作，每个附预期影响指标\n5. 输出一页结论：病灶 + 动作 + 验证周期（7/14 天后复查）',
+      why:'<b>为什么：</b>步骤是给 Agent 的“分析路径”——没这条路径，它每次都现场发挥、想到哪说到哪。注意“先定位病灶层再开方”这个顺序，是老运营的基本功：没找到病根就换药，换多少都没用。' },
+    { name:'③ 工具指引（用什么办）', color:'#f9e2af',
+      code:'- query_sales_data(sku_id, date_range)：拉商品核心指标\n- query_category_benchmark(category)：拉类目均值做对比\n- query_review_keywords(sku_id)：拉评价高频词，找负面集中点\n- 禁止：任何改价/改库存/上下架类工具（本 Skill 只出诊断，不动手）',
+      why:'<b>为什么：</b>写明“能用哪些工具、不能碰哪些”——诊断场景的 Agent 只该长“眼睛”，不该长“手”。工具白名单从根上保证它看完数据不会顺手帮你改个价。' },
+    { name:'④ 红线边界（绝对不能做什么）', color:'#f38ba8',
+      code:'- 样本不足 7 天的数据，不下任何结论，只标注“数据积累中”\n- 每条优化建议必须对应一个数据证据，不接受“凭感觉”\n- 不承诺具体销量数字，只给优化方向和验证指标',
+      why:'<b>为什么：</b>红线是 Skill 的生命线。“数据证据”这条写死，Agent 才不会把三天波动讲成惊天趋势，也不会为了显得有把握而拍脑袋承诺销量——这是分析纪律，不是话术设计。' },
+    { name:'⑤ 兜底（搞不定怎么办）', color:'#cba6f7',
+      code:'出现以下任一情况，立即转人工并附诊断摘要：\n- 数据缺口超 30%（如推广数据拉不到），列出缺失清单\n- 指标异动超 50% 且找不到原因，标记“疑似异常事件”\n- 涉及砍品、换类目等战略级决策，只供参考，必须人工拍板',
+      why:'<b>为什么：</b>兜底条款定义了 Agent 的“认输机制”。注意“附诊断摘要”这个细节——转人工不是甩锅，查到哪一步、排除了什么、卡在哪，一并交接，人工接手不懵。' }
+  ];
+  var file = document.getElementById('skFile');
+  file.innerHTML += secs.map(function(s, i){
+    return '<div class="sk-section' + (i===0 ? ' open' : '') + '">'
+      + '<div class="sk-sec-head"><span class="dot" style="background:' + s.color + '"></span>' + s.name + '<span class="arrow">▶</span></div>'
+      + '<div class="sk-sec-body"><div class="sk-sec-inner"><div class="sk-code">' + s.code + '</div><div class="sk-why">' + s.why + '</div></div></div>'
+      + '</div>';
+  }).join('');
+  file.addEventListener('click', function(e){
+    var head = e.target.closest('.sk-sec-head');
+    if (head) head.parentElement.classList.toggle('open');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Token：AI 的“计价单位” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="为什么 AI API 按 Token 收费？一段详情页文案到底值多少钱？用电商人的话讲清 Token，现场算给你看。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="Token：AI 的&quot;计价单位&quot;">
+<meta property="og:description" content="为什么 API 按 Token 收费？一段详情页文案值多少钱？现场算给你看。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-1.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .tok-demo textarea{
+    width:100%;min-height:96px;padding:12px 14px;border-radius:10px;
+    border:1.5px solid var(--border-strong);background:var(--bg);color:var(--text);
+    font-family:inherit;font-size:14px;line-height:1.7;resize:vertical;
+  }
+  .tok-demo textarea:focus{outline:none;border-color:var(--accent);}
+  .tok-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+  .tok-stat{background:var(--pill-bg);border-radius:10px;padding:12px;text-align:center;}
+  .tok-stat .v{font-size:22px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums;}
+  .tok-stat .k{font-size:11.5px;color:var(--sub);margin-top:2px;}
+  .tok-break{margin-top:14px;font-size:13px;line-height:2.1;word-break:break-all;}
+  .tok-break .t{border-radius:5px;padding:1px 3px;margin:0 1px;}
+  .tok-break .c0{background:rgba(249,115,22,.16);}
+  .tok-break .c1{background:rgba(37,99,235,.14);}
+  .tok-break .c2{background:rgba(16,185,129,.16);}
+  .tok-note{font-size:12px;color:var(--sub);margin-top:10px;}
+  .price-row{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:13.5px;}
+  .price-row select{
+    padding:7px 10px;border-radius:8px;border:1.5px solid var(--border-strong);
+    background:var(--bg);color:var(--text);font-family:inherit;font-size:13px;
+  }
+  @media(max-width:768px){.tok-stats{grid-template-columns:1fr 1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座</div>
+    <h1>Token：AI 的“计价单位”</h1>
+    <p class="subtitle">搞电商的算账都精。AI 这盘生意的第一步，就是搞明白它按什么单位收你的钱。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">概念</span><span class="tag">6 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先打个比方</div>
+
+  <p class="reveal">你去发快递，快递公司按<b>重量</b>收费；你找美工做图，美工按<b>张数</b>收费。那 AI 公司按什么收费？按 <b>Token</b>。</p>
+
+  <p class="reveal">Token 是什么？别被这个洋词唬住。你可以把它理解成 AI 眼里的“<b>字块</b>”——AI 读文章、写文章，不是一个字一个字来的，而是一块一块来的。大致的规律是：</p>
+
+  <ul>
+    <li class="reveal"><b>一个汉字 ≈ 1 个 Token</b>（常见字有的半个，生僻字可能两个）</li>
+    <li class="reveal"><b>一个英文单词 ≈ 1 个 Token</b>，标点符号也算</li>
+    <li class="reveal">一句“亲，这款连衣裙有现货哦” ≈ 12~14 个 Token</li>
+  </ul>
+
+  <div class="sec-label">交互演示 · 你的文案值多少 Token</div>
+
+  <p class="reveal">别光听我说，自己动手试。下面粘贴一段你店里的文案，实时看它大概值多少 Token、多少钱：</p>
+
+  <div class="demo tok-demo reveal">
+    <div class="demo-title">Token 估算器（近似值，不同模型分词略有差异）</div>
+    <textarea id="tokInput">亲，这款法式碎花连衣裙是今年的新款，雪纺面料，透气不闷，S 到 XL 都有现货，今天下单 48 小时内发出～</textarea>
+    <div class="tok-stats">
+      <div class="tok-stat"><div class="v" id="vChars">0</div><div class="k">字符数</div></div>
+      <div class="tok-stat"><div class="v" id="vTokens">0</div><div class="k">估算 Token</div></div>
+      <div class="tok-stat"><div class="v" id="vCost">0</div><div class="k">生成成本（元）</div></div>
+    </div>
+    <div class="price-row">
+      按模型价格档：
+      <select id="priceSel">
+        <option value="0.002">经济档 · ¥2 / 百万 Token</option>
+        <option value="0.008" selected>主流档 · ¥8 / 百万 Token</option>
+        <option value="0.03">旗舰档 · ¥30 / 百万 Token</option>
+      </select>
+    </div>
+    <div class="tok-break" id="tokBreak"></div>
+    <div class="tok-note">色块 = AI 眼里的“字块”切分示意（橙色：汉字，蓝色：字母/数字，绿色：标点）</div>
+  </div>
+
+  <div class="sec-label">算一笔电商账</div>
+
+  <p class="reveal">假设你用主流档模型（¥8 / 百万 Token）批量生成<b>商品标题和卖点</b>：</p>
+
+  <ul>
+    <li class="reveal">一个 SKU：输入商品参数约 200 Token，输出标题 + 5 条卖点约 300 Token，合计约 <b>500 Token</b></li>
+    <li class="reveal">1000 个 SKU 全店翻新一遍：50 万 Token ≈ <b>4 块钱</b></li>
+  </ul>
+
+  <div class="l-callout reveal">
+    看出来了吧——<b>生成文案这件事，AI 的边际成本几乎为零</b>。真正烧钱的不是写，而是后面会讲到的：客服 Agent 一轮一轮的对话、生图、还有你反复试错改提示词的过程。学会算 Token 账，是管住 AI 成本的第一步。
+  </div>
+
+  <div class="sec-label">为什么偏偏按 Token 收费</div>
+
+  <p class="reveal">因为 AI 干活消耗的是<b>算力</b>，而算力消耗和 Token 数基本成正比：读你的输入要算力，一个字一个字往外蹦也要算力。Token 就是它和算力之间最诚实的换算单位。</p>
+
+  <p class="reveal">所以记住这个公式：<b>AI 账单 =（输入 Token + 输出 Token）× 单价</b>。后面讲成本优化时，所有招数本质都是在动这两个数——要么让输入变短，要么让输出变短，要么换个单价便宜的模型干粗活。</p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>Token = AI 的计价单位</b>，一个汉字约 1 个，输入输出都计费。</li>
+      <li><b>账单公式</b>：AI 费用 =（输入 + 输出 Token）× 单价，优化成本就动这三个变量。</li>
+      <li><b>文案生成极其便宜</b>：1000 个 SKU 的标题卖点只要几块钱，别在这上面省错地方。</li>
+      <li>真正的大头在<b>多轮对话和生图</b>，后面的篇章会专门算这两笔账。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var input = document.getElementById('tokInput');
+  var priceSel = document.getElementById('priceSel');
+  var vChars = document.getElementById('vChars');
+  var vTokens = document.getElementById('vTokens');
+  var vCost = document.getElementById('vCost');
+  var tokBreak = document.getElementById('tokBreak');
+
+  // 粗估：汉字/全角≈1，ASCII 字母数字≈0.3/字符（≈1 token/单词），标点≈1
+  function estimate(text){
+    var tokens = 0, html = '', shown = 0;
+    for (var i = 0; i < text.length; i++){
+      var ch = text[i], cls, n;
+      if (/[一-鿿　-〿＀-￯]/.test(ch)){ n = 1; cls = 'c0'; }
+      else if (/[a-zA-Z0-9]/.test(ch)){ n = 0.3; cls = 'c1'; }
+      else if (/\s/.test(ch)){ n = 0; cls = ''; }
+      else { n = 1; cls = 'c2'; }
+      tokens += n;
+      if (cls && shown < 120){
+        html += '<span class="t ' + cls + '">' + ch.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span>';
+        shown++;
+      }
+    }
+    if (text.length > 120) html += ' …';
+    return { tokens: Math.ceil(tokens), html: html };
+  }
+
+  function update(){
+    var text = input.value;
+    var est = estimate(text);
+    var price = +priceSel.value; // 元/千Token? 注意单位：option 是 元/百万Token
+    var cost = est.tokens * price / 1000; // price 值是 元/千Token 的千分之一？修正：0.008 = 8元/百万 = 0.008元/千
+    vChars.textContent = text.length;
+    vTokens.textContent = est.tokens;
+    vCost.textContent = cost < 0.001 ? '<0.001' : cost.toFixed(4);
+    tokBreak.innerHTML = est.html;
+  }
+  input.addEventListener('input', update);
+  priceSel.addEventListener('change', update);
+  update();
+})();
+</script>
+</body>
+</html>

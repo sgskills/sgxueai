@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汇总 · 认知底座一页纸 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="第一篇章总复盘：Token、上下文白板、幻觉三类成因、四种应对方案的选择矩阵——一张图带走电商 AI 认知底座。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="汇总 · 认知底座一页纸">
+<meta property="og:description" content="Token / 上下文 / 幻觉 / 四种应对方案选择矩阵，第一篇章一页纸复盘。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/summary-1.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .map{display:flex;flex-direction:column;gap:14px;margin-top:16px;}
+  .map-row{display:flex;gap:12px;align-items:stretch;}
+  .map-key{
+    width:120px;flex-shrink:0;border-radius:12px;padding:13px 14px;
+    background:var(--blue);color:#fff;display:flex;flex-direction:column;justify-content:center;
+  }
+  .map-key .t{font-size:13.5px;font-weight:900;}
+  .map-key .s{font-size:10.5px;opacity:.85;margin-top:2px;}
+  .map-val{
+    flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;
+    padding:12px 16px;font-size:13px;line-height:1.7;color:var(--sub);
+  }
+  .map-val b{color:var(--text-h);}
+  .quiz{margin-top:16px;}
+  .quiz .q-item{
+    background:var(--bg);border:1.5px solid var(--border);border-radius:12px;
+    padding:14px 17px;margin-bottom:12px;
+  }
+  .quiz .q-t{font-size:14px;font-weight:800;color:var(--text-h);margin-bottom:10px;}
+  .quiz .opt{
+    display:block;width:100%;text-align:left;margin-top:7px;padding:9px 13px;
+    border-radius:9px;border:1.5px solid var(--border-strong);background:var(--card);
+    font-size:13px;cursor:pointer;font-family:inherit;color:var(--text);transition:.15s;
+  }
+  .quiz .opt:hover{border-color:var(--accent);}
+  .quiz .opt.right{background:rgba(16,185,129,.1);border-color:var(--success);color:var(--success);font-weight:700;}
+  .quiz .opt.wrong{background:rgba(220,38,38,.08);border-color:var(--danger);color:var(--danger);}
+  .quiz .q-why{font-size:12px;color:var(--sub);margin-top:8px;display:none;line-height:1.6;}
+  .quiz .q-item.answered .q-why{display:block;}
+  @media(max-width:768px){.map-row{flex-direction:column;}.map-key{width:auto;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 汇总</div>
+    <h1>认知底座一页纸</h1>
+    <p class="subtitle">十个知识点压缩成一页：看完如果能对身边人讲明白，第一篇章就算真的过关了。</p>
+    <div class="tag-row"><span class="tag">汇总</span><span class="tag">复盘</span><span class="tag">5 分钟</span></div>
+  </div>
+
+  <div class="sec-label">底层机制 · 三句话讲清 AI</div>
+
+  <div class="map reveal">
+    <div class="map-row">
+      <div class="map-key"><span class="t">Token</span><span class="s">计价单位</span></div>
+      <div class="map-val"><b>一个汉字 ≈ 1 个 Token，输入输出都收费。</b>账单 =（输入+输出）× 单价。文案生成极便宜，多轮对话和生图才是大头。</div>
+    </div>
+    <div class="map-row">
+      <div class="map-key"><span class="t">概率接龙</span><span class="s">生成原理</span></div>
+      <div class="map-val"><b>AI 没有腹稿，逐字押注：</b>看前文 → 算概率 → 挑一个 → 循环。通顺来自高概率，“AI 味”也来自高概率；前文越准后文越准，提示词决定第一颗棋子。</div>
+    </div>
+    <div class="map-row">
+      <div class="map-key"><span class="t">上下文白板</span><span class="s">工作记忆</span></div>
+      <div class="map-val"><b>白板大小固定，写满就擦最早的。</b>System Prompt 区永不掉线；大窗口有“中间遗忘”和“重复计费”两坑；关键信息要上墙、长对话要交班。</div>
+    </div>
+    <div class="map-row">
+      <div class="map-key"><span class="t">训练≠推理</span><span class="s">学习真相</span></div>
+      <div class="map-val"><b>对话不会教 AI 任何东西</b>——你的输入只在本次对话的便签上，关窗即焚。要它记住店规：System Prompt、知识库，别陪聊。</div>
+    </div>
+  </div>
+
+  <div class="sec-label">幻觉 · 为什么 AI 会一本正经地胡说</div>
+
+  <p class="reveal">三类高发幻觉：<b>自信编造</b>（不存在的牌子也能编出卖点）、<b>张冠李戴</b>（把品类平均参数安到具体商品上）、<b>知识过时</b>（训练截止后的事一无所知）。根因：训练机制奖励“像样回答”，不奖励“承认不知道”。</p>
+
+  <div class="sec-label">四种应对 · 选择矩阵</div>
+
+  <table class="reveal">
+    <tr><th>武器</th><th>管什么</th><th>管不了什么</th><th>电商典型用法</th></tr>
+    <tr><td><b>提示词约束</b></td><td>表达风格、输出格式</td><td>事实真假、实时信息</td><td>店规四要素：身份 / 红线 / 动作 / 兜底</td></tr>
+    <tr><td><b>温度调节</b></td><td>发挥尺度、输出稳定性</td><td>事实真假</td><td>客服 0-0.2，详情页 0.3-0.5，创意 0.6+</td></tr>
+    <tr><td><b>RAG 知识库</b></td><td>事实准确（自家资料类问题）</td><td>手册质量差、检索错位</td><td>商品参数、FAQ、售后政策入库，开卷作答</td></tr>
+    <tr><td><b>评测 + 抽检</b></td><td>兜底验收、错误率监控</td><td>预防不了，只能拦截</td><td>高危全检、中危比例抽、低危机器筛</td></tr>
+  </table>
+
+  <div class="sec-label">快速自测 · 三道题验收本篇</div>
+
+  <div class="demo reveal quiz">
+    <div class="demo-title">点击选项作答</div>
+    <div class="q-item">
+      <div class="q-t">1. 客人第一句说了“敏感肌”，聊到第 20 轮 AI 忘了。最可能的原因是？</div>
+      <button class="opt" data-r="0">AI 的模型版本太老，该升级了</button>
+      <button class="opt" data-r="1">关键信息躺在对话流水里，被上下文溢出擦掉了</button>
+      <button class="opt" data-r="0">温度调得太高，AI 故意忽略</button>
+      <div class="q-why">✅ 上下文白板写满后先进先出。对策：关键信息写进 System Prompt 或状态区“上墙”，长对话定期摘要交班。（第 1-4 节）</div>
+    </div>
+    <div class="q-item">
+      <div class="q-t">2. 让 AI 整理 500 个 SKU 的参数表格，温度应该设在什么区间？</div>
+      <button class="opt" data-r="0">0.8 左右，让输出更灵活</button>
+      <button class="opt" data-r="0">0.5 左右，平衡稳定与创意</button>
+      <button class="opt" data-r="1">0 ~ 0.1，要的是原样照抄</button>
+      <div class="q-why">✅ 参数整理属于“错了要赔钱”的场景，温度越低越好。温度管发挥尺度，创作类场景才需要调高。（第 1-8 节）</div>
+    </div>
+    <div class="q-item">
+      <div class="q-t">3. AI 客服老是被客人问倒：“这款面霜含不含酒精？”最釜底抽薪的解法是？</div>
+      <button class="opt" data-r="0">把提示词写得更严厉，禁止它乱回答</button>
+      <button class="opt" data-r="1">把成分表入库走 RAG，让它开卷作答</button>
+      <button class="opt" data-r="0">每天跟 AI 多说几遍成分，让它记住</button>
+      <div class="q-why">✅ 答案藏在自家资料里的问题走 RAG。提示词管不了“它不知道的事”，对话也教不会模型任何东西。（第 1-2、1-7、1-9 节）</div>
+    </div>
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本篇带走的四句话</div>
+    <ul>
+      <li>AI 是<b>按 Token 计费的接龙机器</b>：账会算，“它会思考”的幻想就破了。</li>
+      <li><b>白板有限、对话不教</b>：重要信息上墙，知识入库，别靠陪聊。</li>
+      <li><b>幻觉是机制问题</b>：不怪模型怪流程——别让它猜，给它查。</li>
+      <li><b>四件武器分工</b>：提示词管风格、温度管尺度、RAG 管事实、评测管兜底。</li>
+    </ul>
+  </div>
+
+  <div class="l-callout reveal">
+    🎉 第一篇章过关！下一篇章《业务流智能体设计》，我们把这些认知组装成真正能跑在店里的客服 Agent、选品 Agent、文案 Agent——从“懂 AI”进阶到“用 AI 干活”。
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.q-item').forEach(function(item){
+    item.querySelectorAll('.opt').forEach(function(opt){
+      opt.addEventListener('click', function(){
+        if (item.classList.contains('answered')) return;
+        item.classList.add('answered');
+        item.querySelectorAll('.opt').forEach(function(o){
+          if (o.dataset.r === '1') o.classList.add('right');
+          else if (o === opt) o.classList.add('wrong');
+          o.disabled = true;
+        });
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

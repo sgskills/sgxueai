@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汇总 · 智能体设计一页纸 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="第二篇章总复盘：Prompt 四板斧、Agent 循环、成本五层、选型矩阵——业务流智能体设计全景一页带走。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="汇总 · 智能体设计一页纸">
+<meta property="og:description" content="Prompt 四板斧 / Agent 循环 / 成本五层 / 选型矩阵。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/summary-2.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .map{display:flex;flex-direction:column;gap:14px;margin-top:16px;}
+  .map-row{display:flex;gap:12px;align-items:stretch;}
+  .map-key{
+    width:120px;flex-shrink:0;border-radius:12px;padding:13px 14px;
+    background:var(--purple);color:#fff;display:flex;flex-direction:column;justify-content:center;
+  }
+  .map-key .t{font-size:13.5px;font-weight:900;}
+  .map-key .s{font-size:10.5px;opacity:.85;margin-top:2px;}
+  .map-val{
+    flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;
+    padding:12px 16px;font-size:13px;line-height:1.7;color:var(--sub);
+  }
+  .map-val b{color:var(--text-h);}
+  @media(max-width:768px){.map-row{flex-direction:column;}.map-key{width:auto;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 汇总</div>
+    <h1>智能体设计一页纸</h1>
+    <p class="subtitle">十二个知识点压缩成四行——能从“聊天 AI”讲到“会自我纠错的客服 Agent”，这篇就算吃透了。</p>
+    <div class="tag-row"><span class="tag">汇总</span><span class="tag">复盘</span><span class="tag">5 分钟</span></div>
+  </div>
+
+  <div class="sec-label">本篇知识地图</div>
+
+  <div class="map reveal">
+    <div class="map-row">
+      <div class="map-key"><span class="t">Prompt 四板斧</span><span class="s">2-1 ~ 2-4</span></div>
+      <div class="map-val"><b>人设圈定概率池、范文是最精确的提示词、格式按消费者选、注入要三层防。</b>人设管“怎么说”，范文管“什么感觉”，格式管“能不能直接用”，安全管“别被套话”。</div>
+    </div>
+    <div class="map-row">
+      <div class="map-key"><span class="t">Agent 循环</span><span class="s">2-5 ~ 2-9</span></div>
+      <div class="map-val"><b>Agent = 模型 + 脚手架：</b>Plan 拆任务、Tool 动手（AI 开条系统跑腿）、Memory 记事、Act 执行。ReAct 三步循环带自我纠错；五种翻车靠五道护栏；Skill 把 SOP 变成肌肉记忆。</div>
+    </div>
+    <div class="map-row">
+      <div class="map-key"><span class="t">效能体系</span><span class="s">2-10 ~ 2-11</span></div>
+      <div class="map-val"><b>轮数是第一杀手</b>（白板累积，轮数越多重复计费越多）。五层效能优化：提示词瘦身 → 流程收口 → 语义缓存 → 上下文压缩 → 模型分级——帮运营把琐事时间一层层抢回来，每周 20 小时压到六七个小时。</div>
+    </div>
+    <div class="map-row">
+      <div class="map-key"><span class="t">选型矩阵</span><span class="s">2-12</span></div>
+      <div class="map-val"><b>两轴定选型</b>：任务容错度与复杂度 × 预算等级。最大浪费是全任务旗舰——简单活用经济档，旗舰只干贵活；每季度用自己的题重测，备好备胎模型。</div>
+    </div>
+  </div>
+
+  <div class="sec-label">带走的决策清单</div>
+
+  <ul>
+    <li class="reveal">✅ 给 AI 下任务前默念四件套：<b>人设、范文、参数、红线</b>——缺哪个补哪个。</li>
+    <li class="reveal">✅ 第一批 Agent 工具只上“只读”：查订单、查库存、查物流，写操作后放。</li>
+    <li class="reveal">✅ 五道护栏写进框架：循环上限、输出截断、超时控制、中断恢复、转人工闸口。</li>
+    <li class="reveal">✅ 把店里三个核心 SOP 写成 Skill：差评处理、售前咨询、发货异常。</li>
+    <li class="reveal">✅ 每月看一次账单构成：轮数、单轮 Token、模型档位，哪个异常砍哪个。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本篇带走的四句话</div>
+    <ul>
+      <li><b>聊天 AI 是顾问，Agent 是员工</b>——员工要配流程、工具和权限。</li>
+      <li><b>Agent 的工程在脚手架</b>：翻车不怪模型怪框架，护栏和 Skill 是你的主战场。</li>
+      <li><b>成本先堵浪费再谈单价</b>：轮数和提示词减半是免费的。</li>
+      <li><b>会带人就会带 Agent</b>：你二十年的管理经验，正是这个时代最值钱的技能。</li>
+    </ul>
+  </div>
+
+  <div class="l-callout reveal">
+    📝 本篇内容已并入「阶段自测」——下一步去 <b>exam.html</b> 做 20 道题，覆盖导学篇 + 第一篇 + 第二篇，错题会直接告诉你回哪节课复习。
+  </div>
+
+  <div class="skill-rec reveal">
+    <span class="sr-ico"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+    <span class="sr-txt">电商人必备好用的 Skill 库，复制本段文字发给AI安装：<a href="https://github.com/sgskills/aibp" target="_blank" rel="noopener">github.com/sgskills/aibp</a></span>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

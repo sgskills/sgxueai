@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>选品的底层逻辑：需求 > 供应链 > 流量 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="两个真实商家案例讲透选品顺序：先看池子，再看竿子——需求、供应链、流量的优先级排序。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="选品的底层逻辑：需求 > 供应链 > 流量">
+<meta property="og:description" content="两个真实商家案例讲透选品顺序：先看池子，再看竿子。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/lei-1.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .rank-lab{margin-top:14px;}
+  .rank-pool{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+  .rk{padding:10px 18px;border-radius:11px;border:1.5px solid var(--border-strong);background:var(--card);
+    font-size:13.5px;font-weight:800;color:var(--text-h);cursor:pointer;transition:.18s;user-select:none;}
+  .rk:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .rk.used{opacity:.35;pointer-events:none;}
+  .rank-slots{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+  .slot{flex:1;min-width:150px;min-height:64px;border-radius:11px;border:2px dashed var(--border-strong);
+    display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;font-weight:800;color:var(--sub);
+    cursor:pointer;transition:.18s;padding:8px;}
+  .slot .pos{font-size:16px;color:var(--accent);}
+  .slot.filled{border-style:solid;border-color:var(--accent-border);background:var(--accent-soft);color:var(--text-h);}
+  .rank-verdict{font-size:13px;font-weight:700;line-height:1.8;padding:13px 16px;border-radius:11px;
+    background:var(--pill-bg);border:1.5px solid var(--border);min-height:52px;}
+  .rank-verdict b{color:var(--accent);}
+  .rank-verdict.win{background:rgba(16,185,129,.09);border-color:rgba(16,185,129,.45);color:var(--success);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">加餐篇 · 团队应用加餐</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">加餐篇 · 团队应用加餐</div>
+    <h1>选品的底层逻辑：需求 > 供应链 > 流量</h1>
+    <p class="subtitle">正课讲了五篇 AI，加餐换个战场——聊聊 AI 之外的经营底盘。第一课，也是最贵的一课：选品。</p>
+    <div class="tag-row"><span class="tag">电商</span><span class="tag">加餐</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先讲一个 40 万的教训</div>
+
+  <p class="reveal">几年前，杭州一位做家居小物的商家看中一款“网红榨汁杯”——社交媒体上热度爆棚，他断定这是爆款，一口气备了 40 万的货。结果上架三个月，卖了不到十分之一。</p>
+
+  <p class="reveal">复盘时他才发现自己搞反了什么：<b>他看到的是“流量热度”，不是“需求”</b>。那阵热度是内容平台推出来的话题，围观的人多、真想买的人少；更要命的是，这个产品他没有任何供应链优势——1688 上人人能拿到同样的货，他唯一的打法就是降价，降到毛利见底。</p>
+
+  <div class="l-callout reveal">
+    他用 40 万买了句话：<b>先看池子里有没有鱼（需求），再看你的竿子比别人长不长（供应链），最后才轮到怎么下钩（流量）</b>。顺序反了，越努力亏得越快。
+  </div>
+
+  <div class="sec-label">动手排排看：三要素的正确座次</div>
+
+  <div class="demo rank-lab reveal">
+    <div class="demo-title">排序练习 · 点卡片，按你认为的优先级放进 1/2/3 号位</div>
+    <div class="rank-pool">
+      <div class="rk" data-k="need">🎯 需求（池子里有鱼吗）</div>
+      <div class="rk" data-k="supply">🏭 供应链（你的竿子够长吗）</div>
+      <div class="rk" data-k="traffic">📣 流量（怎么下钩）</div>
+    </div>
+    <div class="rank-slots">
+      <div class="slot" data-pos="1"><span class="pos">①</span>最重要</div>
+      <div class="slot" data-pos="2"><span class="pos">②</span>其次</div>
+      <div class="slot" data-pos="3"><span class="pos">③</span>最后</div>
+    </div>
+    <div class="rank-verdict" id="rankVerdict">把三张牌都放进位置，我给你的排序打个分。</div>
+  </div>
+
+  <div class="sec-label">为什么是这个顺序</div>
+
+  <ul>
+    <li class="reveal"><b>需求错了，后面全是无效努力</b>：池子里没鱼，你竿子再长、钩再香也白搭。判断需求看三个硬指标：搜索量是否稳定（不是脉冲）、复购/刚需属性、价格带是否有真实成交。</li>
+    <li class="reveal"><b>供应链决定你能不能守住</b>：需求对了，马上有人跟进。你比别人便宜 10%、快 3 天、能定制——这三样占一样，爆款才守得住；一样不占，你就是给别人测款的义工。</li>
+    <li class="reveal"><b>流量是放大器，不是发动机</b>：前两个对了，直通车/内容/达人随便哪个都能打；前两个错了，流量每花一分钱都在加速亏损。</li>
+  </ul>
+
+  <p class="reveal">再看一个正面的例子：广东一家服饰商家按这个顺序筛出了一款防晒衣——先看池子：防晒搜索量年年涨、复购率高（第二年还来买）；再看竿子：供应链能拿到独家面料、起订量压得住；最后下钩：内容平台种草 + 站内承接，三个月起量，当年就打进了细分类目前列。<b>顺序对了，每一步都是顺风。</b></p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>选品三要素排序</b>：需求 > 供应链 > 流量，顺序反了越努力亏越快。</li>
+      <li><b>需求看硬指标</b>：稳定搜索量、刚需/复购属性、真实成交价带——不看话题热度。</li>
+      <li><b>供应链是护城河</b>：便宜、快、可定制至少占一样，否则是给别人测款的义工。</li>
+      <li><b>流量是放大器</b>：前两个对了怎么打都行，错了花钱加速亏损。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var slots=document.querySelectorAll('.slot'),rks=document.querySelectorAll('.rk');
+  var verdict=document.getElementById('rankVerdict');
+  var active=null;
+  var correct={1:'need',2:'supply',3:'traffic'};
+  var names={need:'需求',supply:'供应链',traffic:'流量'};
+  rks.forEach(function(rk){
+    rk.addEventListener('click',function(){
+      if(active)active.classList.remove('sel');
+      active=rk;
+      rks.forEach(function(x){x.style.outline='';});
+      rk.style.outline='2px solid var(--accent)';
+    });
+  });
+  slots.forEach(function(slot){
+    slot.addEventListener('click',function(){
+      // 点已填充的槽位 = 取出
+      if(slot.classList.contains('filled')){
+        var k=slot.getAttribute('data-k');
+        slot.classList.remove('filled');slot.removeAttribute('data-k');
+        slot.innerHTML='<span class="pos">'+'①②③'[+slot.getAttribute('data-pos')-1]+'</span>'+['最重要','其次','最后'][+slot.getAttribute('data-pos')-1];
+        document.querySelector('.rk[data-k="'+k+'"]').classList.remove('used');
+        judge();return;
+      }
+      if(!active)return;
+      active.classList.add('used');active.style.outline='';
+      slot.classList.add('filled');
+      slot.setAttribute('data-k',active.getAttribute('data-k'));
+      slot.innerHTML='<span class="pos">'+'①②③'[+slot.getAttribute('data-pos')-1]+'</span>'+active.textContent;
+      active=null;
+      judge();
+    });
+  });
+  function judge(){
+    var filled=document.querySelectorAll('.slot.filled');
+    if(filled.length<3){
+      verdict.className='rank-verdict';
+      verdict.innerHTML='把三张牌都放进位置，我给你的排序打个分。（'+filled.length+'/3）';
+      return;
+    }
+    var ok=true,ans=[];
+    slots.forEach(function(s){
+      var p=s.getAttribute('data-pos'),k=s.getAttribute('data-k');
+      ans.push(names[k]);
+      if(correct[p]!==k)ok=false;
+    });
+    if(ok){
+      verdict.className='rank-verdict win';
+      verdict.innerHTML='🏆 <b>满分！需求 → 供应链 → 流量。</b>先看池子有没有鱼，再看竿子够不够长，最后才想怎么下钩。这个顺序值 40 万——别人交过学费，你不用交了。';
+    }else{
+      verdict.className='rank-verdict';
+      verdict.innerHTML='你的排序：<b>'+ans.join(' → ')+'</b>。<br>再想想：'+((ans[0]==='流量')?'把流量排第一，就是当年那个备了 40 万货的商家——热度≠需求。':'')+((ans[0]==='供应链')?'供应链再强，池子里没鱼也是白搭——有竿子也得先有鱼。':'顺序还不对，想想“哪一步错了后面全白干”。');
+    }
+  }
+})();
+</script>
+</body>
+</html>

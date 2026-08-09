@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>角色扮演：让 AI 进入“金牌运营”状态 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="同一句话，五种人设实时切换，看 AI 的输出差别有多大。System Prompt 角色设定的实战第一课。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="角色扮演：让 AI 进入&quot;金牌运营&quot;状态">
+<meta property="og:description" content="五种人设实时切换，同一条指令输出差别有多大。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-1.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .role-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .role-row button{
+    border:1.5px solid var(--border-strong);border-radius:999px;padding:8px 18px;
+    font-size:13px;font-weight:700;background:transparent;color:var(--sub);
+    cursor:pointer;font-family:inherit;transition:.2s;
+  }
+  .role-row button.on{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.3);}
+  .role-sys{
+    background:var(--pill-bg);border-radius:10px;padding:11px 15px;font-size:12.5px;
+    color:var(--sub);margin-bottom:14px;line-height:1.7;border-left:3px solid var(--purple);
+  }
+  .role-sys b{color:var(--text-h);}
+  .role-out{
+    background:var(--card);border:1.5px solid var(--border);border-radius:12px;
+    padding:16px 19px;font-size:14px;line-height:1.9;min-height:120px;
+  }
+  .role-out .rtag{
+    display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--purple);
+    padding:2px 10px;border-radius:999px;margin-bottom:8px;
+  }
+  .role-diff{margin-top:12px;font-size:12.5px;color:var(--sub);background:var(--pill-bg);border-radius:10px;padding:10px 14px;line-height:1.7;}
+  .role-diff b{color:var(--text-h);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>角色扮演：让 AI 进入“金牌运营”状态</h1>
+    <p class="subtitle">上一篇章学了店规四要素，这一篇先把第一个要素“身份”用透——你给它什么人设，它就还你什么水平的活。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">实战</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">为什么人设这么灵</div>
+
+  <p class="reveal">接龙原理再登场：AI 读过全网文本，<b>不同身份的人说同一件事，用词、结构、关注点完全不同</b>。你说“你是客服”，它就调用客服语料的概率分布；你说“你是十年经验的类目运营总监”，另一套分布立刻上桌。</p>
+
+  <p class="reveal">所以角色设定不是玄学客套，是<b>在概率池里圈定范围</b>——人设越具体，圈得越准。</p>
+
+  <div class="sec-label">交互演示 · 同一指令，五种人设</div>
+
+  <p class="reveal">指令只有一句：<b>“这款保温杯卖点怎么讲？”</b>点击切换人设，看输出差多远：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">人设切换实验台</div>
+    <div class="role-row" id="roleRow"></div>
+    <div class="role-sys" id="roleSys"></div>
+    <div class="role-out" id="roleOut"></div>
+    <div class="role-diff" id="roleDiff"></div>
+  </div>
+
+  <div class="sec-label">写好人设的三个加料点</div>
+
+  <ul>
+    <li class="reveal"><b>加年限和领域</b>：“做保温杯类目 8 年的运营”比“电商运营”强十倍——年限和类目越具体，语料圈得越精准。</li>
+    <li class="reveal"><b>加服务对象</b>：“给 25-35 岁通勤女性写文案的策划”——人设里带上客群，输出自动带人群视角。</li>
+    <li class="reveal"><b>加性格倾向</b>：“说话直给、讨厌形容词堆叠的文案”——性格词会直接改变措辞风格。</li>
+  </ul>
+
+  <div class="sec-label">两个常见误区</div>
+
+  <ul>
+    <li class="reveal"><b>误区一：人设万能</b>。“你是世界顶级营销大师”不会让 AI 真变成大师——人设只能调用它读过的语料，调不出语料里没有的东西。参数还得你给（料），红线还得你划（框）。</li>
+    <li class="reveal"><b>误区二：人设越长越好</b>。三行写清身份、客群、风格就够了，写八百字小传反而稀释重点，还白烧 Token。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>人设 = 概率池圈定</b>：身份词直接切换 AI 的语料分布，不是客套话。</li>
+      <li><b>同一指令五种人设五种活</b>：客服讲政策、策划讲钩子、总监讲结构——按岗位选人。</li>
+      <li><b>三个加料点</b>：年限领域、服务对象、性格倾向——越具体越准。</li>
+      <li><b>人设不能替代料和框</b>：它管“怎么说”，管不了“说什么”和“不能说什么”。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var roles = [
+    { name:'默认·无人设', sys:'<b>System Prompt：</b>（空）——AI 自由发挥',
+      out:'这款保温杯保温效果好，容量大，携带方便，适合各种人群使用，性价比很高，值得购买。',
+      diff:'<b>输出特征：</b>百科式正确废话，零人群、零场景、零情绪——这就是“AI 味”的标准样本。' },
+    { name:'🙋 金牌客服', sys:'<b>System Prompt：</b>你是保温杯旗舰店的金牌客服，擅长把参数翻译成人话，说话亲切有分寸。',
+      out:'亲，这款是 316 不锈钢内胆，早上倒的热水到下午还是烫的～杯盖能当小杯子用，办公室泡枸杞特别方便。320g 的重量塞包里不压肩，通勤带很合适哦。',
+      diff:'<b>输出特征：</b>参数全在，但都被翻译成了使用场景——“316 不锈钢”变成了“早上倒的水下午还烫”。' },
+    { name:'📢 短视频策划', sys:'<b>System Prompt：</b>你是专做日用百货的抖音短视频策划，擅长前 3 秒钩子，语言有网感。',
+      out:'“早上 8 点倒的开水，下午 5 点我愣是没敢直接喝——这杯子是保温还是炼丹？”钩子之后接：杯盖当杯子、倒置不漏水两个卖点演示。',
+      diff:'<b>输出特征：</b>不回答问题，先造冲突——短视频岗位的本能就是抢前 3 秒，卖点后置。' },
+    { name:'📊 类目运营总监', sys:'<b>System Prompt：</b>你是做了 8 年保温杯类目的运营总监，习惯从人群分层和转化逻辑讲卖点。',
+      out:'卖点要分层讲：通勤人群打“杯盖两用+320g 轻量”，宝妈人群打“316 内胆+长效保温冲奶”，礼品场景打“礼盒装+刻字服务”。主图放保温时效对比，详情页首屏放人群场景图，别堆参数。',
+      diff:'<b>输出特征：</b>不卖货，先分人群——总监视角天然带结构化：人群→场景→卖点→落位。' },
+    { name:'🧐 挑剔买家', sys:'<b>System Prompt：</b>你是被保温杯坑过三次的挑剔买家，专挑卖点里的漏洞。',
+      out:'“保温效果好”？几小时降到多少度，敢写实测数据吗？“容量大”？500ml 还是 750ml？“携带方便”？装满水多重、能不能放进车门杯架？讲不清楚就是心虚。',
+      diff:'<b>输出特征：</b>反向质检——用来拷问自己的卖点文案，比 AI 夸你一百句都有用。' }
+  ];
+  var row = document.getElementById('roleRow');
+  var sysEl = document.getElementById('roleSys');
+  var outEl = document.getElementById('roleOut');
+  var diffEl = document.getElementById('roleDiff');
+  row.innerHTML = roles.map(function(r, i){
+    return '<button data-i="' + i + '"' + (i===0 ? ' class="on"' : '') + '>' + r.name + '</button>';
+  }).join('');
+  function show(i){
+    row.querySelectorAll('button').forEach(function(b, k){ b.classList.toggle('on', k===i); });
+    sysEl.innerHTML = roles[i].sys;
+    outEl.innerHTML = '<span class="rtag">输出</span><br>' + roles[i].out;
+    diffEl.innerHTML = roles[i].diff;
+  }
+  row.addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if (b) show(+b.dataset.i);
+  });
+  show(0);
+})();
+</script>
+</body>
+</html>

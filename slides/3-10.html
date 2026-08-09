@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多 Agent 协作：选品 + 文案 + 设计流水线 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="三个 Agent 接力完成一次上新：选品 Agent、文案 Agent、设计 Agent 如何协作，调度策略与冲突处理。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="多 Agent 协作：选品 + 文案 + 设计流水线">
+<meta property="og:description" content="三个 Agent 接力完成一次上新，调度与冲突处理。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-10.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .agents{display:flex;gap:12px;justify-content:center;margin-bottom:18px;flex-wrap:wrap;}
+  .agent-chip{
+    display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;
+    border:1.5px solid var(--border);background:var(--bg);font-size:13px;font-weight:800;
+    color:var(--sub);transition:.25s;
+  }
+  .agent-chip.active{border-color:var(--green);color:var(--green);background:rgba(5,150,105,.08);box-shadow:0 4px 14px rgba(5,150,105,.15);}
+  .agent-chip.done{border-color:var(--success);color:var(--success);opacity:.75;}
+  .ma-stage{
+    background:var(--pill-bg);border-radius:13px;padding:17px 19px;min-height:120px;
+  }
+  .ma-step-title{font-size:14px;font-weight:900;color:var(--text-h);margin-bottom:7px;}
+  .ma-step-desc{font-size:13px;line-height:1.75;color:var(--text);}
+  .ma-output{
+    margin-top:10px;background:var(--card);border:1.5px dashed var(--border-strong);
+    border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--sub);line-height:1.7;
+  }
+  .ma-output b{color:var(--text-h);}
+  .ma-controls{display:flex;gap:10px;justify-content:center;margin-top:16px;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>多 Agent 协作：选品 + 文案 + 设计流水线</h1>
+    <p class="subtitle">一个 Agent 是员工，一群 Agent 是部门。这一节看三个 Agent 怎么接力完成一次完整的上新——以及一个“包工头”角色为什么必不可少。</p>
+    <div class="tag-row"><span class="tag">动画</span><span class="tag">概念</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">为什么要拆成多个 Agent</div>
+
+  <p class="reveal">一个“全能 Agent”负责整个上新？听起来美，跑起来糟：提示词塞了选品规则 + 文案风格 + 设计规范几千字，<b>样样通样样松</b>，一出问题还找不到是哪个“人格”犯的错。</p>
+
+  <p class="reveal">拆开的道理和开店一样：<b>专业的人干专业的事</b>。选品 Agent 只懂选品逻辑，提示词短而精；文案 Agent 只钻研文案；设计 Agent 只管出图。每个都好调、好测、好追责。代价是需要一个<b>调度者（Orchestrator）</b>——包工头，负责派活、验收、传话。</p>
+
+  <div class="sec-label">动画演示 · 一次上新的接力赛</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">任务：秋季新款针织衫上新</div>
+    <div class="agents" id="agentChips"></div>
+    <div class="ma-stage" id="maStage"></div>
+    <div class="ma-controls">
+      <button id="maNext">▶ 下一步</button>
+      <button class="btn-ghost" id="maReset">↺ 重置</button>
+    </div>
+  </div>
+
+  <div class="sec-label">多 Agent 协作的三条军规</div>
+
+  <ul>
+    <li class="reveal"><b>串行还是并行，看依赖</b>：文案必须等选品定款（串行）；但主图和详情图可以同时出（并行）。依赖关系画清楚，效率翻倍；画不清，全是返工。</li>
+    <li class="reveal"><b>交接必须结构化</b>：Agent 之间传的不是“一段话”，是 JSON 式的结构化数据（款号、卖点、禁忌、风格要求）——还记得 2-3 节吗？<b>给程序读的用 JSON</b>，多 Agent 场景就是给程序读。</li>
+    <li class="reveal"><b>冲突由包工头裁决</b>：文案 Agent 想打“慵懒风”，设计 Agent 出了“职场风”——冲突不能靠两个 Agent 互吵解决，调度者拿着品牌规范一票裁决，打回重做。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    别急着上多 Agent。<b>单个 Agent 跑顺一个环节，再考虑串联</b>——多 Agent 是放大器：单点 90 分，串起来放大成流水线；单点 60 分，串起来放大成灾难现场。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>拆 Agent 的理由</b>：专精 > 全能——每个 Agent 提示词短、好调、好追责。</li>
+      <li><b>调度者是必需品</b>：派活、验收、裁决冲突，一个不能少。</li>
+      <li><b>三条军规</b>：依赖定串并行、交接用结构化数据、冲突包工头裁决。</li>
+      <li><b>先单点跑顺再串联</b>：多 Agent 是放大器，不雪中送炭。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var chips = [
+    { ic:'🧭', n:'调度者' }, { ic:'🔍', n:'选品 Agent' },
+    { ic:'✍️', n:'文案 Agent' }, { ic:'🎨', n:'设计 Agent' }, { ic:'👤', n:'人工终审' }
+  ];
+  var steps = [
+    { a:0, t:'调度者接单，拆任务', d:'拿到“秋季针织衫上新”任务，拆成：定款 → 出文案 → 出图，明确每一步的验收标准和交接格式。',
+      out:'任务单：{ 款型: 待定, 风格: 秋季通勤, 截止: 48h }' },
+    { a:1, t:'选品 Agent 定款', d:'调数据工具分析近 30 天猫人台数据和竞品：燕麦色、宽松版、V 领搜索量上涨最快，定价带 129-169。',
+      out:'交接 JSON：{ 款: "燕麦色 V 领宽松版“, 卖点: [”显瘦","软糯","通勤百搭“], 禁忌: [”不提"不起球""] }' },
+    { a:2, t:'文案 Agent 出文案', d:'读取交接 JSON（不是自由发挥！），按卖点写标题、5 条详情卖点、1 条短视频脚本，禁忌词全程规避。',
+      out:'产出：“把云朵穿在身上的燕麦色针织衫……”（含 5 条卖点 + 脚本）' },
+    { a:3, t:'设计 Agent 出图', d:'根据同一交接 JSON 的“秋季通勤”风格定调，垫图 + 场景模板批量出图（3-2 节流水线），主图 3 张 + 详情图 5 张。',
+      out:'产出：主图 ×3（1K 打样）、详情场景图 ×5' },
+    { a:0, t:'调度者验收 + 冲突检查', d:'对照任务单逐项验收：文案卖点和图的场景一致吗？禁忌词有没有出现？发现详情图第 3 张场景偏“居家风”，与“通勤”冲突——打回设计 Agent 重出这一张。',
+      out:'验收单：文案 ✅ / 主图 ✅ / 详情图 #3 ❌ 已打回重做' },
+    { a:4, t:'人工终审', d:'所有产出包送到运营手里：10 分钟过目，重点看品牌调性和事实细节（3-3 质检清单），一键上架。',
+      out:'上架 ✅ 全流程 4 小时，传统流程要 3-5 天' }
+  ];
+  var chipEls = document.getElementById('agentChips');
+  chipEls.innerHTML = chips.map(function(c, i){
+    return '<div class="agent-chip" data-i="' + i + '">' + c.ic + ' ' + c.n + '</div>';
+  }).join('');
+  var stage = document.getElementById('maStage');
+  var idx = 0;
+  function render(){
+    chipEls.querySelectorAll('.agent-chip').forEach(function(el, i){
+      el.classList.remove('active','done');
+      if (idx >= steps.length){ el.classList.add('done'); return; }
+      if (i === steps[idx].a) el.classList.add('active');
+    });
+    if (idx >= steps.length){
+      stage.innerHTML = '<div class="ma-step-title">🎉 上新完成</div><div class="ma-step-desc">从任务下达到上架 4 小时。注意回看：每个 Agent 只干自己擅长的，调度者管验收和冲突，人只做终审——这就是部门化的 AI 流水线。</div>';
+      return;
+    }
+    var s = steps[idx];
+    stage.innerHTML = '<div class="ma-step-title">' + chips[s.a].ic + ' ' + s.t + '</div>'
+      + '<div class="ma-step-desc">' + s.d + '</div>'
+      + '<div class="ma-output"><b>输出：</b>' + s.out + '</div>';
+  }
+  document.getElementById('maNext').addEventListener('click', function(){ idx++; render(); });
+  document.getElementById('maReset').addEventListener('click', function(){ idx = 0; render(); });
+  render();
+})();
+</script>
+</body>
+</html>

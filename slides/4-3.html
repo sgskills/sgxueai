@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>长任务 Agent：跑一夜的竞品监控 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="迭代上限、断点恢复、超时控制——让 Agent 跑一整夜竞品监控不翻车、不烧冤枉钱。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="长任务 Agent：跑一夜的竞品监控">
+<meta property="og:description" content="迭代上限、断点恢复、超时控制三大保命设计。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-3.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .monitor{margin-top:14px;}
+  .m-bar{display:flex;gap:5px;margin:14px 0 10px;}
+  .m-cell{flex:1;height:34px;border-radius:7px;background:var(--pill-bg);border:1.5px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;color:var(--sub);transition:.25s;}
+  .m-cell.done{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.45);color:var(--success);}
+  .m-cell.crash{background:rgba(220,38,38,.14);border-color:rgba(220,38,38,.5);color:var(--danger);animation:shake .4s;}
+  .m-cell.resume{background:rgba(249,115,22,.14);border-color:rgba(249,115,22,.5);color:var(--accent);}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+  .m-log{font-size:12px;line-height:1.9;min-height:110px;background:#1E1E2E;color:#cbd5e1;border-radius:10px;padding:13px 15px;font-family:"SF Mono",Menlo,Consolas,monospace;}
+  .m-log .ok{color:#34d399;}
+  .m-log .err{color:#f87171;}
+  .m-log .warn{color:#fbbf24;}
+  .m-stat{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;}
+  .m-stat span{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--pill-bg);color:var(--sub);}
+  .m-stat b{color:var(--text-h);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶</div>
+    <h1>长任务 Agent：跑一夜的竞品监控</h1>
+    <p class="subtitle">客服 Agent 一次对话几分钟，错了大不了转人工。但“每天凌晨把 20 个竞品链接的价格、库存、评价全爬一遍”这种活，一跑几小时——没有保命设计，半夜崩了你都不知道。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">工程</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">长任务和短对话，是两种生物</div>
+
+  <p class="reveal">前面章节的 Agent 都在“短平快”场景里：一轮对话几十秒到几分钟。长任务完全不同——<b>跑的时间越长，出事的概率越接近 100%</b>。API 会超时、网络会抖、平台会限流、模型会抽风。跑 10 分钟不出事是运气，跑 10 小时不出事靠设计。</p>
+
+  <ul>
+    <li class="reveal"><b>竞品监控</b>：每晚盯 20 个链接的价格/库存/上新，早上给你一份异动报告。</li>
+    <li class="reveal"><b>评价分析</b>：大促后把 5000 条新评价逐条打标归类，出一份痛点报告。</li>
+    <li class="reveal"><b>批量上新</b>：把 200 个 SKU 的标题、卖点、详情文案一次性生成并入库。</li>
+  </ul>
+
+  <p class="reveal">这三个场景的共同点：<b>任务可以拆成一个个独立小格子</b>。这是长任务能救回来的前提——先记住这句话，下面的设计全靠它。</p>
+
+  <div class="sec-label">保命设计一：迭代上限——给 Agent 戴“手环”</div>
+
+  <p class="reveal">2-8 节讲过 Agent 死循环。长任务里死循环更阴：它不会原地打转，而是<b>慢慢跑偏</b>——比如竞品页面结构变了，Agent 反复重试同一个失败动作，每轮都在烧 Token，一夜烧掉几百块，早上给你一堆报错。</p>
+
+  <p class="reveal">解法简单粗暴：<b>每个子任务设最大迭代次数</b>。抓一个链接最多试 5 轮，5 轮还不行就记下来跳过，绝不纠缠。就像你给运营定的规矩：一个客人的问题 10 分钟搞不定就升级，别让一个人卡死整条客服线。</p>
+
+  <div class="sec-label">保命设计二：断点恢复——死在哪，活在哪</div>
+
+  <p class="reveal">长任务最怕的不是失败，是<b>从头再来</b>。5000 条评价分析到 4800 条崩了，如果没有断点，明天重跑又是几小时。断点恢复的核心动作就一个：<b>每完成一格，就把进度写进磁盘</b>（4-1 节的交接卡思想，只不过交接对象是“明天重启的自己”）。</p>
+
+  <div class="demo monitor reveal" id="demo">
+    <div class="demo-title">断点恢复模拟器 · 点“开跑”，看一次崩溃与复活</div>
+    <div class="m-bar" id="mbar"></div>
+    <div class="m-log" id="mlog">// 待机中。点击下方按钮，模拟一次“跑一夜”的竞品监控。</div>
+    <div class="m-stat">
+      <span>完成 <b id="stDone">0</b>/10</span>
+      <span>崩溃 <b id="stCrash">0</b> 次</span>
+      <span>重跑损耗 <b id="stWaste">0</b> 格</span>
+      <button id="btnRun" style="margin-left:auto;">▶ 开跑（无断点）</button>
+      <button id="btnRunCk" class="btn-ghost">▶ 开跑（有断点）</button>
+    </div>
+  </div>
+
+  <p class="reveal">看到差别了吗：<b>没断点，崩一次全白干；有断点，崩了从原地爬起来</b>。上面模拟的正是真实场景——竞品平台凌晨限流把你踢出来，有断点的 Agent 睡醒接着抓，没断点的 Agent 让你从头再等三小时。</p>
+
+  <div class="sec-label">保命设计三：超时控制——每个环节都有“打烊时间”</div>
+
+  <ul>
+    <li class="reveal"><b>单次调用超时</b>：一次 API 请求 30 秒没回就放弃，记为失败格——不让一个卡死的请求拖住整夜。</li>
+    <li class="reveal"><b>子任务超时</b>：一个链接 5 分钟没搞定就跳过——跟迭代上限双保险。</li>
+    <li class="reveal"><b>总时长兜底</b>：整个任务超过 4 小时没跑完，强制收工，把已完成的先发你——<b>早上 8 点你收到的是“80% 结果 + 异常清单”，而不是一个还在转的圈</b>。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    长任务设计的心法一句话：<b>不要追求“一次跑完”，要追求“随时能停、停了能续”</b>。这跟做电商一个道理——大促预案不是赌系统不崩，而是崩了之后 5 分钟能切备用方案。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>任务先拆格</b>：长任务能救回来的前提，是可以拆成独立小格子。</li>
+      <li><b>迭代上限</b>：单格最多试 N 轮，失败记下跳过，绝不纠缠烧 Token。</li>
+      <li><b>断点恢复</b>：每完成一格就落盘，崩了从断点续跑，不从头再来。</li>
+      <li><b>三层超时</b>：单次调用、单个子任务、整个任务，每层都有“打烊时间”。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var mbar=document.getElementById('mbar'),mlog=document.getElementById('mlog');
+  var stDone=document.getElementById('stDone'),stCrash=document.getElementById('stCrash'),stWaste=document.getElementById('stWaste');
+  var cells=[],running=false;
+  for(var i=0;i<10;i++){
+    var c=document.createElement('div');c.className='m-cell';c.textContent='链接'+(i+1);
+    mbar.appendChild(c);cells.push(c);
+  }
+  function log(html,cls){mlog.innerHTML+='\n<span class="'+(cls||'')+'">'+html+'</span>';mlog.scrollTop=mlog.scrollHeight;}
+  function reset(){
+    cells.forEach(function(c){c.className='m-cell';});
+    stDone.textContent='0';stCrash.textContent='0';stWaste.textContent='0';
+  }
+  function run(useCk){
+    if(running)return;running=true;reset();
+    mlog.textContent='// 02:00 任务启动：监控 10 个竞品链接'+(useCk?'（每格落盘）':'（无断点）');
+    var crashAt=5+Math.floor(Math.random()*3); // 第5~7格崩
+    var i=0,waste=0,crashes=0;
+    function step(){
+      if(i>=10){
+        log('06:12 全部完成 ✅ 异动报告已生成','ok');
+        running=false;return;
+      }
+      cells[i].classList.add('done');
+      if(i===crashAt&&crashes===0){
+        crashes++;stCrash.textContent=crashes;
+        cells[i].className='m-cell crash';
+        log('03:47 链接'+(i+1)+' 抓取失败：竞品平台限流，连接被踢 ❌','err');
+        if(useCk){
+          log('03:47 检测到断点文件：已完成 '+i+' 格 → 原地恢复','warn');
+          cells[i].className='m-cell resume';
+          setTimeout(function(){cells[i].classList.add('done');i++;stDone.textContent=i;step();},900);
+        }else{
+          waste=i;stWaste.textContent=waste;
+          log('03:47 无断点记录 → 任务重启，前 '+i+' 格作废重跑 💸','err');
+          setTimeout(function(){
+            cells.forEach(function(c,idx){c.className='m-cell';if(idx<=i)c.classList.add('resume');});
+            log('03:48 从链接1 重新开始……','warn');
+            i=0;crashAt=99;step();
+          },1100);
+        }
+        stDone.textContent=i;return;
+      }
+      log('✓ 链接'+(i+1)+'：价格 ¥'+(59+i*7)+' · 库存正常 · 无降价动作','ok');
+      i++;stDone.textContent=i;
+      setTimeout(step,420);
+    }
+    step();
+  }
+  document.getElementById('btnRun').addEventListener('click',function(){run(false);});
+  document.getElementById('btnRunCk').addEventListener('click',function(){run(true);});
+})();
+</script>
+</body>
+</html>

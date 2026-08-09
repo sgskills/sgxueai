@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Few-Shot：给 AI 看“爆款范文” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="为什么要在提示词里放 3 条优秀案例？给与不给、给多给少，输出质量差多少？Few-Shot 实战对比。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="Few-Shot：给 AI 看&quot;爆款范文&quot;">
+<meta property="og:description" content="给 AI 看 3 条爆款范文 vs 不给，输出效果实测对比。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-2.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .fs-slider-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .fs-slider-row label{font-size:13px;font-weight:700;color:var(--sub);flex-shrink:0;}
+  .fs-slider-row .val{font-weight:900;color:var(--purple);min-width:76px;}
+  .fs-examples{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+  .fs-ex{
+    background:var(--pill-bg);border-radius:9px;padding:9px 13px;font-size:12.5px;
+    color:var(--sub);line-height:1.6;border-left:3px solid var(--purple);
+    transition:opacity .3s;
+  }
+  .fs-ex.hidden-ex{display:none;}
+  .fs-ex b{color:var(--text-h);}
+  .fs-out{
+    background:var(--card);border:1.5px solid var(--border);border-radius:12px;
+    padding:15px 18px;font-size:14px;line-height:1.9;min-height:96px;
+  }
+  .fs-out .rtag{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--purple);padding:2px 10px;border-radius:999px;margin-bottom:8px;}
+  .fs-verdict{margin-top:12px;font-size:12.5px;color:var(--sub);background:var(--pill-bg);border-radius:10px;padding:10px 14px;line-height:1.7;}
+  .fs-verdict b{color:var(--text-h);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>Few-Shot：给 AI 看“爆款范文”</h1>
+    <p class="subtitle">带新人最快的办法不是讲道理，是甩给他几个优秀案例：“照这个感觉来。”对 AI，这招同样好使，而且好使得多。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">交互</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">什么是 Few-Shot</div>
+
+  <p class="reveal">很简单：<b>在下达任务之前，先贴几条“输入 → 理想输出”的示范</b>。一条示范叫 One-Shot，几条叫 Few-Shot，一条都不给叫 Zero-Shot。</p>
+
+  <p class="reveal">为什么好使？回到接龙原理：AI 时刻在模仿“前文”。范文一进前文，它就能从里面提取出<b>说不清楚的那些要求</b>——语气、节奏、结构、详略——这些东西你用规则写二十条都未必说全，三条范文一次搞定。<b>范文是最精确的提示词。</b></p>
+
+  <div class="sec-label">交互演示 · 范文条数对输出的影响</div>
+
+  <p class="reveal">任务：把商品参数变成小红书风格的卖点文案。拖动滑块，控制给 AI 看几条爆款范文，看输出怎么变：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">Few-Shot 数量实验 · 参数 → 小红书文案</div>
+    <div class="fs-slider-row">
+      <label>范文条数</label>
+      <input type="range" id="fsSlider" min="0" max="3" value="0">
+      <span class="val" id="fsVal">Zero-Shot</span>
+    </div>
+    <div class="fs-examples" id="fsEx"></div>
+    <div class="fs-out" id="fsOut"></div>
+    <div class="fs-verdict" id="fsVerdict"></div>
+  </div>
+
+  <div class="sec-label">范文挑选的三个讲究</div>
+
+  <ul>
+    <li class="reveal"><b>挑“你想要的样子”，不是“最有名的样子”</b>：别抄别家大店的文案当范文，AI 会连人家的品牌调性一起抄走。用你自己店里验证过的爆款。</li>
+    <li class="reveal"><b>风格要统一</b>：三条范文三种风格，AI 学到的是“混乱”。宁缺毋滥，风格一致的两条胜过杂烩五条。</li>
+    <li class="reveal"><b>覆盖不同情况</b>：如果商品有主打款、利润款、引流款，范文最好各覆盖一类——AI 会自己判断“这次该像哪条”。</li>
+  </ul>
+
+  <div class="sec-label">成本提醒：范文是要烧 Token 的</div>
+
+  <p class="reveal">三条范文每条 100 字，就是 300+ Token 的固定输入——<b>每次生成都付一遍</b>。批量生成 1000 条文案时，光范文就烧掉 30 万 Token。所以范文要精简：保留风格和结构，砍掉修饰，一条 50-80 字最理想。这也是第二篇章后面“成本优化”要算的账。</p>
+
+  <div class="l-callout reveal">
+    实操组合技：<b>人设（怎么说）+ 范文（什么感觉）+ 参数（说什么）+ 红线（不能说什么）</b>，四件套配齐，文案类任务的输出基本可以直接进抽检环节，不用大改。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>Few-Shot = 任务前贴示范</b>：范文是最精确的提示词，说不清的风格要求全靠它。</li>
+      <li><b>0 → 1 条是质变</b>：Zero-Shot 到 One-Shot 的提升最大，1 到 3 条是微调。</li>
+      <li><b>范文三讲究</b>：用自家验证过的爆款、风格统一、覆盖不同款型。</li>
+      <li><b>范文烧 Token</b>：批量任务里精简到 50-80 字一条，别把整篇详情页贴进去。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var examples = [
+    '范文 1：<b>冰丝防晒衣</b> → “通勤路上晒成两个色号？这件 UPF50+ 的冰丝防晒衣我焊在身上了，机洗十次都不变形。”',
+    '范文 2：<b>保温杯</b> → “早八人的命是这杯给的：316 内胆，早 8 点的水到下午 5 点还烫嘴，杯盖还能当小茶杯。”',
+    '范文 3：<b>乳胶枕</b> → “落枕星人翻身！93% 天然乳胶，侧睡仰睡都托得住，睡醒脖子终于不是自己的敌人了。”'
+  ];
+  var outputs = [
+    { copy:'这款连衣裙面料舒适，设计时尚，上身效果好，适合多种场合，值得入手。', verdict:'<b>Zero-Shot（0 条范文）：</b>AI 只能调用“全网平均水平”——正确、平庸、没人想点进去。' },
+    { copy:'谁懂啊家人们！这条碎花裙穿上直接瘦五斤既视感，雪纺轻到像没穿，蹲下去捡东西都飘逸～', verdict:'<b>One-Shot（1 条范文）：</b>语气、人称、节奏全对了——AI 从范文里偷到了“小红书味”。' },
+    { copy:'蹲下去捡东西都飘逸的雪纺裙！法式碎花开满身，M 到 XL 全码现货，机洗不变形，128 斤的我穿 L 码刚刚好～', verdict:'<b>Two-Shot（2 条范文）：</b>开始融合两条范文的优点：钩子 + 真实体验 + 硬信息（码数/洗护）。' },
+    { copy:'法式碎花开满身的神仙裙子！雪纺轻到没存在感，机洗不变形懒人狂喜～M-XL 全码现货，128 斤穿 L 码亲测刚好，通勤约会一条搞定。', verdict:'<b>Three-Shot（3 条范文）：</b>风格完全稳定：口语钩子、真实参数、洗护细节、人群尺码，一个不少。' }
+  ];
+  var names = ['Zero-Shot','One-Shot','Two-Shot','Three-Shot'];
+  var slider = document.getElementById('fsSlider');
+  var val = document.getElementById('fsVal');
+  var exEl = document.getElementById('fsEx');
+  var outEl = document.getElementById('fsOut');
+  var verdictEl = document.getElementById('fsVerdict');
+  exEl.innerHTML = examples.map(function(e, i){
+    return '<div class="fs-ex hidden-ex" data-i="' + i + '">' + e + '</div>';
+  }).join('');
+  function update(){
+    var n = +slider.value;
+    val.textContent = names[n] + '（' + n + ' 条）';
+    exEl.querySelectorAll('.fs-ex').forEach(function(el, i){
+      el.classList.toggle('hidden-ex', i >= n);
+    });
+    outEl.innerHTML = '<span class="rtag">AI 输出</span><br>' + outputs[n].copy;
+    verdictEl.innerHTML = outputs[n].verdict;
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

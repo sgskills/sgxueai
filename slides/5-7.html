@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提示词资产库：别让经验跟着人走 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="提示词的版本管理、命名规范、效果记录——团队共享的正确方式。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="提示词资产库：别让经验跟着人走">
+<meta property="og:description" content="版本管理、命名规范、效果记录，团队共享的正确方式。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/5-7.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .namer{margin-top:14px;}
+  .namer-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+  .nm{border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);background:var(--card);}
+  .nm h5{font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:10px;}
+  .nm.bad h5{color:var(--danger);}
+  .nm.good h5{color:var(--success);}
+  .nm.bad{border-color:rgba(220,38,38,.3);background:rgba(220,38,38,.04);}
+  .nm.good{border-color:rgba(16,185,129,.35);background:rgba(16,185,129,.05);}
+  .nm .file{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12px;background:rgba(0,0,0,.05);
+    border-radius:7px;padding:7px 11px;margin-bottom:6px;color:var(--text);}
+  [data-theme="dark"] .nm .file{background:rgba(255,255,255,.07);}
+  .nm .cm{font-size:11.5px;color:var(--sub);line-height:1.6;}
+  .lib{margin-top:14px;}
+  .lib-card{border-radius:11px;border:1.5px solid var(--border);background:var(--card);padding:13px 16px;margin-bottom:9px;
+    font-size:12.5px;line-height:1.8;}
+  .lib-card .lc-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .lib-card .lc-name{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.5px;font-weight:800;color:var(--text-h);}
+  .lib-card .lc-ver{font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-border);}
+  .lib-card .lc-meta{font-size:11.5px;color:var(--sub);margin-top:5px;}
+  .lib-card .lc-meta b{color:var(--text-h);}
+  .lib-card .lc-rate{margin-left:auto;font-size:12px;font-weight:900;color:var(--success);white-space:nowrap;}
+  @media(max-width:640px){.namer-row{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第五篇章 · 电商团队 AI 协作规范</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第五篇章 · 电商团队 AI 协作规范</div>
+    <h1>提示词资产库：别让经验跟着人走</h1>
+    <p class="subtitle">团队里那个“最会写提示词”的人离职了，会发生什么？他电脑里 200 条调教好的提示词、试出来的经验、踩过的坑，全跟着他走了。这节把这个问题从根上解决。</p>
+    <div class="tag-row"><span class="tag">技巧</span><span class="tag">资产</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">提示词是资产，不是聊天记录</div>
+
+  <p class="reveal">先看看你团队的提示词现在存在哪：微信收藏夹？备忘录？某个人的 ChatGPT 历史记录里？<b>存法决定了它是不是资产</b>——找不到、看不懂、不知道好不好用的提示词，只是一段聊天记录。</p>
+
+  <p class="reveal">一条提示词要成为“资产”，要带上三件行李：<b>它叫什么</b>（命名）、<b>它第几版</b>（版本）、<b>它管不管用</b>（效果记录）。三样齐全，新人拿来就能用；缺一样，就是又一段死文档。</p>
+
+  <div class="sec-label">命名：名字要让人 3 秒找到、3 秒看懂</div>
+
+  <div class="namer reveal">
+    <div class="namer-row">
+      <div class="nm bad">
+        <h5>❌ 这样命名 = 没有名字</h5>
+        <div class="file">新建文本文档 (3).txt</div>
+        <div class="file">最终版提示词.txt</div>
+        <div class="file">最终版提示词-真的最终版.txt</div>
+        <div class="cm">三个月后：这是哪个场景的？哪版是真好用？“真的最终版”后面还有没有“绝对最终版”？</div>
+      </div>
+      <div class="nm good">
+        <h5>✅ 命名公式：场景-任务-版本</h5>
+        <div class="file">客服-尺码咨询-v1.3.md</div>
+        <div class="file">文案-详情页首屏-v2.0.md</div>
+        <div class="file">数据-周报洞察-v1.1.md</div>
+        <div class="cm">场景一眼归类，任务一看就懂，版本号跟着 4-5 的回归测试走——升版必须过测试集。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">效果记录：每条资产带一张“体检卡”</div>
+
+  <p class="reveal">光存提示词文本没用——你还要知道它<b>管不管用</b>。每条资产带一张体检卡，四个字段：</p>
+
+  <div class="demo lib reveal">
+    <div class="demo-title">资产库示例 · 每条提示词的完整档案</div>
+    <div class="lib-card">
+      <div class="lc-head">
+        <span class="lc-name">客服-尺码咨询-v1.3.md</span>
+        <span class="lc-ver">v1.3</span>
+        <span class="lc-rate">测试集通过率 94%</span>
+      </div>
+      <div class="lc-meta">
+        <b>效果</b>：50 题回归通过 47（v1.2 是 44，提升点在“建议拍大一码”话术） ·
+        <b>维护人</b>：小林 ·
+        <b>最近更新</b>：2026-07-28 ·
+        <b>禁忌</b>：别删“不确定就建议到店试穿”这句，删了投诉率翻倍
+      </div>
+    </div>
+    <div class="lib-card">
+      <div class="lc-head">
+        <span class="lc-name">文案-详情页首屏-v2.0.md</span>
+        <span class="lc-ver">v2.0</span>
+        <span class="lc-rate">上架转化 +12%</span>
+      </div>
+      <div class="lc-meta">
+        <b>效果</b>：AB 测试两周，详情页停留时长 +12% ·
+        <b>维护人</b>：阿May ·
+        <b>最近更新</b>：2026-08-01 ·
+        <b>禁忌</b>：首屏“痛点提问”结构不能动，v1.x 平铺直叙版已淘汰
+      </div>
+    </div>
+  </div>
+
+  <p class="reveal">注意两张卡里的<b>“禁忌”字段</b>——这是资产库里最值钱的部分。5-3 节纠偏补丁、4-4 节回流的问题、5-4 节换路子的教训，全该沉淀在这里。<b>经验跟着文档走，不跟着人走。</b></p>
+
+  <div class="sec-label">用什么工具？够用就好</div>
+
+  <ul>
+    <li class="reveal"><b>3 人小团队</b>：飞书/钉钉共享文档 + 文件夹按场景分——别折腾工具，纪律比工具值钱。</li>
+    <li class="reveal"><b>10 人左右</b>：多维表格（一条提示词一行，版本/通过率/维护人都是列）——筛选、排序、找“谁维护的”都方便。</li>
+    <li class="reveal"><b>技术团队</b>：Git 仓库——版本管理天然自带，还能回溯“上周三那版到底改了啥”。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    资产库的本质是把这门课学到的东西<b>变成公司固定资产</b>：4-5 的测试集是“质检资产”，这里的提示词库是“生产资产”。人会流动，资产留在公司——这才是 AI 时代团队真正的护城河。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>资产三行李</b>：命名（场景-任务-版本）、版本号、效果记录，缺一不可。</li>
+      <li><b>升版要过检</b>：版本号跟着回归测试走，不通过不升版。</li>
+      <li><b>禁忌字段最值钱</b>：踩过的坑写进卡片，经验跟着文档走。</li>
+      <li><b>工具够用就好</b>：小团队共享文档，大点多维表格，技术团队上 Git。</li>
+    </ul>
+  </div>
+
+  <div class="skill-rec reveal">
+    <span class="sr-ico"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+    <span class="sr-txt">电商人必备好用的 Skill 库，复制本段文字发给AI安装：<a href="https://github.com/sgskills/aibp" target="_blank" rel="noopener">github.com/sgskills/aibp</a></span>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

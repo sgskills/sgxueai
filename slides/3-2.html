@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从一张白底图到一套详情页 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="生图产品化流程：垫图、控图、批量出图、人工精修——一条可复制的 AI 视觉流水线设计。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="从一张白底图到一套详情页">
+<meta property="og:description" content="垫图、控图、批量出图、人工精修的流水线设计。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-2.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .pipe{display:flex;flex-direction:column;gap:0;margin-top:16px;position:relative;}
+  .pipe::before{
+    content:'';position:absolute;left:19px;top:20px;bottom:20px;width:2px;
+    background:linear-gradient(var(--green),var(--accent));
+  }
+  .pipe-step{display:flex;gap:16px;align-items:flex-start;padding:12px 0;position:relative;}
+  .pipe-no{
+    width:40px;height:40px;border-radius:12px;flex-shrink:0;z-index:1;
+    background:var(--card);border:2px solid var(--green);color:var(--green);
+    font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;
+  }
+  .pipe-body{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:13px 17px;}
+  .pipe-body .t{font-size:14.5px;font-weight:800;color:var(--text-h);}
+  .pipe-body .d{font-size:12.5px;color:var(--sub);margin-top:4px;line-height:1.65;}
+  .pipe-body .tip{
+    margin-top:8px;font-size:12px;background:rgba(5,150,105,.07);color:var(--green);
+    border-radius:8px;padding:7px 11px;font-weight:700;line-height:1.6;
+  }
+  .who-tag{
+    display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;
+    margin-left:8px;vertical-align:2px;
+  }
+  .who-ai{background:rgba(5,150,105,.12);color:var(--green);}
+  .who-human{background:rgba(249,115,22,.12);color:var(--accent);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>从一张白底图到一套详情页</h1>
+    <p class="subtitle">很多人用 AI 生图是“单张碰运气”，高手是“流水线作业”。差在哪？差在没有把生图当成一条有分工、有质检的生产线。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">技巧</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">为什么“单张碰运气”走不远</div>
+
+  <p class="reveal">店里上新 20 个 SKU，每个要 1 张主图 + 5 张详情图 + 1 张海报，就是 140 张图。一张一张跟 AI“聊着改”，每张调半小时——<b>AI 省的钱全赔在人的时间上</b>。</p>
+
+  <p class="reveal">正确思路是把它当成工厂流水线来设计：<b>标准化的环节、明确的质检点、人和 AI 各干擅长的部分</b>。下面这条流水线是我给团队用的版本，直接可抄。</p>
+
+  <div class="sec-label">六步流水线</div>
+
+  <div class="pipe reveal">
+    <div class="pipe-step"><span class="pipe-no">1</span><div class="pipe-body">
+      <div class="t">拍白底图 / 平铺图 <span class="who-tag who-human">人干</span></div>
+      <div class="d">手机+自然光就够，核心是商品清晰、不变形。这是整条线唯一的“重资产”环节——<b>商品本身的真实感，AI 替不了</b>。</div>
+    </div></div>
+    <div class="pipe-step"><span class="pipe-no">2</span><div class="pipe-body">
+      <div class="t">寻找行业优秀案例库 <span class="who-tag who-human">人干</span></div>
+      <div class="d">人去搜集同类目做得好的主图、详情页、海报案例，建成案例库——<b>审美方向、风格参照由人定</b>，这是整条线的“品味源头”，AI 替不了。</div>
+    </div></div>
+    <div class="pipe-step"><span class="pipe-no">3</span><div class="pipe-body">
+      <div class="t">建场景模板库 <span class="who-tag who-ai">AI 干</span></div>
+      <div class="d">让 AI 拆解案例库里的优秀图，提炼场景描述固化成模板：如“日系原木桌面+晨光+浅景深”“户外草地+午后逆光”。每个模板跑通过、出过好图才入库。</div>
+      <div class="tip">💡 模板 = 上一节说的“降低废片率”的核心武器，团队共享，持续迭代。</div>
+    </div></div>
+    <div class="pipe-step"><span class="pipe-no">4</span><div class="pipe-body">
+      <div class="t">垫图 + 控图生成 <span class="who-tag who-ai">AI 干</span></div>
+      <div class="d">白底图当“垫图”喂给 AI，套场景模板批量生成。<b>垫图保证商品不变形，模板保证风格不跑偏</b>——两个保险同时上。</div>
+    </div></div>
+    <div class="pipe-step"><span class="pipe-no">5</span><div class="pipe-body">
+      <div class="t">人工质检 <span class="who-tag who-human">人干</span></div>
+      <div class="d">按质检清单过一遍（下一节专门讲）：手、LOGO、材质、文字。每张 10 秒，只看不改，打回的重生成。</div>
+    </div></div>
+    <div class="pipe-step"><span class="pipe-no">6</span><div class="pipe-body">
+      <div class="t">排版定稿 <span class="who-tag who-human">人干</span></div>
+      <div class="d">入围的图上 PS/稿定做最后 10%：排版、压字、调色、局部重绘。<b>AI 出到 90 分，人补最后 10 分</b>——别让 AI 冲 100 分，那是烧钱黑洞。</div>
+    </div></div>
+  </div>
+
+  <div class="sec-label">人和 AI 的分工原则</div>
+
+  <p class="reveal">看明白了吗：这条线上<b>AI 干的是“量”（拆案例建模板、批量生成），人干的是“判断”（定品味、做质检、补最后 10 分）</b>。凡是“每张都不一样”的活给 AI，凡是“每张都要对”的活留给人。流水线一旦跑通，20 个 SKU 的图从一周压缩到一两天，视觉成本砍到原来的两三成。再往上走一步：<b>经过 1-2 个月的磨合和 SOP 梳理，优秀的团队甚至可以把图片生成流程“自动化”</b>，大大缩减更多人工参与的环节。</p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>生图要当流水线设计</b>：标准环节 + 质检点 + 人机分工，不是单张碰运气。</li>
+      <li><b>六步</b>：白底图 → 案例库 → 模板库 → 垫图控图 → 人工质检 → 排版定稿。</li>
+      <li><b>垫图保商品、模板保风格</b>：两个保险同时上，废片率立降。</li>
+      <li><b>AI 出 90 分，人补最后 10 分</b>：让 AI 冲 100 分是烧钱黑洞。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

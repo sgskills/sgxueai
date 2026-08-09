@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>搭建你的商品知识库 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="商品参数、FAQ、售后政策怎么切块入库，检索命中率才高？知识库建设的完整实战流程。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="搭建你的商品知识库">
+<meta property="og:description" content="商品参数、FAQ、售后政策怎么切块入库，检索命中率才高。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-6.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .chunk-demo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .chunk{border-radius:12px;padding:15px 17px;font-size:12.5px;line-height:1.8;}
+  .chunk h5{font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:9px;}
+  .chunk.bad{background:rgba(220,38,38,.05);border:1.5px solid rgba(220,38,38,.28);}
+  .chunk.bad h5{color:var(--danger);}
+  .chunk.good{background:rgba(16,185,129,.05);border:1.5px solid rgba(16,185,129,.32);}
+  .chunk.good h5{color:var(--success);}
+  .chunk code{font-size:11px;display:block;background:rgba(0,0,0,.05);border-radius:6px;padding:7px 10px;margin:5px 0;color:var(--text);}
+  [data-theme="dark"] .chunk code{background:rgba(255,255,255,.07);}
+  .chunk .why{color:var(--sub);font-size:11.5px;margin-top:7px;line-height:1.6;}
+  @media(max-width:768px){.chunk-demo{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>搭建你的商品知识库</h1>
+    <p class="subtitle">上一节看到 RAG 的疗效了。这一节干体力活：把你店里的资料，整理成 AI 查得到、查得准的知识库。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">技巧</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">RAG 的效果 70% 在建库</div>
+
+  <p class="reveal">很多团队 RAG 上线后抱怨“答得还是不准”，查来查去，问题全在库里：<b>Excel 直接导入、详情页整页塞入、FAQ 三年没更新</b>。垃圾进垃圾出，检索技术再好也救不了烂资料。</p>
+
+  <p class="reveal">建库就三件事：<b>收什么、怎么切、怎么养</b>。下面逐个说。</p>
+
+  <div class="sec-label">第一步：收什么——四类资料入库</div>
+
+  <ul>
+    <li class="reveal"><b>商品档案</b>：每个 SKU 一页——参数、卖点、适用人群、禁忌、搭配建议。这是知识库的骨架。</li>
+    <li class="reveal"><b>政策文档</b>：包邮规则、退换货政策、发票规则、活动说明。<b>只放最新版</b>，过期政策是幻觉的温床。</li>
+    <li class="reveal"><b>真实 FAQ</b>：从客服聊天记录里挖高频问题 + 金牌客服的标准答案——这是最有价值的一类，别自己拍脑袋编。</li>
+    <li class="reveal"><b>对比与边界</b>：A 款 vs B 款差异、“不适合什么人”——敢写“不适用”的库，才能养出敢劝退的客服。</li>
+  </ul>
+
+  <div class="sec-label">第二步：怎么切——切块的艺术</div>
+
+  <p class="reveal">切块（chunking）是建库最容易翻车的环节。切太大，检索不准；切太小，上下文丢光。对比感受一下：</p>
+
+  <div class="chunk-demo reveal">
+    <div class="chunk bad">
+      <h5>❌ 错误示范：整页塞入 / 乱切</h5>
+      <code>【整块】连衣裙详情页全文 3000 字：面料、尺码、洗涤、模特信息、品牌故事……</code>
+      <code>【乱切】……裙长 115cm，适合身高（断）160-175 穿……雪纺面（断）料透气……</code>
+      <div class="why">整页塞：检索时噪音淹没重点。乱切：句子拦腰斩断，“适合身高 160” 后面接的是另一个 SKU 的内容，AI 直接张冠李戴。</div>
+    </div>
+    <div class="chunk good">
+      <h5>✅ 正确姿势：按“问答单元”切</h5>
+      <code>【块 1】法式碎花连衣裙 · 尺码：S 码裙长 108cm 适合 155-165，M 码 112cm 适合 160-170，L 码 115cm 适合 165-175</code>
+      <code>【块 2】法式碎花连衣裙 · 面料洗护：雪纺，机洗需装洗衣袋，阴干不可暴晒</code>
+      <div class="why">每块 = 一个完整语义单元 + 带商品名。AI 查到任何一块都能独立读懂，不怕上下文丢失。</div>
+    </div>
+  </div>
+
+  <ul>
+    <li class="reveal"><b>切块口诀</b>：一块答一问，块内自完整（带商品名），单块 100-300 字。</li>
+    <li class="reveal"><b>加标签</b>：每块打上类目、SKU、场景标签，检索时先按标签过滤再匹配，准确率立升。</li>
+  </ul>
+
+  <div class="sec-label">第三步：怎么养——知识库是活物</div>
+
+  <ul>
+    <li class="reveal"><b>定责任人</b>：知识库要有 owner，上新 24 小时内入库，改价改政策当天更新——<b>谁运营店铺，谁运营知识库</b>。</li>
+    <li class="reveal"><b>从客诉里补</b>：每周看 AI 客服“答不上来/答错”的记录，那就是知识库的缺口清单，逐条补上。</li>
+    <li class="reveal"><b>定期清尸</b>：下架商品、过期活动及时清除或归档——过期资料比没有资料更害人。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    一句话：<b>知识库不是 IT 项目，是运营资产</b>。你店里的客服主管花两个周末就能建起第一版——先把 Top 50 高频问题的标准答案入库，AI 客服立刻就能接住七成咨询。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>RAG 效果 70% 在建库</b>：垃圾进垃圾出，技术救不了烂资料。</li>
+      <li><b>四类入库</b>：商品档案、政策文档（只留最新版）、真实 FAQ、对比与边界。</li>
+      <li><b>切块口诀</b>：一块答一问、块内自完整、100-300 字、带标签。</li>
+      <li><b>库要养</b>：定责任人、从客诉补缺口、定期清过期资料。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上下文压缩：长对话不“断片” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="60% 裁剪 → 75% 微压缩 → 85% 折叠 → 95% 紧急：拖动滑块看四层压缩防线——运营贴几十张报表做数据分析，AI 也能不“忘事”。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="上下文压缩：长对话不&quot;断片&quot;">
+<meta property="og:description" content="拖动滑块看四轮压缩防线，大数据分析不断片。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-9.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .cp-slider-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .cp-slider-row label{font-size:13px;font-weight:700;color:var(--sub);flex-shrink:0;}
+  .cp-slider-row .val{font-weight:900;color:var(--green);min-width:76px;}
+  .cp-bar-wrap{margin-bottom:16px;}
+  .cp-bar{
+    height:34px;border-radius:9px;overflow:hidden;display:flex;
+    border:1.5px solid var(--border-strong);position:relative;
+  }
+  .cp-bar .used{background:linear-gradient(90deg,var(--green),var(--amber),var(--danger));transition:width .4s;}
+  .cp-bar .free{background:var(--pill-bg);flex:1;}
+  .cp-thresholds{position:relative;height:18px;font-size:10px;color:var(--sub);}
+  .cp-thresholds span{position:absolute;transform:translateX(-50%);font-weight:700;}
+  .cp-action{
+    border-radius:12px;padding:14px 17px;font-size:13px;line-height:1.75;
+    border:1.5px solid var(--border);background:var(--bg);min-height:88px;transition:.3s;
+  }
+  .cp-action .at{font-weight:900;font-size:13.5px;margin-bottom:5px;display:flex;align-items:center;gap:8px;}
+  .cp-action .lv{font-size:10.5px;font-weight:900;padding:2px 9px;border-radius:999px;color:#fff;}
+  .lv0{background:var(--success);} .lv1{background:var(--amber);}
+  .lv2{background:#ea580c;} .lv3{background:var(--danger);}
+  .cp-kept{margin-top:12px;font-size:12.5px;color:var(--sub);background:var(--pill-bg);border-radius:10px;padding:10px 14px;line-height:1.7;}
+  .cp-kept b{color:var(--text-h);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>上下文压缩：长对话不“断片”</h1>
+    <p class="subtitle">什么时候白板最容易爆？不是聊天，是<b>数据分析</b>——你让 AI 做店铺月度诊断，生意参谋、推广报表、竞品数据一贴就是几万字，白板瞬间见底。第一篇讲过白板会满、会擦掉关键信息，这一节给解法：四层压缩防线。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">技巧</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">数据分析是白板的“吞金兽”</div>
+
+  <p class="reveal">体会一下这个场景：周一早上你让运营智能体做月度复盘——先贴 30 天的流量日报，再贴店铺 A 和店铺 B 两份推广明细，又贴了竞品价格监控表。报到一半你想追问“那上周三转化率跳水到底为什么”，AI 却一脸茫然：<b>最早贴的流量日报已经被挤出白板了</b>。</p>
+
+  <p class="reveal">第一篇的结论是“白板满了，最早的被擦掉”——那是没有压缩机制的裸奔状态。实战中，成熟的 Agent 框架会在白板快满时<b>主动整理</b>，而不是被动擦除。整理的核心思路一句话：<b>原始明细变摘要，关键结论永留存</b>。第 1-10 天的流量明细可以压成一行“上旬日均访客 4200、转化率 2.1%”，但“上周三转化率跳水到 0.8%”这个异常必须钉在白板上。</p>
+
+  <div class="sec-label">交互演示 · 四层压缩防线</div>
+
+  <p class="reveal">拖动滑块模拟数据越贴越多、白板占用率越来越高，看系统在不同水位采取什么动作：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">上下文水位模拟器 · 数据分析场景</div>
+    <div class="cp-slider-row">
+      <label>白板占用率</label>
+      <input type="range" id="cpSlider" min="30" max="98" value="45">
+      <span class="val" id="cpVal">45%</span>
+    </div>
+    <div class="cp-bar-wrap">
+      <div class="cp-bar"><div class="used" id="cpUsed" style="width:45%"></div><div class="free"></div></div>
+      <div class="cp-thresholds">
+        <span style="left:60%">60% 裁剪</span>
+        <span style="left:75%">75% 微压缩</span>
+        <span style="left:85%">85% 折叠</span>
+        <span style="left:95%">95% 紧急</span>
+      </div>
+    </div>
+    <div class="cp-action" id="cpAction"></div>
+    <div class="cp-kept" id="cpKept"></div>
+  </div>
+
+  <div class="sec-label">压缩的两大纪律</div>
+
+  <ul>
+    <li class="reveal"><b>关键结论清单先行</b>：压缩前先定义“什么永远不能丢”——核心指标结论（转化率、投产比、毛利口径）、已确认的异常点、你定下的决策。这张清单写在 System Prompt 里，任何压缩级别都豁免。<b>明细可以压，结论不能丢。</b></li>
+    <li class="reveal"><b>压缩要留“索引”</b>：被折叠的报表不是删除，是“存进档案柜留张卡片”——你追问“把 5 号那天的流量明细再拉出来看看”时，AI 能凭索引把原始数据取回来重新细算。只压不留档，等于变相擦白板。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    压缩机制和成本是一对双赢：白板占用低了，<b>每轮重付的 Token 同步变少</b>（2-10 的 Token 账里，这是“轮数系数”的解法）。防断片和省钱，同一个动作。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>数据分析最吃白板</b>：报表一贴几万字，没有压缩机制，最早的数据先被挤出去。</li>
+      <li><b>四层防线</b>：60% 裁冗余 → 75% 压明细 → 85% 折叠存索引 → 95% 紧急摘要重开。</li>
+      <li><b>核心思路</b>：原始明细变摘要，关键结论永留存。</li>
+      <li><b>压缩 = 防断片 + 省钱</b>：白板占用低，每轮重复计费同步下降。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var levels = [
+    { max:59, lv:'lv0', name:'✅ 安全水位 · 不动作', body:'白板空间充足，所有报表原文保留。此时的 AI 记性最好，每一行数据都随时可查。',
+      kept:'保留：全部原始数据。' },
+    { max:74, lv:'lv1', name:'✂️ 第一层 · 裁剪冗余', body:'占用超 60%，开始剪掉零信息内容——重复贴的表头、空行、导出报表自带的说明文字、你已经讨论完并得出结论的闲聊段落。',
+      kept:'保留：全部数据与结论。<b>裁掉：重复表头、空行、导出说明、已闭环的讨论。</b>' },
+    { max:84, lv:'lv2', name:'🗜️ 第二层 · 微压缩', body:'超 75%，早期明细被改写成摘要：“第 1-10 天流量日报 → 日均访客 4200、转化率 2.1%、搜索占比 55%”——三行数字顶十天的报表。',
+      kept:'保留：近期数据原文 + 关键结论。<b>压缩：早期明细 → 指标摘要。</b>' },
+    { max:94, lv:'lv3', name:'📦 第三层 · 折叠存索引', body:'超 85%，整份报表被折叠进“档案柜”，白板上只留索引卡：“直通车 5/1-5/15 明细已折叠（含分计划投产，可取回）”。你追问时凭索引取回原文重新细算。',
+      kept:'保留：近期数据 + 关键结论 + 折叠索引。<b>折叠：整份历史报表。</b>' },
+    { max:98, lv:'lv3', name:'🚨 第四层 · 紧急摘要重开', body:'超 95%，整场分析浓缩成一份“阶段结论卡”，几乎清空白板重新开始：<br><i>“月度复盘进展：转化率上周三跳水至 0.8% 已定位为详情页改版权重波动；直通车投产 3.2 达标、引力魔方 1.6 拖后腿；待办：魔方人群收窄方案。”</i>——结论一个没丢，白板腾出 80% 空间。',
+      kept:'保留：阶段结论卡（关键结论全在）+ System Prompt。<b>清空：一切原始明细。</b>' }
+  ];
+  var slider = document.getElementById('cpSlider');
+  var val = document.getElementById('cpVal');
+  var used = document.getElementById('cpUsed');
+  var action = document.getElementById('cpAction');
+  var kept = document.getElementById('cpKept');
+  function update(){
+    var v = +slider.value;
+    val.textContent = v + '%';
+    used.style.width = v + '%';
+    var lv = levels[0];
+    for (var i = 0; i < levels.length; i++){ if (v <= levels[i].max){ lv = levels[i]; break; } lv = levels[i]; }
+    action.innerHTML = '<div class="at"><span class="lv ' + lv.lv + '">' + v + '%</span>' + lv.name + '</div>' + lv.body;
+    kept.innerHTML = '<b>白板现状</b>：' + lv.kept;
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

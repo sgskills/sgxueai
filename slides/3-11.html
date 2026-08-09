@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>权限与安全：AI 能改价吗？ | 诗光聊AI电商 入门课</title>
+<meta name="description" content="五种权限模式 + 人工兜底节点设计：哪些按钮永远不能让 AI 碰，电商 Agent 的权限设计实战。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="权限与安全：AI 能改价吗？">
+<meta property="og:description" content="五种权限模式 + 人工兜底节点，哪些按钮永远不能让 AI 碰。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-11.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .perm-table td:first-child{font-weight:800;color:var(--text-h);white-space:nowrap;}
+  .perm-lv{display:inline-block;font-size:10.5px;font-weight:900;padding:2px 9px;border-radius:999px;}
+  .pl0{background:rgba(16,185,129,.12);color:var(--success);}
+  .pl1{background:rgba(217,119,6,.12);color:var(--amber);}
+  .pl2{background:rgba(220,38,38,.12);color:var(--danger);}
+  .risk-sort{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+  .risk-item{
+    display:flex;align-items:center;gap:12px;background:var(--card);
+    border:1.5px solid var(--border);border-radius:11px;padding:11px 15px;font-size:13.5px;font-weight:700;
+  }
+  .risk-item .act{flex:1;color:var(--text-h);}
+  .risk-item select{
+    padding:7px 10px;border-radius:8px;border:1.5px solid var(--border-strong);
+    background:var(--bg);color:var(--text);font-family:inherit;font-size:12.5px;
+  }
+  .risk-item .mark{font-size:16px;width:22px;text-align:center;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>权限与安全：AI 能改价吗？</h1>
+    <p class="subtitle">2-4 节防的是“客人骗 AI”，这一节防的是“AI 自己被授权太多”。落地最后一道安全题：给 AI 的权限清单怎么划。</p>
+    <div class="tag-row"><span class="tag">安全</span><span class="tag">实战</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">一个权限判据：错了能撤回吗</div>
+
+  <p class="reveal">给 AI 授权不用纠结，一个判据走天下：<b>这个动作做错了，能不能低成本撤回？</b></p>
+
+  <ul>
+    <li class="reveal"><b>能撤回 → 可以自动</b>：回复客人、查数据、生成文案草稿——错了改一条就行。</li>
+    <li class="reveal"><b>撤回有代价 → 人工确认</b>：发优惠券、建退款单、改库存——错了要追损，AI 提议、人拍板。</li>
+    <li class="reveal"><b>撤不回 → 永不授权</b>：改价格、转账、删数据、对外发公告——出了事就是资损和舆情，这些按钮永远在人手里。</li>
+  </ul>
+
+  <div class="sec-label">五种权限模式速查</div>
+
+  <table class="reveal perm-table">
+    <tr><th>动作</th><th>权限模式</th><th>理由</th></tr>
+    <tr><td>回复客人咨询</td><td><span class="perm-lv pl0">全自动</span></td><td>说错了下一句可以圆回来</td></tr>
+    <tr><td>查订单 / 库存 / 物流</td><td><span class="perm-lv pl0">全自动</span></td><td>只读操作，查错无损</td></tr>
+    <tr><td>生成文案 / 图片草稿</td><td><span class="perm-lv pl0">全自动</span></td><td>草稿不上架，质检兜底</td></tr>
+    <tr><td>发优惠券 / 建工单</td><td><span class="perm-lv pl1">人工确认</span></td><td>涉及钱和承诺，AI 提议人拍板</td></tr>
+    <tr><td>改库存 / 上下架商品</td><td><span class="perm-lv pl1">人工确认</span></td><td>误操作影响在售链接</td></tr>
+    <tr><td>改价 / 退款 / 转账</td><td><span class="perm-lv pl2">永不授权</span></td><td>资金动作，撤销代价极高</td></tr>
+    <tr><td>删数据 / 对外公告</td><td><span class="perm-lv pl2">永不授权</span></td><td>不可撤回 + 舆情风险</td></tr>
+  </table>
+
+  <div class="sec-label">小练习 · 这些动作该给什么权限</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">权限分级练习</div>
+    <div class="risk-sort">
+      <div class="risk-item"><span class="act">🎫 给给了差评的客人补发 10 元券</span>
+        <select data-a="人工确认"><option value="">选权限…</option><option>全自动</option><option>人工确认</option><option>永不授权</option></select><span class="mark"></span></div>
+      <div class="risk-item"><span class="act">📦 查询某订单的物流状态</span>
+        <select data-a="全自动"><option value="">选权限…</option><option>全自动</option><option>人工确认</option><option>永不授权</option></select><span class="mark"></span></div>
+      <div class="risk-item"><span class="act">💰 把连衣裙价格从 129 改为 99</span>
+        <select data-a="永不授权"><option value="">选权限…</option><option>全自动</option><option>人工确认</option><option>永不授权</option></select><span class="mark"></span></div>
+      <div class="risk-item"><span class="act">📝 生成下周的上新预告文案草稿</span>
+        <select data-a="全自动"><option value="">选权限…</option><option>全自动</option><option>人工确认</option><option>永不授权</option></select><span class="mark"></span></div>
+      <div class="risk-item"><span class="act">🧾 给客人原路退回 269 元货款</span>
+        <select data-a="永不授权"><option value="">选权限…</option><option>全自动</option><option>人工确认</option><option>永不授权</option></select><span class="mark"></span></div>
+    </div>
+  </div>
+
+  <div class="sec-label">人工兜底节点的设计要点</div>
+
+  <ul>
+    <li class="reveal"><b>确认界面要“一眼能判”</b>：AI 提议发券时，给人工看的卡片要包含：客人诉求、AI 的理由、金额上限——<b>3 秒能决策</b>，否则兜底变成新瓶颈。</li>
+    <li class="reveal"><b>兜底动作留痕</b>：谁确认、何时确认、确认内容，全部落日志——出了纠纷能回溯，这也是团队信任 AI 的基础。</li>
+    <li class="reveal"><b>额度内放权</b>：20 元以内的券可以免确认（写死上限），超了才进人工——安全和效率不是零和，额度设计就是平衡点。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>授权判据</b>：错了能撤回吗？能→自动；有代价→人工确认；撤不回→永不授权。</li>
+      <li><b>资金动作零授权</b>：改价、退款、转账、删数据，永远在人手里。</li>
+      <li><b>兜底要好判、留痕、有额度</b>：3 秒决策界面 + 全程日志 + 小额免确认。</li>
+      <li><b>权限表写进 SOP</b>：团队共用一份，别每个 Agent 各自为政。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.risk-item select').forEach(function(sel){
+    sel.addEventListener('change', function(){
+      var mark = this.parentElement.querySelector('.mark');
+      if (!this.value){ mark.textContent = ''; return; }
+      mark.textContent = this.value === this.dataset.a ? '✅' : '❌';
+    });
+  });
+})();
+</script>
+</body>
+</html>

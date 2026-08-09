@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>结业考试：全课综合测试 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="AI 电商基础课结业考试：31 道题覆盖七大篇章，学完全部课程方可参加，考完出篇章掌握度报告，通过可领结业证书。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="结业考试：全课综合测试 | 诗光聊AI电商 入门课">
+<meta property="og:description" content="31 题覆盖七大篇章，篇章掌握度报告 + 错题定向复习。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/final-exam.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .exam-start{text-align:center;padding:26px 0 10px;}
+  .exam-start .big{font-size:46px;margin-bottom:12px;}
+  .exam-start p{color:var(--sub);font-size:14px;max-width:460px;margin:0 auto 18px;line-height:1.8;}
+  .best-line{font-size:12.5px;font-weight:800;color:var(--accent);margin-bottom:20px;min-height:18px;}
+  .lock-line{font-size:12.5px;color:var(--sub);margin-top:14px;line-height:1.8;max-width:460px;margin-left:auto;margin-right:auto;}
+  .lock-line b{color:var(--accent);}
+  .lock-line a{color:var(--accent);font-weight:700;}
+  #startBtn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.4);box-shadow:none;}
+  .q-block{margin-bottom:24px;}
+  .q-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+  .q-no{
+    flex-shrink:0;width:26px;height:26px;border-radius:8px;font-size:12px;font-weight:900;
+    background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-border);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .q-text{font-size:15px;font-weight:800;color:var(--text-h);line-height:1.6;flex:1;}
+  .q-part{flex-shrink:0;font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:999px;border:1px solid var(--border);color:var(--sub);margin-top:2px;}
+  .q-opts{display:flex;flex-direction:column;gap:8px;padding-left:36px;}
+  .q-opt{
+    text-align:left;padding:11px 15px;border-radius:10px;font-size:13.5px;line-height:1.6;
+    border:1.5px solid var(--border);background:var(--card);color:var(--text);
+    cursor:pointer;font-family:inherit;transition:.15s;
+  }
+  .q-opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(2px);}
+  .q-opt:disabled{cursor:default;opacity:.75;}
+  .q-opt.right{background:rgba(16,185,129,.1);border-color:var(--success);color:var(--success);font-weight:700;opacity:1;}
+  .q-opt.wrong{background:rgba(220,38,38,.08);border-color:var(--danger);color:var(--danger);opacity:1;}
+  .q-why{
+    display:none;margin:10px 0 0 36px;font-size:12.5px;color:var(--sub);
+    background:var(--pill-bg);border-radius:10px;padding:11px 14px;line-height:1.75;
+  }
+  .q-why.show{display:block;}
+  .q-why a{color:var(--accent);font-weight:700;}
+  .exam-bar{
+    position:sticky;bottom:16px;z-index:40;margin-top:26px;
+    background:var(--card);border:1.5px solid var(--border);border-radius:999px;
+    padding:10px 20px;display:flex;align-items:center;gap:14px;
+    box-shadow:var(--shadow-pop);
+  }
+  .exam-bar .prog{flex:1;height:8px;border-radius:99px;background:var(--pill-bg);overflow:hidden;}
+  .exam-bar .prog i{display:block;height:100%;background:linear-gradient(90deg,#F97316,#ea580c);border-radius:99px;transition:width .3s;}
+  .exam-bar .pt{font-size:13px;font-weight:800;color:var(--sub);white-space:nowrap;}
+  .result-panel{display:none;padding:26px 0 6px;}
+  .result-panel .rp-score-row{text-align:center;}
+  .result-panel .score{font-size:54px;font-weight:900;line-height:1;}
+  .result-panel .score.pass{color:var(--success);}
+  .result-panel .score.fail{color:var(--amber);}
+  .result-panel .rd{font-size:14px;color:var(--sub);margin-top:10px;line-height:1.8;text-align:center;}
+  .rp-section-title{font-size:12px;font-weight:900;letter-spacing:1px;color:var(--sub);text-transform:uppercase;margin:26px 0 12px;display:flex;align-items:center;gap:10px;}
+  .rp-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+  .rp-part{display:flex;align-items:center;gap:11px;margin-bottom:9px;}
+  .rp-part .rp-dot{flex-shrink:0;width:11px;height:11px;border-radius:50%;}
+  .rp-part .rp-name{flex-shrink:0;width:88px;font-size:12.5px;font-weight:800;color:var(--text-h);}
+  .rp-part .rp-track{flex:1;height:10px;border-radius:999px;background:var(--pill-bg);overflow:hidden;border:1px solid var(--border);}
+  .rp-part .rp-fill{height:100%;border-radius:999px;width:0%;transition:width .7s cubic-bezier(.22,.9,.3,1);}
+  .rp-part .rp-num{flex-shrink:0;width:62px;text-align:right;font-size:12px;font-weight:800;color:var(--sub);}
+  .rp-part .rp-num b{color:var(--text-h);}
+  .rp-miss{border-radius:11px;border:1.5px solid var(--border);background:var(--card);padding:12px 15px;margin-bottom:8px;
+    display:flex;align-items:center;gap:11px;font-size:13px;transition:.15s;}
+  .rp-miss:hover{border-color:var(--accent-border);}
+  .rp-miss .rm-q{flex:1;color:var(--text);line-height:1.6;}
+  .rp-miss .rm-q b{color:var(--danger);}
+  .rp-miss a{flex-shrink:0;font-size:12px;font-weight:800;color:var(--accent);white-space:nowrap;}
+  .rp-perfect{font-size:13.5px;font-weight:800;color:var(--success);padding:13px;border-radius:11px;
+    background:rgba(16,185,129,.08);border:1.5px solid rgba(16,185,129,.4);text-align:center;}
+  .result-panel .acts{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  /* ── 结业证书弹层 ── */
+  .cert-mask{position:fixed;inset:0;z-index:200;background:rgba(20,16,12,.55);backdrop-filter:blur(4px);
+    display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:30px 16px 50px;}
+  .cert-mask.show{display:flex;}
+  .cert-panel{background:var(--card);border-radius:16px;padding:22px;max-width:480px;width:100%;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);}
+  .cert-panel h3{font-size:16px;font-weight:900;color:var(--text-h);text-align:center;margin-bottom:4px;}
+  .cert-panel .cp-sub{font-size:12px;color:var(--sub);text-align:center;margin-bottom:14px;}
+  .cert-name-row{display:flex;gap:9px;margin-bottom:14px;}
+  .cert-name-row input{
+    flex:1;font-family:inherit;font-size:14px;padding:10px 14px;border-radius:10px;
+    border:1.5px solid var(--border-strong);background:var(--bg);color:var(--text-h);outline:none;
+  }
+  .cert-name-row input:focus{border-color:var(--accent);}
+  .cert-canvas-wrap{border-radius:12px;overflow:hidden;border:1.5px solid var(--border);line-height:0;}
+  .cert-canvas-wrap canvas{width:100%;height:auto;display:block;}
+  .cert-actions{display:flex;gap:10px;margin-top:14px;}
+  .cert-actions button,.cert-actions a{
+    flex:1;text-align:center;padding:12px;border-radius:999px;font-size:14px;font-weight:800;
+    cursor:pointer;font-family:inherit;border:none;transition:.15s;
+  }
+  .cert-dl{background:linear-gradient(135deg,#F97316,#ea580c);color:#fff;}
+  .cert-dl:hover{filter:brightness(1.08);}
+  .cert-close{background:var(--pill-bg);color:var(--text);}
+  .cert-tip{font-size:11.5px;color:var(--sub);text-align:center;margin-top:10px;line-height:1.6;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">结业考试 · 全课综合测试</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">结业考试 · 全课综合测试</div>
+    <h1 id="examTitle">结业考试</h1>
+    <p class="subtitle">覆盖全部七大篇章——从 Token 到现金流。每题作答后立即出解析，考完生成你的篇章掌握度报告，错题直达对应课程。</p>
+    <div class="tag-row"><span class="tag">收官</span><span class="tag">考试</span><span class="tag">约 20 分钟</span></div>
+  </div>
+
+  <div class="exam-start" id="startPanel">
+    <img src="mascot/mascot-480.png" alt="顺小栗为你加油" style="width:118px;height:118px;border-radius:50%;box-shadow:0 10px 28px rgba(120,60,0,.2);margin-bottom:16px;">
+    <p id="examDesc"></p>
+    <div class="best-line" id="bestLine"></div>
+    <button id="startBtn" style="background:linear-gradient(135deg,#F97316,#ea580c);box-shadow:0 8px 24px rgba(249,115,22,.35);border:none;padding:13px 36px;border-radius:999px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;">开考 →</button>
+    <div class="lock-line" id="lockLine"></div>
+  </div>
+
+  <div id="quizArea" style="display:none;">
+    <div id="qList"></div>
+    <div class="exam-bar">
+      <span class="pt" id="progText">0 / 0</span>
+      <div class="prog"><i id="progFill" style="width:0%"></i></div>
+      <span class="pt" id="scoreText">得分 0</span>
+    </div>
+    <div class="result-panel" id="resultPanel">
+      <div class="rp-score-row">
+        <div class="score" id="finalScore">0</div>
+        <div class="rd" id="finalDesc"></div>
+      </div>
+      <div class="rp-section-title">📊 篇章掌握度报告</div>
+      <div id="partReport"></div>
+      <div class="rp-section-title">🎯 错题定向复习</div>
+      <div id="missList"></div>
+      <div class="acts">
+        <button id="certBtn" style="display:none;background:linear-gradient(135deg,#0D9488,#0f766e);border:none;padding:12px 28px;border-radius:999px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;">🎓 生成结业证书</button>
+        <button id="retryBtn" style="background:linear-gradient(135deg,#F97316,#ea580c);border:none;padding:12px 28px;border-radius:999px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;">↺ 再考一次</button>
+        <a href="home.html" style="display:inline-flex;align-items:center;padding:12px 24px;border-radius:999px;border:1.5px solid var(--border-strong);font-size:14px;font-weight:600;color:var(--text);">回课程地图</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- 结业证书弹层 -->
+<div class="cert-mask" id="certMask">
+  <div class="cert-panel">
+    <h3>🎓 你的结业证书</h3>
+    <div class="cp-sub">输入昵称，生成专属证书图，晒到朋友圈吧</div>
+    <div class="cert-name-row">
+      <input id="certName" type="text" maxlength="12" placeholder="输入你的昵称（12 字内）" value="">
+    </div>
+    <div class="cert-canvas-wrap"><canvas id="certCanvas" width="1080" height="1440"></canvas></div>
+    <div class="cert-actions">
+      <button class="cert-dl" id="certDl">⬇ 下载证书 PNG</button>
+      <button class="cert-close" id="certClose">关闭</button>
+    </div>
+    <div class="cert-tip">手机端也可长按证书图片保存到相册</div>
+  </div>
+</div>
+
+<script src="course-data.js"></script>
+<script src="final-exam-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var E = window.FINAL_EXAM;
+  var questions = E.questions;
+  var total = questions.length;
+  var answered = 0, correctCount = 0;
+  var misses = [];
+  var partStat = {}; // part -> {ok, total}
+  var BEST_KEY = 'aibp_final_exam_best';
+  var passedScore = 0; // 考过的分数（>=passScore 才非零），供证书使用
+
+  questions.forEach(function(q){
+    if(!partStat[q.part]) partStat[q.part] = {ok:0,total:0};
+    partStat[q.part].total++;
+  });
+
+  document.getElementById('examTitle').textContent = E.title;
+  document.getElementById('examDesc').textContent = '共 ' + total + ' 道单选题，覆盖七大篇章，每题作答后立即显示对错与解析。满分 100，' + E.passScore + ' 分通过。建议 20 分钟内完成。';
+
+  // 历史最好成绩
+  var best = 0;
+  try { best = +(localStorage.getItem(BEST_KEY) || 0); } catch(e){}
+  if (best > 0) {
+    document.getElementById('bestLine').textContent = '🏅 历史最好成绩：' + best + ' 分' + (best >= E.passScore ? '（已通过）' : '（未通过，冲一把）');
+  }
+
+  /* ── 学完门槛：全部课程完成才能开考（阶段自测自愿，不作门槛） ── */
+  var learnableFiles = [];
+  var lessonMeta = {};
+  if (window.COURSE) {
+    window.COURSE.parts.forEach(function(p){ p.topics.forEach(function(t){ t.lessons.forEach(function(ls){
+      if (ls.file !== 'exam.html' && ls.file !== 'final-exam.html') {
+        learnableFiles.push(ls.file);
+        lessonMeta[ls.file] = ls.title;
+      }
+    });});});
+  }
+  var progMap = {};
+  try { progMap = JSON.parse(localStorage.getItem('aibp_course_progress_v1') || '{}'); } catch(e){}
+  var doneCnt = 0;
+  var missing = [];
+  learnableFiles.forEach(function(f){ if (progMap[f]) doneCnt++; else missing.push(f); });
+  var startBtnEl = document.getElementById('startBtn');
+  var lockLineEl = document.getElementById('lockLine');
+  if (doneCnt < learnableFiles.length) {
+    startBtnEl.disabled = true;
+    startBtnEl.textContent = '🔒 尚未解锁';
+    var missHtml = missing.slice(0, 12).map(function(f){
+      return '<a href="' + f + '" style="display:inline-block;margin:3px 6px 3px 0;padding:2px 10px;border:1px solid var(--accent,#7c5cff);border-radius:999px;font-size:12px;text-decoration:none;">' + (lessonMeta[f] || f) + ' →</a>';
+    }).join('');
+    lockLineEl.innerHTML = '结业考试需要先学完全部 <b>' + learnableFiles.length + '</b> 节课（你已完成 <b>' + doneCnt + ' / ' + learnableFiles.length + '</b>），阶段自测自愿挑战、不作门槛。<br>还差这几节，点进去拉到文末点「✓ 完成本节」即可：<br><span style="display:block;margin-top:8px;">' + missHtml + (missing.length > 12 ? ' …等 ' + missing.length + ' 节' : '') + '</span>';
+  } else {
+    lockLineEl.innerHTML = '✅ 全部 ' + learnableFiles.length + ' 节课已学完，随时可以开考。';
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    document.getElementById('startPanel').style.display = 'none';
+    document.getElementById('quizArea').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var qList = document.getElementById('qList');
+  qList.innerHTML = questions.map(function(q, i){
+    var partName = E.parts[q.part] ? E.parts[q.part].name : '';
+    return '<div class="q-block" data-i="' + i + '">'
+      + '<div class="q-head"><span class="q-no">' + (i+1) + '</span><span class="q-text">' + q.q + '</span>'
+      + '<span class="q-part">' + partName + '</span></div>'
+      + '<div class="q-opts">' + q.opts.map(function(o, k){
+          return '<button class="q-opt" data-k="' + k + '">' + String.fromCharCode(65+k) + '. ' + o + '</button>';
+        }).join('') + '</div>'
+      + '<div class="q-why">💡 ' + q.why + ' <a href="' + q.review + '">→ 回这节课复习</a></div>'
+      + '</div>';
+  }).join('');
+
+  function updateBar(){
+    document.getElementById('progText').textContent = answered + ' / ' + total;
+    document.getElementById('progFill').style.width = (answered/total*100) + '%';
+    var score = answered ? Math.round(correctCount/total*100) : 0;
+    document.getElementById('scoreText').textContent = '得分 ' + score;
+    if (answered === total) showResult(score);
+  }
+
+  function showResult(score){
+    var panel = document.getElementById('resultPanel');
+    var sEl = document.getElementById('finalScore');
+    var dEl = document.getElementById('finalDesc');
+    var pass = score >= E.passScore;
+    sEl.textContent = score;
+    sEl.className = 'score ' + (pass ? 'pass' : 'fail');
+    if (pass) {
+      passedScore = score;
+      document.getElementById('certBtn').style.display = '';
+    }
+    dEl.innerHTML = pass
+      ? '🎉 通过！七大篇章的综合测试你拿下了。<br>下面是你的篇章掌握度报告——优势保持，短板也别放过。'
+      : '还差一点点。别灰心——报告里哪篇短就回哪篇补，<br>错题清单都带直达链接，针对性复习比全书重看快得多。';
+
+    // 存最好成绩
+    try {
+      var prev = +(localStorage.getItem(BEST_KEY) || 0);
+      if (score > prev) localStorage.setItem(BEST_KEY, String(score));
+    } catch(e){}
+
+    // 篇章掌握度
+    var report = document.getElementById('partReport');
+    var rows = Object.keys(partStat).map(function(pk){
+      var st = partStat[pk], meta = E.parts[pk] || {name: pk, color: 'var(--accent)'};
+      var pct = Math.round(st.ok/st.total*100);
+      return '<div class="rp-part">'
+        + '<span class="rp-dot" style="background:' + meta.color + ';"></span>'
+        + '<span class="rp-name">' + meta.name + '</span>'
+        + '<div class="rp-track"><div class="rp-fill" data-w="' + pct + '" style="background:' + meta.color + ';"></div></div>'
+        + '<span class="rp-num"><b>' + st.ok + '</b>/' + st.total + ' · ' + pct + '%</span>'
+        + '</div>';
+    }).join('');
+    report.innerHTML = rows;
+    setTimeout(function(){
+      report.querySelectorAll('.rp-fill').forEach(function(f){ f.style.width = f.getAttribute('data-w') + '%'; });
+    }, 120);
+
+    // 错题清单
+    var missWrap = document.getElementById('missList');
+    if (misses.length === 0) {
+      missWrap.innerHTML = '<div class="rp-perfect">🏆 满分通关，无一错题——你已经可以直接带团队了。</div>';
+    } else {
+      missWrap.innerHTML = misses.map(function(m){
+        return '<div class="rp-miss"><span class="rm-q"><b>第 ' + (m.i+1) + ' 题</b>（' + m.partName + '）' + m.q + '</span>'
+          + '<a href="' + m.review + '">去复习 →</a></div>';
+      }).join('');
+    }
+
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  qList.addEventListener('click', function(e){
+    var btn = e.target.closest('.q-opt');
+    if (!btn || btn.disabled) return;
+    var block = btn.closest('.q-block');
+    var qi = +block.dataset.i;
+    var pick = +btn.dataset.k;
+    var q = questions[qi];
+    block.querySelectorAll('.q-opt').forEach(function(o){
+      o.disabled = true;
+      if (+o.dataset.k === q.a) o.classList.add('right');
+    });
+    if (pick === q.a) {
+      correctCount++;
+      partStat[q.part].ok++;
+    } else {
+      btn.classList.add('wrong');
+      misses.push({ i: qi, q: q.q, review: q.review, partName: E.parts[q.part] ? E.parts[q.part].name : '' });
+    }
+    block.querySelector('.q-why').classList.add('show');
+    answered++;
+    updateBar();
+  });
+
+  document.getElementById('retryBtn').addEventListener('click', function(){ window.location.reload(); });
+
+  /* ══════════ 结业证书生成 ══════════ */
+  var certMask = document.getElementById('certMask');
+  var certCanvas = document.getElementById('certCanvas');
+  var certNameInput = document.getElementById('certName');
+
+  // 课程总节数（从 COURSE 动态数）
+  var lessonCount = 0;
+  if (window.COURSE) {
+    window.COURSE.parts.forEach(function(p){ p.topics.forEach(function(t){ t.lessons.forEach(function(ls){
+      if (ls.file !== 'exam.html' && ls.file !== 'final-exam.html') lessonCount++;
+    });});});
+  }
+
+  function certNo(score){
+    var d = new Date();
+    var ymd = '' + d.getFullYear() + ('0'+(d.getMonth()+1)).slice(-2) + ('0'+d.getDate()).slice(-2);
+    var rand = '';
+    var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    for (var i = 0; i < 4; i++) rand += chars.charAt(Math.floor(Math.random()*chars.length));
+    return 'AIBP-' + ymd + '-' + score + '-' + rand;
+  }
+  var certNumber = '';
+
+  // 顺小栗透明图（加载完成后若证书已打开则重绘）
+  var mascotImg = new Image(), mascotReady = false;
+  mascotImg.onload = function(){ mascotReady = true; if (certMask.classList.contains('show')) drawCert(); };
+  mascotImg.src = 'mascot/mascot-hero-t.png';
+
+  // 弧形排字（top: 上弧正向 / bottom: 下弧正向）
+  function arcText(ctx, text, cx, cy, r, isTop, spread, fontStr, color){
+    ctx.save();
+    ctx.font = fontStr; ctx.fillStyle = color;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    var n = text.length;
+    for (var i = 0; i < n; i++) {
+      var t = n === 1 ? 0 : (i / (n - 1) - 0.5);
+      var a = isTop ? (-Math.PI / 2 + t * spread) : (Math.PI / 2 - t * spread);
+      ctx.save();
+      ctx.translate(cx + r * Math.cos(a), cy + r * Math.sin(a));
+      ctx.rotate(isTop ? a + Math.PI / 2 : a - Math.PI / 2);
+      ctx.fillText(text[i], 0, 0);
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  // 层叠线框图标（参考章中心）
+  function layersIcon(ctx, cx, cy, s, color){
+    ctx.save();
+    ctx.strokeStyle = color; ctx.lineWidth = 3.2;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    for (var k = 0; k < 3; k++) {
+      var y = cy - s * 0.52 + k * s * 0.46;
+      ctx.beginPath();
+      ctx.moveTo(cx - s * 0.74, y);
+      ctx.lineTo(cx, y - s * 0.4);
+      ctx.lineTo(cx + s * 0.74, y);
+      ctx.lineTo(cx, y + s * 0.4);
+      if (k === 0) ctx.closePath();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawCert(){
+    var name = (certNameInput.value || '').trim() || '电商人';
+    var score = passedScore;
+    var ctx = certCanvas.getContext('2d');
+    var W = 1080, H = 1440;
+    var FONT = '"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif';
+    var INK = '#1c1c1e', SUB = '#6f6f76', ACC = '#c2670c', ACCD = '#9a5410';
+
+    // 纸底 + 顶部暖橙渐变
+    ctx.fillStyle = '#faf8f3'; ctx.fillRect(0, 0, W, H);
+    var grad = ctx.createLinearGradient(0, 0, 0, 520);
+    grad.addColorStop(0, '#fdf3e3'); grad.addColorStop(1, 'rgba(253,243,227,0)');
+    ctx.fillStyle = grad; ctx.fillRect(0, 0, W, 520);
+
+    // 网格纸纹
+    ctx.strokeStyle = 'rgba(150,115,70,.08)'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (var gx = 0; gx <= W; gx += 36) { ctx.moveTo(gx + .5, 0); ctx.lineTo(gx + .5, H); }
+    for (var gy = 0; gy <= H; gy += 36) { ctx.moveTo(0, gy + .5); ctx.lineTo(W, gy + .5); }
+    ctx.stroke();
+
+    // 圆角细框
+    ctx.strokeStyle = 'rgba(194,103,12,.35)'; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(52, 52, W - 104, H - 104, 26); else ctx.rect(52, 52, W - 104, H - 104);
+    ctx.stroke();
+
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+
+    // 顺小栗
+    if (mascotReady) ctx.drawImage(mascotImg, W / 2 - 95, 104, 190, 206);
+
+    // 眉标 + 主标题
+    ctx.fillStyle = ACCD; ctx.font = '800 21px ' + FONT;
+    ctx.fillText('C E R T I F I C A T E   O F   C O M P L E T I O N', W / 2, 368);
+    ctx.fillStyle = INK; ctx.font = '900 92px ' + FONT;
+    ctx.fillText('结 业 证 书', W / 2, 478);
+
+    // 祝贺 + 名字（唯一视觉焦点）
+    ctx.fillStyle = SUB; ctx.font = '600 25px ' + FONT;
+    ctx.fillText('祝 贺', W / 2, 606);
+    ctx.fillStyle = INK; ctx.font = '900 88px ' + FONT;
+    ctx.fillText(name, W / 2, 716);
+    var nw = ctx.measureText(name).width;
+    ctx.strokeStyle = ACC; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(W / 2 - nw / 2 - 26, 748); ctx.lineTo(W / 2 + nw / 2 + 26, 748); ctx.stroke();
+
+    // 完成说明
+    ctx.fillStyle = INK; ctx.font = '600 28px ' + FONT;
+    ctx.fillText('已完成《AI 电商基础从入门到掌握》全部 ' + lessonCount + ' 节课程', W / 2, 842);
+    ctx.fillText('并通过结业考试', W / 2, 894);
+
+    // COMPLETED pill
+    ctx.font = '800 17px ' + FONT;
+    var pillTxt = 'C O M P L E T E D';
+    var pw = ctx.measureText(pillTxt).width + 56;
+    ctx.fillStyle = 'rgba(194,103,12,.1)';
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(W / 2 - pw / 2, 936, pw, 50, 25); else ctx.rect(W / 2 - pw / 2, 936, pw, 50);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(194,103,12,.4)'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = ACCD;
+    ctx.fillText(pillTxt, W / 2, 968);
+
+    // 成绩小字
+    ctx.fillStyle = SUB; ctx.font = '600 22px ' + FONT;
+    ctx.fillText('结业考试成绩 ' + score + ' 分', W / 2, 1046);
+
+    // 左下信息
+    var d = new Date();
+    var dateStr = d.getFullYear() + ' 年 ' + (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = INK; ctx.font = '800 22px ' + FONT;
+    ctx.fillText('诗光聊AI电商 入门课', 96, H - 258);
+    ctx.fillStyle = SUB; ctx.font = '500 18px ' + FONT;
+    ctx.fillText('证书编号：' + certNumber, 96, H - 214);
+    ctx.fillText('签发日期：' + dateStr, 96, H - 178);
+
+    // 右下 SGXUEAI CERTIFIED 章（科技蓝：双环 + 弧文 + 层叠图标）
+    var sx = W - 206, sy = H - 256, sr = 100;
+    ctx.save();
+    ctx.translate(sx, sy); ctx.rotate(-0.1);
+    ctx.strokeStyle = 'rgba(37,99,235,.7)'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(0, 0, sr, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = 'rgba(37,99,235,.4)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(0, 0, sr - 24, 0, Math.PI * 2); ctx.stroke();
+    // 侧点小圆
+    ctx.fillStyle = 'rgba(37,99,235,.7)';
+    ctx.beginPath(); ctx.arc(-(sr - 12), 0, 3.2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(sr - 12, 0, 3.2, 0, Math.PI * 2); ctx.fill();
+    // 弧形文字
+    arcText(ctx, 'SGXUEAI', 0, 0, sr - 12, true, 2.1, '800 25px ' + FONT, 'rgba(30,86,210,.92)');
+    arcText(ctx, 'CERTIFIED', 0, 0, sr - 12, false, 1.75, '800 24px ' + FONT, 'rgba(30,86,210,.92)');
+    // 中心层叠图标
+    layersIcon(ctx, 0, 0, 36, 'rgba(37,99,235,.85)');
+    ctx.restore();
+
+    // 最底声明
+    ctx.textAlign = 'center';
+    ctx.fillStyle = SUB; ctx.font = '500 15px ' + FONT;
+    ctx.fillText('本证书为公益学习纪念，不代表任何机构资质认证', W / 2, H - 84);
+  }
+
+  document.getElementById('certBtn').addEventListener('click', function(){
+    certNumber = certNo(passedScore);
+    // 预填上次昵称
+    try { certNameInput.value = localStorage.getItem('aibp_cert_name') || ''; } catch(e){}
+    drawCert();
+    certMask.classList.add('show');
+  });
+  certNameInput.addEventListener('input', function(){
+    try { localStorage.setItem('aibp_cert_name', certNameInput.value); } catch(e){}
+    drawCert();
+  });
+  document.getElementById('certClose').addEventListener('click', function(){ certMask.classList.remove('show'); });
+  certMask.addEventListener('click', function(e){ if (e.target === certMask) certMask.classList.remove('show'); });
+  document.getElementById('certDl').addEventListener('click', function(){
+    var name = (certNameInput.value || '').trim() || '电商人';
+    var a = document.createElement('a');
+    a.download = 'AIBP结业证书-' + name + '-' + passedScore + '分.png';
+    a.href = certCanvas.toDataURL('image/png');
+    a.click();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阶段自测 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="AI 电商实战课阶段自测：覆盖导学篇、认知底座、智能体设计，答完即时出分，错题直达对应知识点复习。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="阶段自测 | 诗光聊AI电商 入门课">
+<meta property="og:description" content="答完即时出分，错题直达对应知识点。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/exam.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .exam-start{text-align:center;padding:30px 0 10px;}
+  .exam-start .big{font-size:44px;margin-bottom:12px;}
+  .exam-start p{color:var(--sub);font-size:14px;max-width:440px;margin:0 auto 22px;line-height:1.8;}
+  .q-block{margin-bottom:26px;}
+  .q-head{display:flex;gap:10px;align-items:baseline;margin-bottom:11px;}
+  .q-no{
+    flex-shrink:0;width:26px;height:26px;border-radius:8px;font-size:12px;font-weight:900;
+    background:rgba(124,58,237,.12);color:var(--purple);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .q-text{font-size:15px;font-weight:800;color:var(--text-h);line-height:1.6;}
+  .q-opts{display:flex;flex-direction:column;gap:8px;padding-left:36px;}
+  .q-opt{
+    text-align:left;padding:11px 15px;border-radius:10px;font-size:13.5px;line-height:1.6;
+    border:1.5px solid var(--border);background:var(--card);color:var(--text);
+    cursor:pointer;font-family:inherit;transition:.15s;
+  }
+  .q-opt:hover:not(:disabled){border-color:var(--purple);transform:translateX(2px);}
+  .q-opt:disabled{cursor:default;opacity:.75;}
+  .q-opt.right{background:rgba(16,185,129,.1);border-color:var(--success);color:var(--success);font-weight:700;opacity:1;}
+  .q-opt.wrong{background:rgba(220,38,38,.08);border-color:var(--danger);color:var(--danger);opacity:1;}
+  .q-why{
+    display:none;margin:10px 0 0 36px;font-size:12.5px;color:var(--sub);
+    background:var(--pill-bg);border-radius:10px;padding:11px 14px;line-height:1.75;
+  }
+  .q-why.show{display:block;}
+  .q-why a{color:var(--purple);font-weight:700;}
+  .exam-bar{
+    position:sticky;bottom:16px;z-index:40;margin-top:30px;
+    background:var(--card);border:1.5px solid var(--border);border-radius:999px;
+    padding:10px 20px;display:flex;align-items:center;gap:14px;
+    box-shadow:var(--shadow-pop);
+  }
+  .exam-bar .prog{flex:1;height:8px;border-radius:99px;background:var(--pill-bg);overflow:hidden;}
+  .exam-bar .prog i{display:block;height:100%;background:var(--purple);border-radius:99px;transition:width .3s;}
+  .exam-bar .pt{font-size:13px;font-weight:800;color:var(--sub);white-space:nowrap;}
+  .result-panel{display:none;text-align:center;padding:26px 0 6px;}
+  .result-panel .score{font-size:52px;font-weight:900;line-height:1;}
+  .result-panel .score.pass{color:var(--success);}
+  .result-panel .score.fail{color:var(--amber);}
+  .result-panel .rd{font-size:14px;color:var(--sub);margin-top:10px;line-height:1.8;}
+  .result-panel .acts{margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 阶段自测</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">阶段自测</div>
+    <h1 id="examTitle">阶段自测</h1>
+    <p class="subtitle">覆盖导学篇 + 第一篇章 + 第二篇章。每题作答后立刻出解析，错题会告诉你回哪节课复习。</p>
+    <div class="tag-row"><span class="tag">收官</span><span class="tag">自测</span><span class="tag">约 3 分钟</span></div>
+  </div>
+
+  <div class="exam-start" id="startPanel">
+    <div class="big">📝</div>
+    <p id="examDesc"></p>
+    <button class="btn-primary" id="startBtn" style="background:linear-gradient(135deg,#7C3AED,#6d28d9);box-shadow:0 8px 24px rgba(124,58,237,.35);border:none;padding:13px 34px;border-radius:999px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;">开始答题 →</button>
+  </div>
+
+  <div id="quizArea" style="display:none;">
+    <div id="qList"></div>
+    <div class="exam-bar">
+      <span class="pt" id="progText">0 / 0</span>
+      <div class="prog"><i id="progFill" style="width:0%"></i></div>
+      <span class="pt" id="scoreText">得分 0</span>
+    </div>
+    <div class="result-panel" id="resultPanel">
+      <div class="score" id="finalScore">0</div>
+      <div class="rd" id="finalDesc"></div>
+      <div class="acts">
+        <button class="btn-primary" id="retryBtn" style="background:linear-gradient(135deg,#F97316,#ea580c);border:none;padding:12px 28px;border-radius:999px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;">↺ 再测一次</button>
+        <a href="home.html" style="display:inline-flex;align-items:center;padding:12px 24px;border-radius:999px;border:1.5px solid var(--border-strong);font-size:14px;font-weight:600;color:var(--text);">回课程地图</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="exam-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var E = window.EXAM;
+  var questions = E.questions;
+  var total = questions.length;
+  var answered = 0, correctCount = 0;
+
+  document.getElementById('examTitle').textContent = E.title;
+  document.getElementById('examDesc').textContent = '共 ' + total + ' 道单选题，每题作答后立即显示对错与解析。满分 100，' + E.passScore + ' 分及格。建议 3 分钟内完成。';
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    document.getElementById('startPanel').style.display = 'none';
+    document.getElementById('quizArea').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var qList = document.getElementById('qList');
+  qList.innerHTML = questions.map(function(q, i){
+    return '<div class="q-block" data-i="' + i + '">'
+      + '<div class="q-head"><span class="q-no">' + (i+1) + '</span><span class="q-text">' + q.q.replace(/^\d+\.\s*/, '') + '</span></div>'
+      + '<div class="q-opts">' + q.opts.map(function(o, k){
+          return '<button class="q-opt" data-k="' + k + '">' + String.fromCharCode(65+k) + '. ' + o + '</button>';
+        }).join('') + '</div>'
+      + '<div class="q-why">💡 ' + q.why + ' <a href="' + q.review + '">→ 回这节课复习</a></div>'
+      + '</div>';
+  }).join('');
+
+  function updateBar(){
+    document.getElementById('progText').textContent = answered + ' / ' + total;
+    document.getElementById('progFill').style.width = (answered/total*100) + '%';
+    var score = answered ? Math.round(correctCount/total*100) : 0;
+    document.getElementById('scoreText').textContent = '得分 ' + score;
+    if (answered === total){
+      var panel = document.getElementById('resultPanel');
+      var sEl = document.getElementById('finalScore');
+      var dEl = document.getElementById('finalDesc');
+      var pass = score >= E.passScore;
+      sEl.textContent = score;
+      sEl.className = 'score ' + (pass ? 'pass' : 'fail');
+      dEl.innerHTML = pass
+        ? '🎉 及格！认知底座和智能体设计两篇已拿下。<br>可以进入第三篇章「电商 AI 落地实战」——生图、知识库、多 Agent 流水线在等你。'
+        : '还差一点。别急——上面的错题都有「回这节课复习」的链接，<br>把错题对应的几节再看一遍，回来再战，会稳很多。';
+      panel.style.display = 'block';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  qList.addEventListener('click', function(e){
+    var btn = e.target.closest('.q-opt');
+    if (!btn || btn.disabled) return;
+    var block = btn.closest('.q-block');
+    var qi = +block.dataset.i;
+    var pick = +btn.dataset.k;
+    var q = questions[qi];
+    block.querySelectorAll('.q-opt').forEach(function(o){
+      o.disabled = true;
+      if (+o.dataset.k === q.a) o.classList.add('right');
+    });
+    if (pick === q.a) correctCount++;
+    else btn.classList.add('wrong');
+    block.querySelector('.q-why').classList.add('show');
+    answered++;
+    updateBar();
+  });
+
+  document.getElementById('retryBtn').addEventListener('click', function(){ window.location.reload(); });
+})();
+</script>
+</body>
+</html>

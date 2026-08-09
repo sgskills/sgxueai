@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>输出格式：让 AI 直接给你能上架的表格 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="纯文本、JSON、Markdown 表格——输出格式怎么选？批量生成标题时的最优解，一次讲清三种格式的取舍。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="输出格式：让 AI 直接给你能上架的表格">
+<meta property="og:description" content="纯文本 / JSON / 表格三种格式取舍，批量生成的最优解。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/2-3.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .fmt-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+  .fmt-tabs button{
+    border:1.5px solid var(--border-strong);border-radius:999px;padding:7px 18px;
+    font-size:13px;font-weight:700;background:transparent;color:var(--sub);
+    cursor:pointer;font-family:inherit;transition:.2s;
+  }
+  .fmt-tabs button.on{background:var(--purple);border-color:var(--purple);color:#fff;}
+  .fmt-out{
+    background:#1E1E2E;color:#e2e8f0;border-radius:12px;padding:15px 18px;
+    font-family:"SF Mono","Fira Code",Menlo,Consolas,monospace;font-size:12.5px;
+    line-height:1.85;white-space:pre-wrap;min-height:130px;
+  }
+  .fmt-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+  .fmt-meta .fm{background:var(--pill-bg);border-radius:10px;padding:10px 12px;text-align:center;}
+  .fmt-meta .fv{font-size:14px;font-weight:900;color:var(--text-h);}
+  .fmt-meta .fk{font-size:11px;color:var(--sub);margin-top:2px;}
+  .matcher{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+  .match-row{display:flex;gap:10px;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;}
+  .match-row .sc{flex:1;font-size:13.5px;font-weight:700;color:var(--text-h);}
+  .match-row select{
+    padding:7px 10px;border-radius:8px;border:1.5px solid var(--border-strong);
+    background:var(--card);color:var(--text);font-family:inherit;font-size:13px;
+  }
+  .match-row .mark{font-size:16px;width:24px;text-align:center;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第二篇章 · 业务流智能体设计</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第二篇章 · 业务流智能体设计</div>
+    <h1>输出格式：让 AI 直接给你能上架的表格</h1>
+    <p class="subtitle">批量生成 500 条标题，结果 AI 给你一大段“以下是为您生成的标题”……格式没约定，一半的活白干。</p>
+    <div class="tag-row"><span class="tag">交互</span><span class="tag">技巧</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">格式不对，活全废</div>
+
+  <p class="reveal">很多运营第一次批量用 AI 都踩过这个坑：生成内容本身不错，但混着开场白、编号混乱、每条后面还附一段解释——<b>没法直接粘进表格，还得人工一条条抠</b>。省下的时间又搭进去了。</p>
+
+  <p class="reveal">原因还是接龙原理：你不指定格式，AI 就按“网上最常见的回答格式”来——而网上最常见的格式是“聊天式”的。<b>格式必须写进提示词，最好再给一个输出样例。</b></p>
+
+  <div class="sec-label">交互演示 · 同一份数据的三种格式</div>
+
+  <p class="reveal">点击切换，看同一批标题任务在三种格式下长什么样，以及各自的硬指标：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">格式对比实验台 · 任务：生成 3 条商品标题</div>
+    <div class="fmt-tabs">
+      <button class="on" data-f="0">📝 纯文本</button>
+      <button data-f="1">📊 Markdown 表格</button>
+      <button data-f="2">🔧 JSON</button>
+    </div>
+    <div class="fmt-out" id="fmtOut"></div>
+    <div class="fmt-meta" id="fmtMeta"></div>
+  </div>
+
+  <div class="sec-label">小练习 · 场景对号入座</div>
+
+  <p class="reveal">为每个场景选最合适的格式，选完看对错：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">格式选型练习</div>
+    <div class="matcher">
+      <div class="match-row"><span class="sc">批量生成 500 条标题，要导入 Excel</span>
+        <select data-a="表格"><option value="">选格式…</option><option>纯文本</option><option>表格</option><option>JSON</option></select><span class="mark"></span></div>
+      <div class="match-row"><span class="sc">AI 客服直接回复客人</span>
+        <select data-a="纯文本"><option value="">选格式…</option><option>纯文本</option><option>表格</option><option>JSON</option></select><span class="mark"></span></div>
+      <div class="match-row"><span class="sc">Agent 之间传递结构化数据（程序读取）</span>
+        <select data-a="JSON"><option value="">选格式…</option><option>纯文本</option><option>表格</option><option>JSON</option></select><span class="mark"></span></div>
+      <div class="match-row"><span class="sc">生成公众号文章初稿</span>
+        <select data-a="纯文本"><option value="">选格式…</option><option>纯文本</option><option>表格</option><option>JSON</option></select><span class="mark"></span></div>
+    </div>
+  </div>
+
+  <div class="sec-label">三个实战提醒</div>
+
+  <ul>
+    <li class="reveal"><b>格式 + 样例双保险</b>：光说“用表格输出”不够，贴一行样例（Few-Shot 的另一种用法），格式准确率接近 100%。</li>
+    <li class="reveal"><b>JSON 要防“话痨”</b>：让程序读 JSON 时，明确写“<b>只输出 JSON，不要任何解释</b>”——否则它会在代码块外面裹一层“好的，为您生成如下”，程序直接解析失败。</li>
+    <li class="reveal"><b>长任务防烂尾</b>：一次生成 50 条标题，后半段容易格式崩坏。拆成 10 条一批，格式稳定性高得多——这就是第五篇章要讲的“小步快跑”。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>格式不写进提示词，AI 默认“聊天体”</b>：开场白、解释、乱编号，全要人工返工。</li>
+      <li><b>人看用表格，程序读用 JSON，直接展示用纯文本</b>——按消费者选格式。</li>
+      <li><b>格式 + 样例双保险</b>：贴一行输出样例，格式准确率接近满分。</li>
+      <li><b>JSON 要禁解释、长任务要分批</b>：两个最常见的格式翻车点。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var fmts = [
+    { out:'1. 法式碎花连衣裙女夏雪纺长裙显瘦气质海边度假裙子\n2. 冰丝防晒衣女夏季薄款透气防紫外线通勤外套\n3. 316不锈钢保温杯大容量便携男女学生水杯带杯盖',
+      meta:[['低','机器可读性'],['低','额外 Token'],['人看','适合谁']] },
+    { out:'| 序号 | 标题 | 类目 |\n|---|---|---|\n| 1 | 法式碎花连衣裙女夏雪纺长裙显瘦气质海边度假裙子 | 女装 |\n| 2 | 冰丝防晒衣女夏季薄款透气防紫外线通勤外套 | 女装 |\n| 3 | 316不锈钢保温杯大容量便携男女学生水杯带杯盖 | 家居 |',
+      meta:[['中','机器可读性'],['中','额外 Token'],['表格党','适合谁']] },
+    { out:'[\n  { "id": 1, "title": "法式碎花连衣裙女夏雪纺长裙显瘦气质海边度假裙子", "category": "女装" },\n  { "id": 2, "title": "冰丝防晒衣女夏季薄款透气防紫外线通勤外套", "category": "女装" },\n  { "id": 3, "title": "316不锈钢保温杯大容量便携男女学生水杯带杯盖", "category": "家居" }\n]',
+      meta:[['高','机器可读性'],['高','额外 Token'],['程序','适合谁']] }
+  ];
+  var tabs = document.querySelectorAll('.fmt-tabs button');
+  var outEl = document.getElementById('fmtOut');
+  var metaEl = document.getElementById('fmtMeta');
+  function show(i){
+    tabs.forEach(function(b, k){ b.classList.toggle('on', k===i); });
+    outEl.textContent = fmts[i].out;
+    metaEl.innerHTML = fmts[i].meta.map(function(m){
+      return '<div class="fm"><div class="fv">' + m[0] + '</div><div class="fk">' + m[1] + '</div></div>';
+    }).join('');
+  }
+  tabs.forEach(function(b, i){ b.addEventListener('click', function(){ show(i); }); });
+  show(0);
+
+  document.querySelectorAll('.match-row select').forEach(function(sel){
+    sel.addEventListener('change', function(){
+      var mark = this.parentElement.querySelector('.mark');
+      if (!this.value){ mark.textContent = ''; return; }
+      mark.textContent = this.value === this.dataset.a ? '✅' : '❌';
+    });
+  });
+})();
+</script>
+</body>
+</html>

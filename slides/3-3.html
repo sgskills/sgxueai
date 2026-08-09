@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生图翻车现场与质检清单 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="多手指、错 LOGO、材质穿帮、文字乱码——AI 图上架前必查的 8 个细节，附可直接抄走的质检清单。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="生图翻车现场与质检清单">
+<meta property="og:description" content="AI 图上架前必查的 8 个细节。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-3.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .qc-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+  .qc-item{
+    display:flex;gap:13px;align-items:flex-start;background:var(--card);
+    border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;
+    cursor:pointer;transition:.18s;user-select:none;
+  }
+  .qc-item:hover{border-color:var(--green);}
+  .qc-item.checked{border-color:var(--green);background:rgba(5,150,105,.05);}
+  .qc-box{
+    width:22px;height:22px;border-radius:7px;border:2px solid var(--border-strong);
+    flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;
+    font-size:13px;color:#fff;transition:.18s;
+  }
+  .qc-item.checked .qc-box{background:var(--green);border-color:var(--green);}
+  .qc-box::after{content:'✓';opacity:0;transition:.15s;}
+  .qc-item.checked .qc-box::after{opacity:1;}
+  .qc-item .qt{font-size:13.5px;font-weight:800;color:var(--text-h);}
+  .qc-item .qd{font-size:12px;color:var(--sub);margin-top:2px;line-height:1.6;}
+  .qc-progress{
+    margin-top:16px;display:flex;align-items:center;gap:14px;
+    background:var(--pill-bg);border-radius:12px;padding:12px 17px;
+  }
+  .qc-progress .track{flex:1;height:9px;border-radius:99px;background:var(--border);overflow:hidden;}
+  .qc-progress .fill{height:100%;background:var(--green);border-radius:99px;transition:width .3s;}
+  .qc-progress .pt{font-size:13px;font-weight:900;color:var(--green);white-space:nowrap;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>生图翻车现场与质检清单</h1>
+    <p class="subtitle">AI 生图最常见的死法不是“丑”，是“细节造假”——买家收货发现跟图不符，等着你的就是退货率和差评。这 8 个检查点，上架前必过。</p>
+    <div class="tag-row"><span class="tag">案例</span><span class="tag">安全</span><span class="tag">6 分钟</span></div>
+  </div>
+
+  <div class="sec-label">翻车比你想的更近</div>
+
+  <p class="reveal">真实案例：某店铺 AI 生成的模特图里，<b>衣服上的纽扣从 4 颗变成了 6 颗</b>，详情页就这么上架了。买家收货后晒图对比：“图片仅供参考”都没法这么参考——退货 + 投诉 + 平台判罚三连。</p>
+
+  <p class="reveal">记住生图模型的本性：<b>它画的是“像”，不是“真”</b>。光影可以信它，氛围可以信它，但凡涉及<b>商品本体的事实细节</b>——结构、数量、LOGO、文字——必须人工核。下面这份清单，点开逐项打勾，就是我们质检岗每天在用的版本：</p>
+
+  <div class="sec-label">交互 · 八项质检清单（点着过一遍）</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">AI 生图上架前质检清单 · 逐项打勾</div>
+    <div class="qc-list" id="qcList"></div>
+    <div class="qc-progress">
+      <div class="track"><div class="fill" id="qcFill" style="width:0%"></div></div>
+      <span class="pt" id="qcText">0 / 8</span>
+    </div>
+  </div>
+
+  <div class="sec-label">把质检嵌进流水线</div>
+
+  <ul>
+    <li class="reveal"><b>前四项查“真”</b>（结构、数量、LOGO、文字）——涉及商品事实，<b>一项不过整张打回</b>，没有商量。</li>
+    <li class="reveal"><b>后四项查“假”</b>（手、材质、比例、穿帮）——影响可信度，视严重程度打回或局部重绘。</li>
+    <li class="reveal"><b>质检权独立</b>：生图的人不质检自己——自己孩子看不出丑，这是人性。流水线第 5 步必须换人做。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>生图最大的风险是细节造假</b>：纽扣数量、LOGO、文字——图越真，假细节越致命。</li>
+      <li><b>八项清单照抄即用</b>：前四查“真”后四查“假”，一项不过整张打回。</li>
+      <li><b>质检权要独立</b>：生图者不质检，换人过清单。</li>
+      <li><b>局部重绘救小错</b>：好构图 + 小瑕疵 = 重绘局部，别整张重来浪费钱。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var items = [
+    ['商品结构对不上','纽扣几颗、口袋几个、拉链朝哪——和实物逐点核对，AI 经常“自由发挥”。'],
+    ['数量错误','一套六支变八支、四件套变五件套——赠品和规格是客诉重灾区。'],
+    ['LOGO 与标变形','品牌标被重画、字母错拼——这不止丑，还可能侵权违规。'],
+    ['文字乱码','包装上的字、吊牌上的字，AI 写的基本不能看，要么修掉要么裁掉。'],
+    ['手部与肢体','六指、反关节、手和身体比例失调——模特图第一检查点。'],
+    ['材质穿帮','哑光变镜面、针织变皮面——材质错了等于虚假宣传。'],
+    ['比例失真','商品在场景里忽大忽小，“显得大”收货就翻车——退货率的隐形推手。'],
+    ['背景穿帮','镜子里的反射对不上、阴影方向打架——细节控买家一眼看穿。']
+  ];
+  var checked = 0;
+  var list = document.getElementById('qcList');
+  list.innerHTML = items.map(function(it){
+    return '<div class="qc-item"><span class="qc-box"></span><span><div class="qt">' + it[0] + '</div><div class="qd">' + it[1] + '</div></span></div>';
+  }).join('');
+  list.addEventListener('click', function(e){
+    var item = e.target.closest('.qc-item');
+    if (!item) return;
+    item.classList.toggle('checked');
+    checked = list.querySelectorAll('.checked').length;
+    document.getElementById('qcFill').style.width = (checked/8*100) + '%';
+    document.getElementById('qcText').textContent = checked + ' / 8' + (checked === 8 ? ' ✅ 可以上架' : '');
+  });
+})();
+</script>
+</body>
+</html>

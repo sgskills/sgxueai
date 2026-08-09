@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>应对四：评测 + 人工抽检 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="AI 输出的最后一道防线：评测体系 + 人工抽检。冷启动阶段怎么定抽检比例、怎么设计质检清单。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="应对四：评测 + 人工抽检">
+<meta property="og:description" content="外部纠错层：冷启动阶段的兜底策略，抽检比例怎么定。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-10.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .qc-sim{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+  .qc-box{background:var(--pill-bg);border-radius:10px;padding:13px 15px;text-align:center;}
+  .qc-box .qv{font-size:26px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums;}
+  .qc-box .qk{font-size:11.5px;color:var(--sub);margin-top:2px;}
+  .qc-slider-row{display:flex;align-items:center;gap:12px;margin-top:16px;}
+  .qc-slider-row label{font-size:13px;font-weight:700;color:var(--sub);width:110px;flex-shrink:0;}
+  .qc-slider-row .val{font-weight:900;color:var(--accent);min-width:64px;font-variant-numeric:tabular-nums;}
+  .qc-bar{margin-top:16px;height:26px;border-radius:8px;background:var(--pill-bg);overflow:hidden;display:flex;}
+  .qc-bar .ok{background:var(--success);transition:width .4s;}
+  .qc-bar .miss{background:var(--danger);transition:width .4s;}
+  .qc-bar-legend{display:flex;gap:14px;font-size:11.5px;color:var(--sub);margin-top:6px;}
+  .qc-bar-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;}
+  .qc-note{margin-top:12px;font-size:13px;font-weight:700;color:var(--text-h);background:var(--accent-soft);border-radius:10px;padding:10px 14px;border:1px solid var(--accent-border);}
+  @media(max-width:768px){.qc-sim{grid-template-columns:1fr 1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座 · 幻觉应对 4/4</div>
+    <h1>评测 + 人工抽检：最后一道防线</h1>
+    <p class="subtitle">提示词、温度、RAG 都配齐了，AI 输出就能 100% 放心？不能。但凡直接面对客人的内容，永远需要一道“验收”。</p>
+    <div class="tag-row"><span class="tag">概念</span><span class="tag">实战</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">电商人其实早就懂这个道理</div>
+
+  <p class="reveal">你仓库发货，打包员再熟练，<b>质检岗也不会撤</b>——不是不信任，是出错的代价太大。AI 输出是一个道理：前三件武器把错误率从 30% 压到 1%，但剩下的 1% 落在商品标题上就是违规，落在客服承诺上就是投诉。</p>
+
+  <p class="reveal">这道“验收”分两层：<b>机器评测</b>（用规则和另一个 AI 批量筛）和<b>人工抽检</b>（人按清单过一遍）。机器负责量，人负责兜住机器漏掉的。冷启动阶段人工比例高，跑顺了逐步降低——这套打法有个专门的名字叫 HITL（Human-in-the-loop，人在回路）。</p>
+
+  <div class="sec-label">交互演示 · 抽检比例怎么定</div>
+
+  <p class="reveal">假设 AI 每天生成 500 条商品短文案，当前错误率 2%（10 条有错）。拖动滑块调整抽检比例，看“漏网之鱼”怎么变：</p>
+
+  <div class="demo reveal">
+    <div class="demo-title">抽检模拟器 · 每天 500 条文案 · 错误率 2%</div>
+    <div class="qc-slider-row">
+      <label>人工抽检比例</label>
+      <input type="range" id="qcSlider" min="5" max="100" value="20" step="5">
+      <span class="val" id="qcVal">20%</span>
+    </div>
+    <div class="qc-sim">
+      <div class="qc-box"><div class="qv" id="qcCheck">100</div><div class="qk">每天人工检查（条）</div></div>
+      <div class="qc-box"><div class="qv" id="qcCatch">2</div><div class="qk">大概率能抓到（条）</div></div>
+      <div class="qc-box"><div class="qv" id="qcMiss" style="color:var(--danger);">8</div><div class="qk">漏网上架（条）</div></div>
+      <div class="qc-box"><div class="qv" id="qcTime">1.7h</div><div class="qk">每天质检耗时（约）</div></div>
+    </div>
+    <div class="qc-bar" id="qcBar"></div>
+    <div class="qc-bar-legend">
+      <span><i style="background:var(--success)"></i>抓到的错误</span>
+      <span><i style="background:var(--danger)"></i>漏网的错误</span>
+    </div>
+    <div class="qc-note" id="qcNote"></div>
+  </div>
+
+  <div class="sec-label">看出来了吧：抽检是笔经济账</div>
+
+  <p class="reveal">100% 全检最安全，但 500 条全检意味着 AI 省的人力又还回去了。正确的姿势是<b>分级抽检</b>：</p>
+
+  <ul>
+    <li class="reveal"><b>高危内容全检</b>：涉及价格、功效、活动承诺的输出，一条都不放过——这些是赔钱项。</li>
+    <li class="reveal"><b>中危内容按比例</b>：详情页文案、客服常规回复，抽 20%-30%，盯着错误率动态调整。</li>
+    <li class="reveal"><b>低危内容机器筛</b>：内部素材、创意草稿，过一遍规则检查（违禁词、字数）就行。</li>
+  </ul>
+
+  <div class="sec-label">质检清单：把“看看有没有问题”变成打勾</div>
+
+  <p class="reveal">抽检最大的坑是“凭感觉看”。必须做成清单，一条一条打勾。一份文案质检清单长这样：</p>
+
+  <ul>
+    <li class="reveal">□ 参数事实：文案里的数字、材质、规格，和商品参数表<b>逐条对得上</b>吗？</li>
+    <li class="reveal">□ 违禁词：有没有“最/第一/治疗/美白”等广告法和平台违禁词？</li>
+    <li class="reveal">□ 承诺：有没有 AI 自作主张许下的承诺（“无效退款”“孕妇可用”）？</li>
+    <li class="reveal">□ 调性：像不像我们店说话的方式？丢进店铺首页违和吗？</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    认知底座篇收尾：<b>提示词管风格、温度管尺度、RAG 管事实、评测管兜底</b>——四件武器配齐，你就从“AI 盲盒玩家”变成了“AI 质检经理”。第二篇章开始，我们把这些认知组装成能真正干活的业务流智能体。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>四件武器齐活</b>：提示词、温度、RAG 压错误率，评测+抽检兜剩下的 1%。</li>
+      <li><b>抽检是经济账</b>：高危全检、中危比例抽、低危机器筛，别为低危内容浪费人力。</li>
+      <li><b>质检必须清单化</b>：参数事实、违禁词、承诺、调性，逐条打勾，不凭感觉。</li>
+      <li><b>错误率动态调档</b>：跑顺了降抽检，换提示词/换模型后立刻恢复高比例。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var TOTAL = 500, ERR = 0.02, MIN_PER = 1; // 每条质检约1分钟
+  var slider = document.getElementById('qcSlider');
+  var qcVal = document.getElementById('qcVal');
+  var qcCheck = document.getElementById('qcCheck');
+  var qcCatch = document.getElementById('qcCatch');
+  var qcMiss = document.getElementById('qcMiss');
+  var qcTime = document.getElementById('qcTime');
+  var qcBar = document.getElementById('qcBar');
+  var qcNote = document.getElementById('qcNote');
+
+  function update(){
+    var pct = +slider.value / 100;
+    var errs = TOTAL * ERR;                    // 总错误条数 = 10
+    var checked = Math.round(TOTAL * pct);
+    var caught = Math.round(errs * pct);
+    var missed = errs - caught;
+    qcVal.textContent = slider.value + '%';
+    qcCheck.textContent = checked;
+    qcCatch.textContent = caught;
+    qcMiss.textContent = missed;
+    qcTime.textContent = (checked * MIN_PER / 60).toFixed(1) + 'h';
+    qcBar.innerHTML = '<div class="ok" style="width:' + (caught/errs*100) + '%"></div>'
+      + '<div class="miss" style="width:' + (missed/errs*100) + '%"></div>';
+    qcNote.textContent = missed === 0
+      ? '✅ 全检：零漏网，但每天 8 小时质检——AI 省的人力全还回去了。'
+      : missed <= 2
+      ? '👍 这个比例比较划算：漏网风险可控，人力也没白搭。'
+      : '⚠️ 每天 ' + missed + ' 条带错文案直接上架——抽检比例对高危内容来说太低了。';
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

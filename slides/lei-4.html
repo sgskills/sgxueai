@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>现金流：电商老板的生死线 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="库存、账期、推广费——赚钱的公司是怎么被现金流拖死的。电商老板的生死线。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="现金流：电商老板的生死线">
+<meta property="og:description" content="库存、账期、推广费——赚钱的公司是怎么被现金流拖死的。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/lei-4.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .cf{margin-top:14px;}
+  .cf-ctl label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--text-h);margin:11px 0 4px;}
+  .cf-ctl label output{color:var(--accent);}
+  .cf-chart{margin-top:14px;border-radius:11px;border:1.5px solid var(--border);background:var(--card);padding:12px;}
+  .cf-chart svg{width:100%;height:auto;display:block;}
+  .cf-verdict{margin-top:12px;font-size:13px;font-weight:700;line-height:1.8;padding:13px 16px;border-radius:11px;
+    background:var(--pill-bg);border:1.5px solid var(--border);min-height:52px;transition:.25s;}
+  .cf-verdict.danger{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.4);color:var(--danger);}
+  .cf-verdict.warn{background:rgba(217,119,6,.07);border-color:rgba(217,119,6,.4);color:var(--amber);}
+  .cf-verdict.safe{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.4);color:var(--success);}
+  .cf-verdict b{color:inherit;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">加餐篇 · 团队应用加餐</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">加餐篇 · 团队应用加餐</div>
+    <h1>现金流：电商老板的生死线</h1>
+    <p class="subtitle">有些公司账面看着在赚钱，却可能突然倒下——每个月都在盈利，资金却先撑不住了。最常见的导火索，就是现金流断裂。</p>
+    <div class="tag-row"><span class="tag">电商</span><span class="tag">加餐</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">利润是观点，现金是事实</div>
+
+  <p class="reveal">先建立一个直觉：<b>利润是算出来的，现金是数出来的</b>。你的链接这个月“赚了 10 万”——但那 10 万在哪？在平台的账期里压着（15 天后才结算）、在仓库的库存里躺着（备了下个月的货）、在下个月推广费的预付里烧着。账上利润 10 万，卡里能动的钱可能是 -5 万。</p>
+
+  <p class="reveal">电商的现金流被三个吸血鬼轮流抽血：</p>
+
+  <ul>
+    <li class="reveal"><b>库存</b>：钱变成货的瞬间就“冻住”了。备 30 天的货，就是 30 天的销售额冻结在仓库；爆款备 60 天，一场降价就能让你从“赚钱”变“亏钱卖库存”。</li>
+    <li class="reveal"><b>账期</b>：平台确认收货后 T+15 结算，供应商却要求款到发货——两头一夹，卖得越多，垫得越多。<b>增长越快，资金压力越大</b>，说的就是这种结构。</li>
+    <li class="reveal"><b>推广费</b>：直通车是先充值后扣费，今天的推广费买的是 7-15 天后的回款——它是现金流的“前置出血点”。</li>
+  </ul>
+
+  <div class="sec-label">亲手感受一下：把一家“赚钱”的店调到失血</div>
+
+  <div class="demo cf reveal">
+    <div class="demo-title">现金流模拟器 · 月销 30 万的店，拖滑块看现金还能撑几个月</div>
+    <div class="cf-ctl">
+      <label>备货深度（库存占月销成本的比例）<output id="oStock">45 天</output></label>
+      <input type="range" id="rStock" min="15" max="90" value="45" step="5">
+      <label>平台账期（回款要等多少天）<output id="oTerm">15 天</output></label>
+      <input type="range" id="rTerm" min="0" max="45" value="15" step="5">
+      <label>推广费占比（月销的几成先烧给直通车）<output id="oAd">15%</output></label>
+      <input type="range" id="rAd" min="5" max="40" value="15" step="1">
+    </div>
+    <div class="cf-chart">
+      <svg viewBox="0 0 560 180" id="cfSvg">
+        <line x1="30" y1="20" x2="30" y2="150" stroke="var(--border-strong)" stroke-width="1.5"/>
+        <line x1="30" y1="150" x2="550" y2="150" stroke="var(--border-strong)" stroke-width="1.5"/>
+        <line x1="30" y1="105" x2="550" y2="105" stroke="var(--danger)" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="536" y="100" font-size="10" fill="var(--danger)" text-anchor="end">生死线（现金=0）</text>
+        <path id="cfLine" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+        <text x="40" y="16" font-size="10" fill="var(--sub)">手中现金</text>
+        <text x="545" y="166" font-size="10" fill="var(--sub)" text-anchor="end">未来 6 个月 →</text>
+      </svg>
+    </div>
+    <div class="cf-verdict" id="cfVerdict"></div>
+  </div>
+
+  <p class="reveal">多试几组你会发现那个最危险的组合：<b>备货 90 天 + 账期 45 天 + 推广 30%</b>——哪怕月销 30 万、毛利 30%（标准“赚钱店”），现金曲线也可能在第 3 个月跌破生死线。这就是“赚钱的公司被现金流拖垮”的完整解剖。</p>
+
+  <div class="sec-label">老炮的三条保命纪律</div>
+
+  <ul>
+    <li class="reveal"><b>备货款分级</b>：引流款浅备（15-20 天），利润款正常备（30 天），只有验证过的爆款才允许深备——深备是特权，不是默认。</li>
+    <li class="reveal"><b>现金水位线</b>：账上永远留够“3 个月固定开支 + 1 个月推广费”的活钱。低于这条线，第一反应是去库存、不是去借钱。</li>
+    <li class="reveal"><b>增长要看“现金转换周期”</b>：钱出去到回来一共几天？这个周期 × 增速 = 你扩张时每天要垫的钱。算不清这笔账，扩张就是蒙眼狂奔。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>利润是观点，现金是事实</b>：账面盈利 10 万，卡里能动可能是 -5 万。</li>
+      <li><b>三个吸血鬼</b>：库存冻结、账期垫付、推广前置出血。</li>
+      <li><b>死亡组合</b>：深备货 + 长账期 + 高推广——赚钱的店也能三个月断血。</li>
+      <li><b>三条纪律</b>：备货分级、守住现金水位线、算清现金转换周期再扩张。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var rS=document.getElementById('rStock'),rT=document.getElementById('rTerm'),rA=document.getElementById('rAd');
+  var oS=document.getElementById('oStock'),oT=document.getElementById('oTerm'),oA=document.getElementById('oAd');
+  var line=document.getElementById('cfLine'),verdict=document.getElementById('cfVerdict');
+  function update(){
+    var stock=+rS.value,term=+rT.value,ad=+rA.value;
+    oS.textContent=stock+' 天';oT.textContent=term+' 天';oA.textContent=ad+'%';
+    // 简化模型：月销30万、毛利30%、固定开支5万/月、初始现金25万
+    // 每月现金变化 = 回款(毛利-推广-固定) - 新增备货冻结
+    var cash=25,points=[],alive=6;
+    for(var m=0;m<=6;m++){
+      var y=105-(cash/40)*85; // 40万映射到顶
+      if(y<20)y=20;
+      points.push((30+m*86.7)+','+Math.min(y,150));
+      if(cash<=0&&alive===6){alive=m;}
+      var inflow=9-(30*ad/100)-5;          // 毛利9万 - 推广 - 固定开支
+      var freeze=7*(stock/30)-3.5;          // 备货冻结压力
+      var drag=term/15*1.5;                 // 账期拖累
+      cash=cash+inflow-freeze-drag;
+    }
+    line.setAttribute('d','M'+points.join(' L'));
+    var dead=alive<6;
+    var pressure=stock/90*0.4+term/45*0.3+ad/40*0.3;
+    if(dead){
+      verdict.className='cf-verdict danger';
+      verdict.innerHTML='⚠️ <b>第 '+alive+' 个月现金断裂！</b>月销 30 万、毛利 30%——账面上这家店一直在赚钱，但备货、账期、推广三个抽血口把现金抽干了。这就是“账面盈利却撑不下去”的完整解剖。';
+    }else if(pressure>0.55){
+      verdict.className='cf-verdict warn';
+      verdict.innerHTML='⚠️ <b>现金在持续走低。</b>还没断，但曲线一路向下——任何一个意外（退货潮、平台罚款、供应商催款）都可能成为最后一根稻草。优先减备货深度。';
+    }else{
+      verdict.className='cf-verdict safe';
+      verdict.innerHTML='✅ <b>现金结构健康。</b>浅备货 + 短账期 + 克制推广，曲线稳住了。记住这个手感——扩张之前先把这三个滑块算一遍。';
+    }
+  }
+  [rS,rT,rA].forEach(function(r){r.addEventListener('input',update);});
+  update();
+})();
+</script>
+</body>
+</html>

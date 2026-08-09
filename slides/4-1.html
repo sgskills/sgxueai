@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上下文工程：给 AI 的“交接班记录” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="跨班次、跨 Agent 的上下文怎么传递？交接班记录的设计——信息不丢失的业务流基本功。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="上下文工程：给 AI 的&quot;交接班记录&quot;">
+<meta property="og:description" content="跨班次、跨 Agent 的上下文传递设计。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-1.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .handover{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .ho{border-radius:12px;padding:15px 17px;font-size:12.5px;line-height:1.8;}
+  .ho h5{font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:9px;}
+  .ho.bad{background:rgba(220,38,38,.05);border:1.5px solid rgba(220,38,38,.28);}
+  .ho.bad h5{color:var(--danger);}
+  .ho.good{background:rgba(16,185,129,.05);border:1.5px solid rgba(16,185,129,.32);}
+  .ho.good h5{color:var(--success);}
+  .ho code{display:block;font-size:11.5px;background:rgba(0,0,0,.05);border-radius:6px;padding:7px 10px;margin:5px 0;color:var(--text);}
+  [data-theme="dark"] .ho code{background:rgba(255,255,255,.07);}
+  @media(max-width:768px){.handover{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶</div>
+    <h1>上下文工程：给 AI 的“交接班记录”</h1>
+    <p class="subtitle">前三篇解决了“一块白板”的问题。进阶篇面对的是多块白板之间——跨班次、跨 Agent、跨天的信息怎么不丢、不乱、不重复。</p>
+    <div class="tag-row"><span class="tag">概念</span><span class="tag">实战</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">交接断层的三个典型现场</div>
+
+  <ul>
+    <li class="reveal"><b>客服转人工</b>：客人跟 AI 聊了 20 分钟，转人工后客服第一句“您说下情况”——客人原地爆炸（3-8 节讲过要带摘要，这就是上下文工程的应用）。</li>
+    <li class="reveal"><b>Agent 接力</b>：选品 Agent 定好款，文案 Agent 拿到手的却是“写个针织衫文案”——卖点、禁忌、人群全丢了（3-10 节讲的结构化交接就是解药）。</li>
+    <li class="reveal"><b>跨天任务</b>：昨天让 AI 分析到一半的数据，今天重开窗口从头再来——昨天的“思考过程”全烧掉了。</li>
+  </ul>
+
+  <p class="reveal">这三个现场的病根是同一个：<b>信息只存在一块白板上，换块白板就清零</b>。上下文工程就是给业务流设计“交接班记录”——像餐厅交接班一样，下一棒接手时该知道什么，写清楚、传到位。</p>
+
+  <div class="sec-label">交接记录的坏与好</div>
+
+  <div class="handover reveal">
+    <div class="ho bad">
+      <h5>❌ 坏交接：把整本流水账甩过去</h5>
+      <code>【交接内容】前 20 轮完整聊天记录原文……</code>
+      下一个 Agent 拿到 3000 字流水，关键信息埋在废话里，还白烧一轮 Token——等于没交接。
+    </div>
+    <div class="ho good">
+      <h5>✅ 好交接：结构化摘要卡</h5>
+      <code>{ 客人: “王女士”, 诉求: “裙子换小码”, 进度: “已查库存S缺货M有货”, 待办: “等客人选M或等补货”, 情绪: “平和”, 禁忌: “无” }</code>
+      六个字段，下一棒 3 秒读完，直接续上节奏。
+    </div>
+  </div>
+
+  <div class="sec-label">设计交接卡的四要素</div>
+
+  <ul>
+    <li class="reveal"><b>事实</b>：已确认的信息（订单号、款号、价格）——写结论，不写过程。</li>
+    <li class="reveal"><b>进度</b>：办到哪一步了——让下一棒知道从哪接，不从头问。</li>
+    <li class="reveal"><b>待办</b>：下一步要做什么、等谁拍板——交接的核心就是这个字段。</li>
+    <li class="reveal"><b>雷区</b>：客人的禁忌和情绪状态——避免下一棒一脚踩雷。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    判断你的交接设计好不好，一个标准：<b>换个“人”接手，能不能不问任何一句就接着干？</b>能，交接合格；不能，字段补齐。这个标准对 AI 和人类员工一视同仁——上下文工程本质是把“带团队”的经验写进了系统。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>交接断层三现场</b>：客服转人工、Agent 接力、跨天任务——病根都是“换白板清零”。</li>
+      <li><b>交接卡四要素</b>：事实、进度、待办、雷区——写结论不写流水。</li>
+      <li><b>结构化 > 自然段</b>：JSON 摘要卡 3 秒读完，流水账 3000 字白烧 Token。</li>
+      <li><b>验收标准</b>：接手方不问一句就能续上，才算合格。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

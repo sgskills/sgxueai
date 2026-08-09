@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 输出怎么质检：三层评测体系 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="规则校验 → 模型互评 → 人工抽检，三层漏斗让 AI 产出的文案、图片、客服话术有章法可查。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="AI 输出怎么质检：三层评测体系">
+<meta property="og:description" content="规则校验 → 模型互评 → 人工抽检。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-4.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .funnel{margin-top:14px;}
+  .f-layer{border-radius:12px;padding:15px 18px;margin-bottom:12px;border:1.5px solid var(--border-strong);
+    background:var(--card);cursor:pointer;transition:.2s;position:relative;overflow:hidden;}
+  .f-layer:hover{transform:translateY(-2px);box-shadow:var(--shadow-pop);}
+  .f-layer .fl-head{display:flex;align-items:center;gap:10px;}
+  .f-layer .fl-badge{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:900;color:#fff;flex-shrink:0;}
+  .f-layer:nth-child(1) .fl-badge{background:var(--blue);}
+  .f-layer:nth-child(2) .fl-badge{background:var(--purple);}
+  .f-layer:nth-child(3) .fl-badge{background:var(--accent);}
+  .f-layer .fl-name{font-size:14.5px;font-weight:800;color:var(--text-h);}
+  .f-layer .fl-cost{margin-left:auto;font-size:11.5px;color:var(--sub);font-weight:700;white-space:nowrap;}
+  .f-layer .fl-body{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:13px;color:var(--sub);line-height:1.8;}
+  .f-layer.open .fl-body{max-height:260px;margin-top:10px;}
+  .f-layer .fl-body b{color:var(--text-h);}
+  .f-flow{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0;font-size:12px;font-weight:800;color:var(--sub);}
+  .f-flow .ff{padding:6px 14px;border-radius:999px;background:var(--pill-bg);border:1.5px solid var(--border);}
+  .f-flow .ff.hot{background:var(--accent-soft);border-color:var(--accent-border);color:var(--accent);}
+  .f-flow .arrow{color:var(--accent);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶</div>
+    <h1>AI 输出怎么质检：三层评测体系</h1>
+    <p class="subtitle">1-10 节说过“评测 + 人工抽检”是幻觉的兜底。那一节讲的是“要不要质检”，这一节讲的是“怎么质检才可持续”——全靠人工看，100 条文案你就看吐了；全靠 AI 自查，它自己骗自己。</p>
+    <div class="tag-row"><span class="tag">实战</span><span class="tag">体系</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">质检的核心矛盾：成本 vs 覆盖率</div>
+
+  <p class="reveal">AI 一天能产 500 条文案、200 张图、3000 句客服话术。你的团队一天能人工看多少？50 条？100 条？<b>用人工覆盖全部产出，AI 省下来的人力又原样还回去了</b>——这是大多数团队“AI 用得累”的真正原因。</p>
+
+  <p class="reveal">解法是把质检做成<b>漏斗</b>：便宜的手段拦大头，贵的手段只处理漏网之鱼。三层漏斗，每一层的成本和任务完全不同（点开每一层看细节）：</p>
+
+  <div class="funnel reveal">
+    <div class="f-layer" data-open="1">
+      <div class="fl-head">
+        <div class="fl-badge">1</div>
+        <div class="fl-name">规则校验 · 机器秒查</div>
+        <div class="fl-cost">成本 ≈ 0 · 拦 70% 问题</div>
+      </div>
+      <div class="fl-body">
+        不写一行 AI，纯代码规则：<b>违禁词表</b>（“最/第一/治疗”广告法红线）、<b>字数限制</b>（标题超 30 字打回）、<b>格式检查</b>（JSON 字段齐不齐、价格带不带 ¥）、<b>事实比对</b>（文案里的参数和商品库对不对得上）。<br>
+        这一层像工厂的<b>传送带卡尺</b>——尺寸不对的零件根本进不了下一道工序。它不聪明，但它不知疲倦、永不放水。
+      </div>
+    </div>
+    <div class="f-layer">
+      <div class="fl-head">
+        <div class="fl-badge">2</div>
+        <div class="fl-name">模型互评 · AI 查 AI</div>
+        <div class="fl-cost">成本 低 · 拦 25% 问题</div>
+      </div>
+      <div class="fl-body">
+        规则查不出的“软实力问题”——通不通顺、像不像人话、卖点突不突出——交给<b>另一个模型当评委</b>。写法很简单：“你是资深电商文案总监，给这条文案按 1-10 打分，低于 7 分说明理由。”<br>
+        关键技巧：<b>评委模型和干活模型最好不是同一个</b>（自己批改自己的作文容易放水），且评委只看单条、不看全局——它的职责是“初筛”，不是“终审”。
+      </div>
+    </div>
+    <div class="f-layer">
+      <div class="fl-head">
+        <div class="fl-badge">3</div>
+        <div class="fl-name">人工抽检 · 兜底终审</div>
+        <div class="fl-cost">成本 高 · 只抽 5%</div>
+      </div>
+      <div class="fl-body">
+        前两道筛完，只剩“看起来没问题”的产出。人工只干两件事：<b>按比例抽检</b>（每 100 条抽 5 条）和<b>必查高危品</b>（保健品、化妆品、食品——广告法高危类目 100% 人工过）。<br>
+        抽检发现的问题<b>必须回流</b>：违禁词漏了 → 补进第一层词表；调性不对 → 把案例加进第二层评委的评分标准。这样三层才会越用越聪明。
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">三类产出，漏斗配比各不同</div>
+
+  <table class="reveal">
+    <tr><th>产出类型</th><th>规则校验主力</th><th>模型互评主力</th><th>人工抽检比例</th></tr>
+    <tr><td><b>文案</b>（标题/详情）</td><td>违禁词、字数、参数比对</td><td>通顺度、卖点突出度</td><td>5%（高危类目 100%）</td></tr>
+    <tr><td><b>图片</b>（主图/海报）</td><td>尺寸、文件大小、有无 LOGO 位</td><td>多模态模型看“图文一致性”</td><td>10%（3-3 节的 8 项清单）</td></tr>
+    <tr><td><b>客服话术</b></td><td>禁语、承诺类词汇（“包赔/绝对”）</td><td>语气温度、是否答非所问</td><td>3% + 差评对话全查</td></tr>
+  </table>
+
+  <div class="f-flow reveal">
+    <span class="ff">AI 产出 500 条</span><span class="arrow">→</span>
+    <span class="ff">规则刷掉 350</span><span class="arrow">→</span>
+    <span class="ff">互评刷掉 125</span><span class="arrow">→</span>
+    <span class="ff hot">人工只看 25 条 ✅</span>
+  </div>
+
+  <div class="l-callout reveal">
+    三层体系的精髓不在“三层”，而在<b>问题回流</b>：人工发现的每一个问题，都要变成第一层的规则或第二层的评分标准。只抽检不回流的质检，是在原地跑步。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>质检是漏斗</b>：便宜手段拦大头，贵手段只处理漏网之鱼。</li>
+      <li><b>第一层规则</b>：违禁词/格式/参数比对，零成本拦 70%。</li>
+      <li><b>第二层互评</b>：评委模型打分初筛，评委和干活的别用同一个模型。</li>
+      <li><b>第三层人工</b>：只抽 5% + 高危必查，发现的问题必须回流到前两层。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.f-layer').forEach(function(layer){
+    if(layer.getAttribute('data-open'))layer.classList.add('open');
+    layer.addEventListener('click',function(){layer.classList.toggle('open');});
+  });
+})();
+</script>
+</body>
+</html>

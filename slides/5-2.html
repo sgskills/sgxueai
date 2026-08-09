@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提示词六大要素：角色 · 任务 · 背景 · 输出 · 示例 · 约束 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="最基本的提示词书写逻辑：角色、任务、背景、输出、示例、约束——六个要素灵活组合使用，并非全部必备。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="提示词六大要素：角色 · 任务 · 背景 · 输出 · 示例 · 约束">
+<meta property="og:description" content="最基本的提示词书写逻辑，六个要素灵活组合，并非全部必备。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/5-2.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .el-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:14px;}
+  .el-card{
+    border-radius:13px;border:1.5px solid var(--border);background:var(--card);
+    padding:15px 16px;transition:.2s;
+  }
+  .el-card:hover{border-color:var(--green);}
+  .el-head{display:flex;align-items:center;gap:9px;margin-bottom:7px;}
+  .el-n{
+    width:26px;height:26px;border-radius:8px;background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0;
+  }
+  .el-name{font-size:14.5px;font-weight:900;color:var(--text-h);}
+  .el-q{font-size:11px;color:var(--green);font-weight:800;margin-left:auto;}
+  .el-desc{font-size:12.5px;color:var(--sub);line-height:1.7;}
+  .el-eg{
+    margin-top:9px;font-size:12px;line-height:1.65;background:var(--pill-bg);
+    border-radius:9px;padding:8px 11px;color:var(--text);
+  }
+  .el-eg b{color:var(--green);}
+  .asm{
+    background:var(--pill-bg);border-radius:12px;padding:16px 18px;margin-top:14px;
+    font-size:13.5px;line-height:2.0;
+  }
+  .asm .tag-el{
+    display:inline-block;font-size:10.5px;font-weight:900;color:#fff;background:var(--green);
+    border-radius:6px;padding:1px 7px;margin-right:6px;vertical-align:2px;
+  }
+  .mix-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .mix-chip{
+    border:1.5px solid var(--border-strong);border-radius:999px;padding:7px 15px;
+    font-size:12.5px;font-weight:700;color:var(--sub);background:var(--card);
+  }
+  .mix-chip b{color:var(--text-h);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第五篇章 · 电商团队 AI 协作规范</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第五篇章 · 电商团队 AI 协作规范</div>
+    <h1>提示词六大要素：角色 · 任务 · 背景 · 输出 · 示例 · 约束</h1>
+    <p class="subtitle">上一节三段式讲了“下任务的流程”，这节把流程落到纸面：一条合格的提示词到底由哪几样零件组成？六个要素——记住这六个词，你以后写任何提示词都有了骨架。</p>
+    <div class="tag-row"><span class="tag">基础</span><span class="tag">必记</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">六个要素，各回答一个问题</div>
+
+  <div class="el-grid reveal">
+    <div class="el-card">
+      <div class="el-head"><span class="el-n">1</span><span class="el-name">角色</span><span class="el-q">它是谁？</span></div>
+      <div class="el-desc">给 AI 一个身份，它的语料就会向这个身份倾斜。</div>
+      <div class="el-eg"><b>“你是一个有 10 年经验的资深天猫内容文案专家。”</b></div>
+    </div>
+    <div class="el-card">
+      <div class="el-head"><span class="el-n">2</span><span class="el-name">任务</span><span class="el-q">干什么？</span></div>
+      <div class="el-desc">一句话说清要它做什么，动词开头，越具体越好。</div>
+      <div class="el-eg"><b>“写 3 条详情页首屏卖点文案。”</b></div>
+    </div>
+    <div class="el-card">
+      <div class="el-head"><span class="el-n">3</span><span class="el-name">背景</span><span class="el-q">在什么情况下？</span></div>
+      <div class="el-desc">你脑子里的经营信息：价格带、竞品、活动节点、过往数据。</div>
+      <div class="el-eg"><b>“客单价 199-259 元，主打抗皱可机洗，618 预热期用。客群 25-35 岁通勤女性。”</b></div>
+    </div>
+    <div class="el-card">
+      <div class="el-head"><span class="el-n">4</span><span class="el-name">输出</span><span class="el-q">交付成什么样？</span></div>
+      <div class="el-desc">格式、字数、结构、风格——不给格式，它就按自己的习惯来。</div>
+      <div class="el-eg"><b>“每条不超过 30 字，卖点+场景结构，不要感叹号。”</b></div>
+    </div>
+    <div class="el-card">
+      <div class="el-head"><span class="el-n">5</span><span class="el-name">示例</span><span class="el-q">照谁的样子？</span></div>
+      <div class="el-desc">给一条“好样子”，顶一百句形容词——AI 最擅长模仿。</div>
+      <div class="el-eg"><b>“参考这条的调性：「挤地铁一身汗，进空调房不黏——抗皱是给通勤留的体面」。”</b></div>
+    </div>
+    <div class="el-card">
+      <div class="el-head"><span class="el-n">6</span><span class="el-name">约束</span><span class="el-q">不能碰什么？</span></div>
+      <div class="el-desc">红线清单：禁用词、不能承诺的功效、广告法禁区。</div>
+      <div class="el-eg"><b>“禁用「显瘦/女神/最」；防晒指数必须按吊牌写，不得虚标。”</b></div>
+    </div>
+  </div>
+
+  <div class="sec-label">组合起来，就是一条专业提示词</div>
+
+  <div class="asm reveal">
+    <span class="tag-el">角色</span>你是一个有 10 年经验的资深天猫内容文案专家。<br>
+    <span class="tag-el">任务</span>写 3 条详情页首屏卖点文案。<br>
+    <span class="tag-el">背景</span>客单价 199-259 元，主打抗皱可机洗，618 预热期用，对标蕉下但走平价路线。客群 25-35 岁通勤女性。<br>
+    <span class="tag-el">输出</span>每条不超过 30 字，“卖点 + 场景”结构，口语化，不用感叹号。<br>
+    <span class="tag-el">示例</span>调性参考：“挤地铁一身汗，进空调房不黏——抗皱是给通勤留的体面。”<br>
+    <span class="tag-el">约束</span>禁用「显瘦 / 女神 / 最」；防晒指数按吊牌写，不得虚标。
+  </div>
+
+  <p class="reveal" style="margin-top:12px;">对比一下“帮我写个防晒衣文案”——同一扇门，六要素是按图纸开门，裸提示词是拿脸撞门。</p>
+
+  <div class="sec-label">重点：灵活组合，并非全部必备</div>
+
+  <p class="reveal">六要素是<b>工具箱，不是填空题</b>。实际应用里按需取用——任务简单就少用几个，任务重要就多配几个：</p>
+
+  <div class="mix-row reveal">
+    <span class="mix-chip"><b>问个常识</b> → 任务</span>
+    <span class="mix-chip"><b>日常快稿</b> → 角色 + 任务 + 输出</span>
+    <span class="mix-chip"><b>重要文案</b> → 角色 + 任务 + 背景 + 输出 + 示例</span>
+    <span class="mix-chip"><b>高危产出（功效/价格/广告）</b> → 六个全上，约束必带</span>
+  </div>
+
+  <ul>
+    <li class="reveal"><b>任务永远必备</b>——没有任务就没有提示词；其余五个看情况。</li>
+    <li class="reveal"><b>越重要的产出，示例和约束越不能省</b>：示例管“像不像”，约束管“死不死”。</li>
+    <li class="reveal"><b>写多了会内化成直觉</b>：三个月后你张口就是“你是谁、干什么、给谁看、什么格式”——那时你就不再需要背这六个词了。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>六大要素</b>：角色（它是谁）、任务（干什么）、背景（什么情况）、输出（交付什么样）、示例（照谁的样子）、约束（不能碰什么）。</li>
+      <li><b>任务是唯一必带</b>，其余五个按需组合——工具箱，不是填空题。</li>
+      <li><b>重要产出口诀</b>：示例管“像不像”，约束管“死不死”。</li>
+      <li><b>高危场景六要素全上</b>：涉及功效、价格、广告法的产出，约束永远必带。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+</body>
+</html>

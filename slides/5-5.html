@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 产出的四条质量底线 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="事实核验、品牌调性、违禁词、版权——团队用 AI 的红线，哪些检查永远不能省。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="AI 产出的四条质量底线">
+<meta property="og:description" content="事实核验、品牌调性、违禁词、版权——不能省的四道检查。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/5-5.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .redline-lab{margin-top:14px;}
+  .rl-item{border-radius:11px;border:1.5px solid var(--border);background:var(--card);padding:13px 16px;
+    margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;transition:.2s;}
+  .rl-item .rl-box{flex-shrink:0;width:24px;height:24px;border-radius:7px;border:2px solid var(--border-strong);
+    cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:transparent;transition:.18s;margin-top:2px;}
+  .rl-item.checked .rl-box{background:var(--danger);border-color:var(--danger);color:#fff;}
+  .rl-item.checked{border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.04);}
+  .rl-item .rl-txt{font-size:13px;line-height:1.7;}
+  .rl-item .rl-txt b{color:var(--text-h);}
+  .rl-item .rl-risk{display:block;font-size:11.5px;color:var(--danger);font-weight:700;margin-top:3px;}
+  .rl-score{margin-top:14px;text-align:center;font-size:13.5px;font-weight:800;padding:13px;border-radius:11px;
+    background:var(--pill-bg);border:1.5px solid var(--border);color:var(--text-h);transition:.25s;}
+  .rl-score.danger{background:rgba(220,38,38,.08);border-color:rgba(220,38,38,.45);color:var(--danger);}
+  .rl-score.safe{background:rgba(16,185,129,.09);border-color:rgba(16,185,129,.45);color:var(--success);}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第五篇章 · 电商团队 AI 协作规范</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第五篇章 · 电商团队 AI 协作规范</div>
+    <h1>AI 产出的四条质量底线</h1>
+    <p class="subtitle">AI 出活快，但快不等于能上架。这四条底线，是给团队定的“四条高压线”——不管谁、不管什么任务、不管多赶，这四道检查一道都不能省。</p>
+    <div class="tag-row"><span class="tag">安全</span><span class="tag">红线</span><span class="tag">8 分钟</span></div>
+  </div>
+
+  <div class="sec-label">底线一：事实核验——AI 说的每个数字都要能对账</div>
+
+  <p class="reveal">1-6 节你见过 AI 一本正经编参数的样子。团队场景里这事更危险：<b>新人不知道 AI 会编</b>，看到“304 不锈钢内胆，保温 24 小时”写得有鼻子有眼就直接上架了——实际产品保温 12 小时，这 12 小时之差就是<b>虚假宣传的实锤</b>。规矩：文案里每一个数字、每一个材质、每一个功效词，都要能指到商品库里的出处。指不出的，删掉。</p>
+
+  <div class="sec-label">底线二：品牌调性——AI 没有“咱家的味儿”</div>
+
+  <p class="reveal">AI 默认输出的是“全网平均值”的调性——而你的店铺能活下来，恰恰因为不是平均值。做高端线的店用了“家人们谁懂啊”，做年轻潮牌的店用了“匠心品质尊贵享受”，都是调性事故。<b>调性不需要 AI 懂，需要人守</b>：把“咱家说什么、不说什么”写成一份调性卡（2-1 的角色设定 + 5-7 的资产库），上架前对着卡过一遍。</p>
+
+  <div class="sec-label">底线三：违禁词——广告法的雷，AI 不认识</div>
+
+  <p class="reveal">“最有效”“第一选择”“纯天然无添加”“治疗级”——这些词 AI 用起来毫无心理障碍，因为它不知道《广告法》的罚单长什么样。这条底线必须<b>机器化</b>（4-4 第一层的违禁词表），不能靠人眼：人眼看 100 条文案会疲劳，词表不会。高危类目（食品/化妆品/保健品/母婴）词表单独加一份类目专属版。</p>
+
+  <div class="sec-label">底线四：版权——AI 生成 ≠ 可以商用</div>
+
+  <ul>
+    <li class="reveal"><b>图片</b>：AI 生成的图可能“神似”某品牌设计、某明星脸、某插画师风格——3-3 节的质检清单里有这一项，上架前必查。</li>
+    <li class="reveal"><b>文案</b>：让 AI“参考 XX 大牌的文案风格”时，它可能直接化用对方的原创句子——近似到构成抄袭，锅是你的。</li>
+    <li class="reveal"><b>字体/素材</b>：AI 海报里搭配的字体、图标，商用授权要单独确认——这条 AI 管不了，只能人管。</li>
+  </ul>
+
+  <div class="sec-label">底线自测：这条文案敢上架吗</div>
+
+  <div class="demo redline-lab reveal">
+    <div class="demo-title">排雷练习 · 勾出你发现的违规点（共 5 处）</div>
+    <div style="border-radius:10px;background:var(--pill-bg);padding:13px 16px;font-size:13px;line-height:1.9;margin-bottom:12px;border:1.5px dashed var(--border-strong);">
+      <b>待审文案：</b>这款全网<b>销量第一</b>的保温杯，采用航天级 316 不锈钢（实际为 304），<b>保温长达 48 小时</b>（实测 12 小时），<b>宝妈必备神器，宝宝用了不生病</b>！文案风格参考某大牌：“让每一口水都充满仪式感”。海报字体用的是网上下载的“站酷快乐体”。
+    </div>
+    <div class="rl-item"><div class="rl-box" data-r="1">✗</div><div class="rl-txt"><b>“销量第一”</b>——极限词<span class="rl-risk">广告法红线，罚单起步价 20 万</span></div></div>
+    <div class="rl-item"><div class="rl-box" data-r="1">✗</div><div class="rl-txt"><b>“航天级 316 不锈钢”（实为 304）</b>——材质虚标<span class="rl-risk">事实核验失守：虚假宣传</span></div></div>
+    <div class="rl-item"><div class="rl-box" data-r="1">✗</div><div class="rl-txt"><b>“保温 48 小时”（实测 12）</b>——功效虚标<span class="rl-risk">事实核验失守：每个数字都要能对账</span></div></div>
+    <div class="rl-item"><div class="rl-box" data-r="1">✗</div><div class="rl-txt"><b>“宝宝用了不生病”</b>——暗示医疗功效<span class="rl-risk">违禁词 + 母婴类目高危表述</span></div></div>
+    <div class="rl-item"><div class="rl-box" data-r="1">✗</div><div class="rl-txt"><b>化用大牌原创句 + 来路不明字体</b>——版权雷区<span class="rl-risk">抄袭风险 + 字体商用授权未确认</span></div></div>
+    <div class="rl-score" id="rlScore">已找出 0 / 5 处雷 —— 点上面各项左侧的方框</div>
+  </div>
+
+  <div class="l-callout reveal">
+    四条底线一句话版：<b>数字能对账、调性对上卡、词表过一遍、素材查清授权</b>。把这句话贴在每个用 AI 的同事屏幕上——AI 越快，这四道闸门越不能省。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>事实核验</b>：每个数字/材质/功效都要能指到出处，指不出就删。</li>
+      <li><b>品牌调性</b>：AI 输出的是全网平均值，“咱家的味儿”靠人守、靠调性卡。</li>
+      <li><b>违禁词</b>：必须机器化过词表，高危类目用专属版，不靠人眼。</li>
+      <li><b>版权</b>：AI 生成 ≠ 可商用——图、文案、字体素材各有各的雷。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var score=document.getElementById('rlScore');
+  var found=0,total=5;
+  document.querySelectorAll('.rl-item').forEach(function(item){
+    item.querySelector('.rl-box').addEventListener('click',function(){
+      if(item.classList.contains('checked'))return;
+      item.classList.add('checked');
+      found++;
+      if(found>=total){
+        score.textContent='🏆 5 / 5 全部找出！这四道闸门已经长在你脑子里了——去教给团队吧。';
+        score.className='rl-score safe';
+      }else{
+        score.textContent='已找出 '+found+' / '+total+' 处雷 —— 继续找';
+        score.className='rl-score danger';
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

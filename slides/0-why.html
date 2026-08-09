@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>为什么电商人要懂 AI 底层 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="AI 写文案跑偏、客服答非所问，根子都在底层机制上——懂了才好管，不懂就只能被牵着走。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="为什么电商人要懂 AI 底层">
+<meta property="og:description" content="AI 跑偏的根子在底层机制，懂了才好管。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/0-why.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .flip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+  .flip{perspective:900px;height:190px;cursor:pointer;}
+  .flip-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
+  .flip.on .flip-in{transform:rotateY(180deg);}
+  .flip-face{position:absolute;inset:0;border-radius:12px;padding:14px 15px;backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;font-size:12px;line-height:1.7;border:1.5px solid var(--border);}
+  .flip-front{background:var(--card);}
+  .flip-front .ff-ico{font-size:20px;}
+  .flip-front h4{font-size:13.5px;font-weight:800;color:var(--text-h);margin:5px 0 4px;}
+  .flip-front p{color:var(--sub);margin:0;}
+  .flip-front .ff-hint{margin-top:8px;font-size:11px;font-weight:800;color:var(--accent);}
+  .flip-back{background:#1E1E2E;color:#cbd5e1;transform:rotateY(180deg);border-color:#1E1E2E;}
+  .flip-back b{color:#fb923c;}
+  @media(max-width:640px){.flip-grid{grid-template-columns:1fr;}.flip{height:170px;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">导学篇 · 开学第一课</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">导学篇 · 开学第一课</div>
+    <h1>为什么电商人要懂 AI 底层</h1>
+    <p class="subtitle">“我会打字就行了，懂原理干嘛？”——会开车确实不用懂发动机，但车子半路抛锚时，懂的人打开引擎盖，不懂的人只能打电话求救。AI 也一样：它抛锚的频率，比你想象的高得多。</p>
+    <div class="tag-row"><span class="tag">开篇</span><span class="tag">认知</span><span class="tag">6 分钟</span></div>
+  </div>
+
+  <div class="sec-label">三个真实翻车，根子都在底层</div>
+
+  <p class="reveal">下面三张牌，是三个真实发生过的电商 AI 事故。<b>先读正面的“表面现象”，猜猜问题出在哪，再翻开看“底层根子”</b>——看看你能不能想到第二层：</p>
+
+  <div class="flip-grid reveal">
+    <div class="flip">
+      <div class="flip-in">
+        <div class="flip-face flip-front">
+          <div class="ff-ico">📣</div>
+          <h4>表面：口径乱了</h4>
+          <p>大促前，运营教了 AI 客服三天新活动规则。大促当天，它还在按上个月的旧规则答，客诉直接爆了。</p>
+          <div class="ff-hint">点开看根子 →</div>
+        </div>
+        <div class="flip-face flip-back">
+          <b>根子：不懂训练 vs 推理。</b>跟 AI 聊天并不会“教会”它任何东西——对话一关，它全部还给你。懂的人会把活动规则写进 System Prompt 或知识库，一次配置，长期生效。<br><br>→ 第一课 1-2 就讲这个。
+        </div>
+      </div>
+    </div>
+    <div class="flip">
+      <div class="flip-in">
+        <div class="flip-face flip-front">
+          <div class="ff-ico">⚖️</div>
+          <h4>表面：被职业打假</h4>
+          <p>AI 写的详情页声称“降三高”，被职业打假人盯上，店铺吃了处罚。老板委屈：“AI 写的啊。”</p>
+          <div class="ff-hint">点开看根子 →</div>
+        </div>
+        <div class="flip-face flip-back">
+          <b>根子：不懂幻觉机制。</b>AI 不懂《广告法》，也不懂你的产品到底有没有这个功效——它只知道“降三高”和“保健品文案”在语料里经常一起出现。懂幻觉的人会建违禁词表 + 参数对账。<br><br>→ 1-6 到 1-10 四节课拆透。
+        </div>
+      </div>
+    </div>
+    <div class="flip">
+      <div class="flip-in">
+        <div class="flip-face flip-front">
+          <div class="ff-ico">🤯</div>
+          <h4>表面：客服失忆</h4>
+          <p>客人聊了 20 分钟换货，AI 突然问“请问您要咨询什么商品”——客人炸毛，差评 + 投诉。</p>
+          <div class="ff-hint">点开看根子 →</div>
+        </div>
+        <div class="flip-face flip-back">
+          <b>根子：不懂上下文窗口。</b>AI 的“记性”是一块有容量的白板，聊满了就会挤掉开头的内容。懂上下文的人会做压缩、做交接卡，让 AI 聊到第 100 轮也不忘事。<br><br>→ 1-4 和 3-9 专门解决。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-label">看懂了吗：三个事故，三种“本可以避免”</div>
+
+  <p class="reveal">注意一个共同点：<b>三个老板都不是不努力，是不知道该往哪努力</b>。口径乱了去加班盯回复、被打假去骂 AI、客服失忆去换模型——全是在表面现象上使劲，根子纹丝不动，下个月换个姿势再翻一次。</p>
+
+  <p class="reveal">懂底层的人刚好反过来：他们不追求“AI 不出错”（不可能），而是<b>知道错误长什么样、从哪来、往哪堵</b>。这就是这门课第一篇章存在的意义——不教你背概念，教你在 AI 抛锚时“打开引擎盖”。</p>
+
+  <div class="sec-label">懂底层的三个实在好处</div>
+
+  <ul>
+    <li class="reveal"><b>管得住 AI</b>：它跑偏时你知道是哪根管子松了——提示词、上下文、还是知识库——而不是只会说“这 AI 不行”。</li>
+    <li class="reveal"><b>压得住成本</b>：Token 怎么烧的、哪里能省，一眼看穿。同样的活，懂的人花三成的钱就能干完。</li>
+    <li class="reveal"><b>带得动团队</b>：员工说“AI 不好用”时，你能指出到底是工具问题还是用法问题——这是 AI 时代管理者的新基本功。</li>
+  </ul>
+
+  <div class="l-callout reveal">
+    一句话：<b>开车不需要会修车，但用 AI 不一样——你懂一点底层逻辑，才发挥得出它最佳的性能</b>。区别不在谁用的工具多，在谁的车抛锚时能自己修。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>表面现象 vs 底层根子</b>：口径乱是训练与推理、被打假是幻觉、客服失忆是上下文。</li>
+      <li><b>不懂底层的努力会打偏</b>：在表面使劲，根子不动，下个月换个姿势再翻车。</li>
+      <li><b>三个实在好处</b>：管得住 AI、压得住成本、带得动团队。</li>
+      <li><b>接下来</b>：第一篇章从 Token 开始，一节课一个底层机制，全部用电商话讲。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.flip').forEach(function(f){
+    f.addEventListener('click',function(){f.classList.toggle('on');});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 跑偏了怎么办：退出 Bug 循环 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="越改越乱时的三个止损动作：回滚、重述、换路子——真实翻车现场复盘。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="AI 跑偏了怎么办：退出 Bug 循环">
+<meta property="og:description" content="越改越乱时的三个止损动作：回滚、重述、换路子。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/5-4.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .loop{margin-top:14px;}
+  .loop-stage{border-radius:12px;background:#1E1E2E;color:#cbd5e1;padding:15px 17px;font-size:12.5px;
+    line-height:2;min-height:150px;font-family:"SF Mono",Menlo,Consolas,monospace;margin-bottom:12px;}
+  .loop-stage .you{color:#7dd3fc;}
+  .loop-stage .ai{color:#cbd5e1;}
+  .loop-stage .bad{color:#f87171;font-weight:700;}
+  .loop-stage .fix{color:#34d399;font-weight:700;}
+  .loop-acts{display:flex;gap:10px;flex-wrap:wrap;}
+  .loop-acts button{flex:1;min-width:140px;}
+  .loop-tip{font-size:12px;color:var(--sub);margin-top:10px;font-weight:700;min-height:20px;}
+  .loop-tip b{color:var(--accent);}
+  .stop3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+  .st{border-radius:12px;border:1.5px solid var(--border);background:var(--card);padding:14px 16px;}
+  .st .st-ico{font-size:20px;}
+  .st h4{font-size:14px;font-weight:800;color:var(--text-h);margin:6px 0 4px;}
+  .st p{font-size:12.5px;color:var(--sub);margin:0;line-height:1.75;}
+  .st .st-when{display:inline-block;margin-top:8px;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;
+    background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-border);}
+  @media(max-width:640px){.stop3{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第五篇章 · 电商团队 AI 协作规范</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第五篇章 · 电商团队 AI 协作规范</div>
+    <h1>AI 跑偏了怎么办：退出 Bug 循环</h1>
+    <p class="subtitle">你一定遇到过：让 AI 改个文案，改完更糟；你说“不对，改回去”，它改出一个新问题；再改，再坏……八轮下来，你还不如自己写。这叫 Bug 循环——这节教你怎么跳车。</p>
+    <div class="tag-row"><span class="tag">案例</span><span class="tag">止损</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">先复盘一个真实翻车现场</div>
+
+  <div class="demo loop reveal">
+    <div class="demo-title">Bug 循环现场 · 保温杯文案，四轮越改越烂</div>
+    <div class="loop-stage" id="loopStage">
+<span class="you">你：</span>把这段保温杯文案改得更有温度一点。
+<span class="ai">AI：</span>“温暖的保温杯，温暖你的心……”（加了“温暖”×6）
+<span class="you">你：</span>太生硬了，别堆“温暖”这个词。
+<span class="ai">AI：</span>“温馨的保温杯，温馨你的每一天……”（换成“温馨”×5）
+<span class="you">你：</span>……不要堆词！要“有画面感”！
+<span class="ai">AI：</span>“清晨的第一缕阳光里，一杯热茶在等你。午后的小憩时光中，暖意伴你左右。深夜加班的台灯下……”（堆了 400 字排比）
+<span class="bad">→ 第 4 轮了，比第 1 版还差。你已经忘了最初想要什么。</span>
+    </div>
+    <div class="loop-acts">
+      <button data-act="rollback">⏪ 回滚</button>
+      <button data-act="restate" class="btn-ghost">🔄 重述</button>
+      <button data-act="reroute" class="btn-ghost">🔀 换路子</button>
+    </div>
+    <div class="loop-tip" id="loopTip">上面是个死局。点三个止损动作，看各自怎么破局 ↓</div>
+  </div>
+
+  <div class="sec-label">三个止损动作详解</div>
+
+  <div class="stop3 reveal">
+    <div class="st">
+      <div class="st-ico">⏪</div>
+      <h4>回滚</h4>
+      <p>回到循环开始前那个“还行”的版本，把烂摊子整页扔掉。AI 对话窗口越滚越长，错误语境越积越厚（1-4 节的白板原理）——<b>不滚回去，每一轮都是在错误的地基上盖楼</b>。</p>
+      <span class="st-when">什么时候用：改了两轮还在跑偏</span>
+    </div>
+    <div class="st">
+      <div class="st-ico">🔄</div>
+      <h4>重述</h4>
+      <p>开新窗口，用“想清楚之后的话”重说需求。刚才那四轮其实帮你搞明白了一件事：你要的不是“温暖”，是“早上赶地铁时单手能开盖”这种<b>具体场景</b>。把这个想清楚，一句顶十句。</p>
+      <span class="st-when">什么时候用：回滚后，需求已经想得更清楚</span>
+    </div>
+    <div class="st">
+      <div class="st-ico">🔀</div>
+      <h4>换路子</h4>
+      <p>承认这条路走不通，换打法：别让它“改文案”了，改成“给我 5 个保温杯使用场景清单”，你挑一个再让它展开——<b>把开放题换成选择题</b>，AI 的发挥空间小了，跑偏空间也小了。</p>
+      <span class="st-when">什么时候用：重述两轮还跑偏，说明打法有问题</span>
+    </div>
+  </div>
+
+  <div class="l-callout reveal">
+    Bug 循环最毒的幻觉是“再改一轮就好了”。给自己定条铁律：<b>同一任务连续两轮不满意，立即执行止损动作，不开第三轮</b>。你的时间和 Token 都烧在“以为快好了”上。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>Bug 循环</b>：越改越烂的病根是错误语境在长对话里越积越厚。</li>
+      <li><b>回滚</b>：回到循环前的好版本，不在错误地基上盖楼。</li>
+      <li><b>重述</b>：开新窗口，用“想清楚了的话”重说需求——循环帮你想清了要什么。</li>
+      <li><b>换路子</b>：开放题换选择题，收窄 AI 的发挥空间。两轮不满意就止损。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var stage=document.getElementById('loopStage'),tip=document.getElementById('loopTip');
+  var acts={
+    rollback:{
+      html:'<span class="fix">⏪ 回滚执行：</span>扔掉这四轮，回到最初的版本——“12 小时保温，304 不锈钢，一键开盖”。\n虽然平淡，但它是对的。<b>从“对的平淡”出发，比从“精彩的跑偏”回来容易得多。</b>',
+      tip:'<b>回滚</b>不是认输，是把谈判桌搬回自己选的位置。'
+    },
+    restate:{
+      html:'<span class="fix">🔄 重述执行：</span>新窗口第一句话——\n<span class="you">你：</span>"写保温杯文案。目标客群：通勤上班族。核心场景：早高峰地铁上单手开盖喝水。要一句主卖点 + 两个支撑点，不超过 80 字。"\n<span class="ai">AI：</span>"挤上地铁的第三站，单手一按，热水正好入口。——12 小时锁温，一键开合，防漏到可以横着塞进通勤包。"\n<span class="fix">✓ 一轮过稿。刚才四轮没白绕——它们帮你把“有温度”翻译成了“地铁单手开盖”。</span>',
+      tip:'<b>重述</b>的秘诀：循环里吃过的亏，都变成了新需求里的具体词。'
+    },
+    reroute:{
+      html:'<span class="fix">🔀 换路子执行：</span>不让它“改文案”了——\n<span class="you">你：</span>"列 6 个保温杯的真实使用场景，每个一句话。"\n<span class="ai">AI：</span>① 早高峰地铁单手开盖 ② 深夜加班泡面续命 ③ 健身房撸铁间隙 ④ 带娃出门冲奶 ⑤ 自驾游山路颠簸防漏 ⑥ 办公室下午茶的体面\n<span class="you">你：</span>"用①展开，80 字以内。" → 一轮过稿。\n<span class="fix">✓ 开放题换选择题：你管住方向，AI 只管执行。</span>',
+      tip:'<b>换路子</b>的本质：把“评审 AI”变成“指挥 AI”——选择题你永远是甲方。'
+    }
+  };
+  document.querySelectorAll('.loop-acts button').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var a=acts[btn.getAttribute('data-act')];
+      stage.innerHTML=a.html;
+      tip.innerHTML=a.tip;
+    });
+  });
+})();
+</script>
+</body>
+</html>

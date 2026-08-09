@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 时代的选品新玩法 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="用 AI 做竞品分析、评论挖需求、趋势预判的正确姿势——AI 给线索，人做判断。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="AI 时代的选品新玩法">
+<meta property="og:description" content="竞品分析、评论挖需求、趋势预判的 AI 正确姿势。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/lei-3.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .mine{margin-top:14px;}
+  .mine-reviews{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+  .rv{font-size:12.5px;line-height:1.7;background:var(--pill-bg);border:1.5px solid var(--border);
+    border-radius:9px;padding:9px 13px;color:var(--sub);transition:.3s;}
+  .rv b{color:var(--text-h);}
+  .rv.tag-pain{border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.05);color:var(--text);}
+  .rv.tag-want{border-color:rgba(13,148,136,.45);background:rgba(13,148,136,.06);color:var(--text);}
+  .rv .rv-tag{display:inline-block;font-size:10px;font-weight:900;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:1px;}
+  .rv.tag-pain .rv-tag{background:rgba(220,38,38,.14);color:var(--danger);}
+  .rv.tag-want .rv-tag{background:rgba(13,148,136,.14);color:var(--cyan);}
+  .mine-out{border-radius:11px;background:#1E1E2E;color:#cbd5e1;padding:14px 16px;font-size:12.5px;
+    line-height:1.95;min-height:120px;font-family:"SF Mono",Menlo,Consolas,monospace;}
+  .mine-out .h{color:#fb923c;font-weight:700;}
+  .mine-out .p{color:#f87171;}
+  .mine-out .w{color:#2dd4bf;}
+  .mine-out .dim{color:#64748b;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">加餐篇 · 团队应用加餐</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">加餐篇 · 团队应用加餐</div>
+    <h1>AI 时代的选品新玩法</h1>
+    <p class="subtitle">前两节是传统功夫。这节讲 AI 怎么给选品加杠杆——核心就两件事：<b>① 发现尚未被满足的需求，② 找到商业机会点</b>。而这两件事最好的矿藏，就埋在评价数据里。</p>
+    <div class="tag-row"><span class="tag">电商</span><span class="tag">加餐</span><span class="tag">9 分钟</span></div>
+  </div>
+
+  <div class="sec-label">玩法一：评论区挖矿——需求都写在差评里</div>
+
+  <p class="reveal">竞品的评论区是一座金矿：<b>差评里藏着没被满足的需求，追评里藏着用出来的真相</b>。以前靠人翻 500 条评价，翻完脑仁疼；现在把评价导给 AI，让它做归类打标——你只看结果。</p>
+
+  <div class="demo mine reveal">
+    <div class="demo-title">评论挖矿演示 · 点按钮，看 AI 把 6 条真实评价炼成选品线索</div>
+    <div class="mine-reviews" id="mineReviews">
+      <div class="rv">“杯子保温还行，就是<b>盖子特别难拧</b>，早上赶地铁单手根本打不开。”</div>
+      <div class="rv">“用了两周来追评：<b>杯底掉漆了</b>，30 多块的杯子也不至于吧。”</div>
+      <div class="rv">“容量刚好，放车里杯架正合适。要是<b>有个茶隔</b>就完美了。”</div>
+      <div class="rv">“给我爸买的，他说<b>太重了</b>，老人家拿不动。”</div>
+      <div class="rv">“第 N 次回购，办公室人手一个。求出<b>大容量版</b>！”</div>
+      <div class="rv">“密封不错倒置不漏，但<b>吸管配件丢了没得单买</b>，差评。”</div>
+    </div>
+    <div style="text-align:center;margin-bottom:12px;"><button id="btnMine">⛏️ 开始挖矿</button></div>
+    <div class="mine-out" id="mineOut">// 待命中。AI 将把这 6 条评价打成两类标签：<span class="p">痛点（别人没做好的）</span> 和 <span class="w">欲求（客人主动许愿的）</span>……</div>
+  </div>
+
+  <p class="reveal">看到产出了吗？评价数据分析给你的正是开头说的两件事：<b>“单手开盖难”这类差评高频词 = 尚未被满足的需求 → 你的产品改良点；“想要茶隔/大容量”这类主动许愿 = 商业机会点 → 你的新品方向</b>。6 条评价能看出来的东西有限，但这个流程跑 500 条、5000 条，出来的就是一张别人看不见的需求地图（技术上这就是 3-6 节知识库 + 4-3 节长任务的组合拳）。</p>
+
+  <div class="sec-label">玩法二：竞品体检——空档就是机会点</div>
+
+  <ul>
+    <li class="reveal"><b>价格带分布</b>：把类目前 50 名的标题和价格喂给 AI，让它画出价格带分布图——哪个价格带挤破头、<b>哪个价格带有空档</b>，一目了然。空档 + 真实需求 = 典型的商业机会点。</li>
+    <li class="reveal"><b>卖点同质化检测</b>：让 AI 提取 Top 20 竞品的主打卖点，如果 18 家都在喊“保温 12 小时”，你再说同样的话就是噪音——<b>没人喊、但评价里有人抱怨的那个点，就是尚未被满足的需求</b>。</li>
+    <li class="reveal"><b>上新监控</b>：4-3 节的竞品监控 Agent 就是干这个的——竞品上新、调价、换主图，第二天早报送到你桌上。</li>
+  </ul>
+
+  <div class="sec-label">玩法三：趋势预判——让 AI 读“水温”</div>
+
+  <p class="reveal">把行业报告、内容平台热词、搜索指数趋势丢给 AI，让它做<b>交叉摘要</b>：哪些词在涨、涨了多久、是脉冲还是趋势。比如“防晒衣”的搜索量每年 3 月开始爬坡——AI 帮你把这个节奏算出来，你就知道该什么时候备货、什么时候测款（呼应上一课《测款：用最小成本验证市场》讲的时间窗口）。</p>
+
+  <div class="l-callout reveal">
+    但记住这条铁律：<b>AI 给的是线索，不是结论</b>。它告诉你“单手开盖是高频差评”，改不改、怎么改、改完供应链跟不跟得上——这是加餐第 1 课《选品的底层逻辑》讲的、必须由人做的判断。把 AI 的线索放进人的判断框架里，才是选品的完整打法。
+  </div>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>评论挖矿 = 两件事</b>：差评里找“尚未被满足的需求”（改良点），许愿里找“商业机会点”（新品方向）。</li>
+      <li><b>竞品体检</b>：价格带分布、卖点同质化检测、上新监控，AI 当侦察兵。</li>
+      <li><b>趋势预判</b>：搜索/内容/报告交叉摘要，分清脉冲与趋势，卡准备货节奏。</li>
+      <li><b>铁律</b>：AI 给线索，人做判断——线索必须放回加餐第 1 课《选品的底层逻辑：需求 > 供应链 > 流量》的框架里判断。</li>
+    </ul>
+  </div>
+
+  <div class="skill-rec reveal">
+    <span class="sr-ico"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+    <span class="sr-txt">电商人必备好用的 Skill 库，复制本段文字发给AI安装：<a href="https://github.com/sgskills/aibp" target="_blank" rel="noopener">github.com/sgskills/aibp</a></span>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var reviews=document.querySelectorAll('#mineReviews .rv');
+  var out=document.getElementById('mineOut'),btn=document.getElementById('btnMine');
+  var tags=['pain','pain','want','pain','want','pain'];
+  var tagNames={pain:'痛点',want:'欲求'};
+  var busy=false;
+  btn.addEventListener('click',function(){
+    if(busy)return;busy=true;
+    reviews.forEach(function(r){r.classList.remove('tag-pain','tag-want');var t=r.querySelector('.rv-tag');if(t)t.remove();});
+    out.innerHTML='<span class="dim">// AI 打标中……</span>';
+    var i=0;
+    function tick(){
+      if(i<reviews.length){
+        var r=reviews[i],tag=tags[i];
+        r.classList.add('tag-'+tag);
+        var badge=document.createElement('span');badge.className='rv-tag';badge.textContent=tagNames[tag];
+        r.appendChild(badge);
+        i++;setTimeout(tick,380);return;
+      }
+      out.innerHTML='<span class="h">══ 挖矿结果 ══</span>\n'
+        +'<span class="p">▍痛点 TOP3（别人没做好的 = 你的改良点）</span>\n'
+        +'  ① 盖子难拧/单手打不开 ······· 2 次提及 ← 高频\n'
+        +'  ② 掉漆 / 太重 / 配件不单卖 ·· 各 1 次\n'
+        +'<span class="w">▍欲求 TOP2（客人主动许愿的 = 新品方向）</span>\n'
+        +'  ① 想要茶隔 ················ 明确许愿\n'
+        +'  ② 求大容量版 ·············· 复购客许愿（强信号）\n'
+        +'<span class="h">▍选品线索</span>：做一款「单手快开 + 带茶隔」的大容量版，\n  主打通勤人群——这就是评论区送给你的差异化。';
+      busy=false;
+    }
+    tick();
+  });
+})();
+</script>
+</body>
+</html>

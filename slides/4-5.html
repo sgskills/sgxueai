@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>建立你的“黄金测试集” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="50 个真实买家问题作为基准，每次改提示词都跑一遍回归——改坏了立刻知道。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="建立你的&quot;黄金测试集&quot;">
+<meta property="og:description" content="50 个真实买家问题，每次改提示词都跑一遍回归。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/4-5.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .regress{margin-top:14px;}
+  .rg-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .rg-prompts{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-width:280px;}
+  .rg-p{border-radius:10px;border:1.5px solid var(--border);padding:10px 13px;font-size:12px;cursor:pointer;transition:.18s;background:var(--card);}
+  .rg-p:hover{border-color:var(--accent-border);}
+  .rg-p.sel{border-color:var(--accent);background:var(--accent-soft);}
+  .rg-p b{display:block;font-size:12.5px;color:var(--text-h);margin-bottom:2px;}
+  .rg-p span{color:var(--sub);font-size:11.5px;}
+  .rg-cells{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin:12px 0;}
+  .rg-cell{aspect-ratio:1;border-radius:6px;background:var(--pill-bg);border:1px solid var(--border);transition:.15s;}
+  .rg-cell.pass{background:rgba(16,185,129,.25);border-color:rgba(16,185,129,.55);}
+  .rg-cell.fail{background:rgba(220,38,38,.25);border-color:rgba(220,38,38,.55);}
+  .rg-meter{display:flex;align-items:center;gap:12px;margin-top:6px;}
+  .rg-track{flex:1;height:12px;border-radius:999px;background:var(--pill-bg);overflow:hidden;border:1px solid var(--border);}
+  .rg-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#F97316,#10B981);width:0%;transition:width .8s cubic-bezier(.22,.9,.3,1);}
+  .rg-num{font-size:20px;font-weight:900;color:var(--text-h);min-width:86px;text-align:right;}
+  .rg-num small{font-size:11px;color:var(--sub);font-weight:700;}
+  .rg-verdict{margin-top:12px;font-size:13px;font-weight:700;padding:11px 15px;border-radius:10px;display:none;}
+  .rg-verdict.ok{display:block;background:rgba(16,185,129,.08);border:1.5px solid rgba(16,185,129,.35);color:var(--success);}
+  .rg-verdict.bad{display:block;background:rgba(220,38,38,.07);border:1.5px solid rgba(220,38,38,.35);color:var(--danger);}
+  @media(max-width:640px){.rg-prompts{grid-template-columns:1fr;}}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第四篇章 · 电商业务流进阶</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第四篇章 · 电商业务流进阶</div>
+    <h1>建立你的“黄金测试集”</h1>
+    <p class="subtitle">你有没有过这种经历：提示词改了一版，试了两个例子感觉“好多了”，上线三天后客服主管找上门——某个老问题被改崩了。缺的不是手感，是一套“回归测试”。</p>
+    <div class="tag-row"><span class="tag">技巧</span><span class="tag">实战</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">为什么“试两个例子”一定翻车</div>
+
+  <p class="reveal">改提示词像调药方子：加强了“热情”，可能削弱了“严谨”；补了“尺码问题”的回答，可能把“物流问题”的答案挤跑偏。<b>你只试了你在意的两个例子，没试的那 48 个里，可能就有一个悄悄崩了。</b></p>
+
+  <p class="reveal">程序员早就解决了这个问题——他们管这叫<b>回归测试</b>：每改一次代码，就把所有老功能重新跑一遍，确认没把旧的改坏。电商人可以直接抄这个作业：<b>攒一套固定的测试题，每次改提示词就全跑一遍</b>。这套题，就是“黄金测试集”。</p>
+
+  <div class="sec-label">黄金测试集怎么攒：从真实对话里捞</div>
+
+  <ul>
+    <li class="reveal"><b>来源必须真实</b>：从客服聊天记录里导 50 条真实买家问题——别自己编，自己编的都是你“以为”客人会问的。</li>
+    <li class="reveal"><b>配比照抄真实分布</b>：物流 30%、尺码 25%、售后 20%、产品参数 15%、优惠 10%——真实店铺什么占比，测试集就什么占比。</li>
+    <li class="reveal"><b>必含 10 条“送命题”</b>：套话攻击（2-4 节）、情绪激动的差评客、政策边缘问题（“能不能开发票抵税”）——平时不出事，出事就是大事的全在这。</li>
+    <li class="reveal"><b>每题配标准答案</b>：不一定逐字标准，但要有“得分点”——比如尺码题必须提到“建议拍大一码”。</li>
+  </ul>
+
+  <div class="sec-label">动手试试：三个提示词版本跑回归</div>
+
+  <div class="demo regress reveal">
+    <div class="demo-title">回归测试台 · 点不同版本，看黄金测试集成绩</div>
+    <div class="rg-head">
+      <div class="rg-prompts">
+        <div class="rg-p sel" data-pass="44" data-msg="ok" data-text="✅ 通过率 88%，可以上线。记住：这个'还行'的数字就是你的基准线——以后每次改提示词，都跟它比。">
+          <b>v1.0 · 当前线上版</b><span>常规客服提示词，稳定但平淡</span>
+        </div>
+        <div class="rg-p" data-pass="47" data-msg="ok" data-text="✅ 通过率 94%，涨了 6 个点！而且 50 题全跑过一遍——可以放心替换线上版。这就是'有依据的优化'。">
+          <b>v1.1 · 加强售后政策</b><span>补了退换货规则的描述</span>
+        </div>
+        <div class="rg-p" data-pass="31" data-msg="bad" data-text="🚨 通过率 62%，崩了！热情人设挤占了政策细节，售后题大面积答非所问。没跑测试集的话，这版上线就是客服事故。">
+          <b>v1.2 · 加强热情人设</b><span>语气更活泼，但动了核心约束</span>
+        </div>
+      </div>
+    </div>
+    <div class="rg-cells" id="rgCells"></div>
+    <div class="rg-meter">
+      <div class="rg-track"><div class="rg-fill" id="rgFill"></div></div>
+      <div class="rg-num"><span id="rgNum">--</span> <small>/ 50 题</small></div>
+    </div>
+    <div class="rg-verdict" id="rgVerdict"></div>
+  </div>
+
+  <p class="reveal">注意 v1.2 的教训：<b>手感上“更活泼了”，数据上“售后崩了”</b>。没有测试集，你只会发现前者；有了测试集，你在上线前就能拦下后者。50 题 × 每题一个 Token 消耗，跑一次回归成本几毛钱——这可能是你 ROI 最高的一笔 AI 支出。</p>
+
+  <div class="sec-label">落地三步走</div>
+
+  <ul>
+    <li class="reveal"><b>第一周：攒题</b>——导最近 30 天客服记录，挑 50 条有代表性的，人工写好得分点。</li>
+    <li class="reveal"><b>立规矩</b>——提示词想上线？先跑回归。通过率低于线上版就驳回，没得商量（4-4 的质检漏斗在这里是前置关卡）。</li>
+    <li class="reveal"><b>每月更新</b>——新问题补进来（大促后必补），太简单的老题淘汰。测试集跟着业务长，才不会变成一潭死水。</li>
+  </ul>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>回归测试</b>：改提示词像调药方——必须确认没把老问题改崩。</li>
+      <li><b>50 道真金题</b>：从真实客服记录里捞，配比照抄真实分布，必含 10 条送命题。</li>
+      <li><b>每题配得分点</b>：不追求逐字一致，抓住“必须答到的点”。</li>
+      <li><b>上线铁律</b>：通过率低于线上版就驳回——几毛钱的回归成本，拦下的是客服事故。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var cellsWrap=document.getElementById('rgCells'),fill=document.getElementById('rgFill'),
+      num=document.getElementById('rgNum'),verdict=document.getElementById('rgVerdict');
+  var cells=[];
+  for(var i=0;i<50;i++){
+    var c=document.createElement('div');c.className='rg-cell';cellsWrap.appendChild(c);cells.push(c);
+  }
+  function render(pass,msg,text){
+    cells.forEach(function(c){c.className='rg-cell';});
+    verdict.className='rg-verdict';verdict.style.display='none';
+    fill.style.width='0%';num.textContent='--';
+    setTimeout(function(){
+      cells.forEach(function(c,idx){
+        setTimeout(function(){c.classList.add(idx<pass?'pass':'fail');},idx*12);
+      });
+      setTimeout(function(){
+        var pct=Math.round(pass/50*100);
+        fill.style.width=pct+'%';num.textContent=pass;
+        verdict.textContent=text;verdict.className='rg-verdict '+msg;
+      },50*12+150);
+    },60);
+  }
+  document.querySelectorAll('.rg-p').forEach(function(p){
+    p.addEventListener('click',function(){
+      document.querySelectorAll('.rg-p').forEach(function(x){x.classList.remove('sel');});
+      p.classList.add('sel');
+      render(parseInt(p.getAttribute('data-pass'),10),p.getAttribute('data-msg'),p.getAttribute('data-text'));
+    });
+  });
+  render(44,'ok','✅ 通过率 88%，可以上线。记住：这个“还行”的数字就是你的基准线——以后每次改提示词，都跟它比。');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>训练 vs 推理：AI 不会在聊天中“学习” | 诗光聊AI电商 入门课</title>
+<meta name="description" content="跟 AI 聊了三天它还是不记得你的店？因为对话根本不会更新模型。训练和推理是两回事，电商人必懂的底层逻辑。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="训练 vs 推理：AI 不会在聊天中&quot;学习&quot;">
+<meta property="og:description" content="对话不会更新模型——训练和推理是两个完全不同的过程。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/1-2.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .brain{display:flex;flex-direction:column;gap:12px;}
+  .brain .row{display:flex;gap:12px;align-items:stretch;}
+  .brain .cell{
+    flex:1;background:var(--pill-bg);border-radius:10px;padding:14px;
+    font-size:13.5px;line-height:1.6;
+  }
+  .brain .cell b{display:block;color:var(--text-h);margin-bottom:4px;}
+  .brain .cell.frozen{border:2px solid var(--blue);position:relative;}
+  .brain .cell.frozen::after{
+    content:'🔒 冻结';position:absolute;top:-10px;right:10px;
+    font-size:10.5px;font-weight:800;color:#fff;background:var(--blue);
+    padding:2px 9px;border-radius:999px;
+  }
+  .teach-box{text-align:center;margin-top:16px;}
+  .teach-log{
+    margin-top:14px;background:var(--pill-bg);border-radius:10px;padding:14px;
+    font-size:13.5px;text-align:left;min-height:52px;line-height:1.7;
+  }
+  .teach-log .sys{color:var(--sub);font-size:12px;}
+  .vs-table td:first-child{font-weight:700;color:var(--text-h);white-space:nowrap;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第一篇章 · 电商 AI 认知底座</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第一篇章 · 电商 AI 认知底座</div>
+    <h1>训练 vs 推理：AI 不会在聊天中“学习”</h1>
+    <p class="subtitle">很多老板纳闷：我明明教过 AI 我们店的规矩，怎么第二天它全忘了？因为“教”这个动作，根本没发生。</p>
+    <div class="tag-row"><span class="tag">概念</span><span class="tag">交互</span><span class="tag">6 分钟</span></div>
+  </div>
+
+  <div class="sec-label">一个常见的误会</div>
+
+  <p class="reveal">带团队的时候你肯定说过这种话：“小王刚来，多带带，<b>教几次就会了</b>。”</p>
+
+  <p class="reveal">很多电商老板把同样的心态搬到了 AI 身上：今天告诉它“我们店满 199 包邮”，明天告诉它“敏感肌系列不能承诺功效”，以为它会像新员工一样<b>越教越懂你</b>。</p>
+
+  <div class="l-callout reveal">
+    真相有点扎心：<b>你和大模型的每一次对话，都不会让它“学会”任何东西。</b>关掉窗口，它对你的店依然一无所知。这不是它记性差，是它的工作原理决定的。
+  </div>
+
+  <div class="sec-label">两个完全不同的过程</div>
+
+  <p class="reveal">AI 的一生有两个阶段，用开店来类比特别清楚：</p>
+
+  <table class="reveal">
+    <tr><th></th><th>训练（Training）</th><th>推理（Inference）</th></tr>
+    <tr><td>是什么</td><td>出厂前的“学徒期”：读遍全网文本，学会语言规律</td><td>上岗后的“接客期”：你问它答，按学过的规律生成内容</td></tr>
+    <tr><td>开店类比</td><td>员工入职前的学校教育和行业培训</td><td>员工每天坐店接待客人</td></tr>
+    <tr><td>谁来干</td><td>AI 公司，烧掉几千万美元算力</td><td>你和你的客人，每次几分钱甚至 0.1 分钱</td></tr>
+    <tr><td>大脑会变吗</td><td><b>会</b>：模型参数被反复调整</td><td><b>不会</b>：参数完全冻结，一个数都不动</td></tr>
+    <tr><td>频率</td><td>几个月甚至一年一次</td><td>每秒几十万次</td></tr>
+  </table>
+
+  <div class="sec-label">交互演示 · 你“教”它试试</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">模拟：教 AI 一条店规，看看会发生什么</div>
+    <div class="brain">
+      <div class="row">
+        <div class="cell frozen"><b>模型参数（大脑）</b>出厂时固定，对话期间冻结，谁都改不动</div>
+        <div class="cell"><b>对话上下文（便签纸）</b>你说的每句话只写在这张临时便签上，窗口一关就扔</div>
+      </div>
+    </div>
+    <div class="teach-box">
+      <button id="teachBtn">🗣️ 告诉 AI：“本店满 199 包邮”</button>
+      <button class="btn-ghost" id="closeBtn">🚪 关闭对话窗口，明天再来</button>
+    </div>
+    <div class="teach-log" id="teachLog"><span class="sys">点击上面的按钮，模拟一次“教 AI”的过程。</span></div>
+  </div>
+
+  <p class="reveal">看到了吗？你“教”的内容只是写进了<b>本次对话的上下文</b>——相当于一张临时便签。便签在，它记得；窗口一关，便签扔了，大脑还是那个出厂大脑。</p>
+
+  <div class="sec-label">那“记住店规”的正确姿势是？</div>
+
+  <p class="reveal">三条路，按成本从低到高：</p>
+
+  <ul>
+    <li class="reveal"><b>写进 System Prompt</b>：每次对话开场，先把“店规便签”贴好。便宜好用，后面第 1-5 节专门讲。</li>
+    <li class="reveal"><b>建知识库（RAG）</b>：把商品参数、FAQ 存进数据库，AI 回答前现查。第 1-9 节讲。</li>
+    <li class="reveal"><b>微调（Fine-tuning）</b>：真的重新训练模型，改变“大脑”。贵、慢、还容易翻车，中小卖家基本用不上，了解即可。</li>
+  </ul>
+
+  <p class="reveal">还有个好消息：按 Token 计费的“推理”模式对你其实是<b>保护</b>——你店的数据不会因为聊天就被模型学走、转头教给竞品。你的便签，只有你的对话窗口看得到。</p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>训练 ≠ 推理</b>：训练改“大脑”，是 AI 公司的事；推理只是“接客”，参数全程冻结。</li>
+      <li><b>对话不会教 AI 任何东西</b>：你的输入只存在于本次对话的上下文便签里，关窗即焚。</li>
+      <li><b>让 AI 记住店规靠三招</b>：System Prompt、知识库（RAG）、微调——前两个才是中小卖家的菜。</li>
+      <li><b>别指望“多用用它就懂我”</b>：要它懂你，得把信息结构化地喂进去，而不是陪聊。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var log = document.getElementById('teachLog');
+  document.getElementById('teachBtn').addEventListener('click', function(){
+    log.innerHTML = '<div>你：本店满 199 包邮，记住了吗？</div>'
+      + '<div>AI：记住啦！本店满 199 包邮 ✅</div>'
+      + '<div class="sys">—— 实际上：这条店规只写进了“对话上下文”这张便签，模型大脑一个字没改。</div>';
+  });
+  document.getElementById('closeBtn').addEventListener('click', function(){
+    log.innerHTML = '<div class="sys">（第二天，新窗口）</div>'
+      + '<div>你：我们店包邮门槛是多少？</div>'
+      + '<div>AI：抱歉，我不了解您店铺的具体政策呢～建议您查看店铺公告哦 🤖</div>'
+      + '<div class="sys">—— 便签已扔，大脑还是出厂状态。想让它记住？把店规写进 System Prompt 或知识库。</div>';
+  });
+})();
+</script>
+</body>
+</html>

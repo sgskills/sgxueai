@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>长期记忆：让运营智能体越用越懂你 | 诗光聊AI电商 入门课</title>
+<meta name="description" content="运营的办公智能体为什么越用越好用？长期记忆让它记住你的爆款历史、诊断结论、标题风格和品牌调性——不用再重复交代背景。">
+<meta name="author" content="张诗光">
+<meta property="og:title" content="长期记忆：让运营智能体越用越懂你">
+<meta property="og:description" content="记住你的爆款、你的诊断习惯、你的标题风格和品牌调性。">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://sgxueai.com/slides/3-7.html">
+<link rel="stylesheet" href="lesson.css">
+<script>(function(){try{document.documentElement.setAttribute('data-theme',localStorage.getItem('aibp_course_theme')||'light');}catch(e){}})();</script>
+<style>
+  .mem-sim{background:var(--pill-bg);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+  .mem-bubble{padding:10px 15px;border-radius:14px;font-size:13.5px;line-height:1.7;max-width:94%;}
+  .mem-bubble.q{background:var(--accent-soft);border:1px solid var(--accent-border);align-self:flex-end;}
+  .mem-bubble.a{background:var(--card);border:1px solid var(--border);align-self:flex-start;}
+  .mem-bubble .who{font-size:10.5px;font-weight:800;color:var(--sub);display:block;margin-bottom:3px;}
+  .mem-card{
+    background:rgba(16,185,129,.07);border:1.5px dashed rgba(16,185,129,.4);
+    border-radius:10px;padding:9px 13px;font-size:12px;color:var(--text);line-height:1.65;
+  }
+  .mem-card b{color:var(--success);}
+  .mem-toggle{display:flex;gap:8px;margin-bottom:14px;}
+  .mem-toggle button{
+    border:1.5px solid var(--border-strong);border-radius:999px;padding:7px 18px;
+    font-size:13px;font-weight:700;background:transparent;color:var(--sub);
+    cursor:pointer;font-family:inherit;transition:.2s;
+  }
+  .mem-toggle button.on{background:var(--green);border-color:var(--green);color:#fff;}
+  .rem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:14px;}
+  .rem-item{
+    background:var(--pill-bg);border-radius:11px;padding:12px 14px;
+    font-size:12.5px;line-height:1.65;color:var(--sub);
+  }
+  .rem-item b{display:block;color:var(--text-h);font-size:13px;margin-bottom:3px;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="mascot/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="mascot/favicon-64.png">
+<link rel="apple-touch-icon" href="mascot/apple-touch-180.png">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?cca8b21d5174e23fad865efad55f8d5e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+
+<header class="lesson-topbar">
+  <div class="inner">
+    <a class="home-link" href="home.html"><span class="logo">A</span>AIBP 实战课</a>
+    <span class="crumb">第三篇章 · 电商 AI 落地实战</span>
+    <div class="right">
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题"><span class="ico-moon">🌙</span><span class="ico-sun">☀️</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lesson">
+
+  <div class="lesson-header">
+    <div class="kicker">第三篇章 · 电商 AI 落地实战</div>
+    <h1>长期记忆：让运营智能体越用越懂你</h1>
+    <p class="subtitle">为什么别人的运营智能体越用越顺手，你的每次都像第一天上班？差别就在长期记忆——它记得你上个月打爆的款、你的诊断习惯、你的标题风格、你品牌的调性，不用你每次重新交代一遍。</p>
+    <div class="tag-row"><span class="tag">概念</span><span class="tag">交互</span><span class="tag">7 分钟</span></div>
+  </div>
+
+  <div class="sec-label">运营每天都在“重复交代背景”</div>
+
+  <p class="reveal">回想一下你用 AI 的日常：让它写个小红书标题，你得先说“我们是做母婴的，调性要温柔专业，别用感叹号狂轰滥炸”；让它做个推广诊断，你得重新贴一遍“我们客单价 200 左右、毛利 55%、主搜渠道占比 40%”……<b>每次对话都从零下温度开始，AI 再聪明也像个实习生。</b></p>
+
+  <p class="reveal">第一篇章的白板是<b>短期记忆</b>：本次对话内有效，关窗即焚。而运营真正值钱的东西——打过的爆款、踩过的坑、形成的风格——<b>不该随窗口一起烧掉</b>。长期记忆就是白板之外的“经验档案柜”：每次协作结束，把值得记住的提炼入库；下次开局，自动把相关档案贴回白板。技术上常用向量检索（按语义相似度找相关记忆），原理你记住<b>“档案柜 + 自动调取”</b>就够了。</p>
+
+  <div class="sec-label">交互 · 同一个运营，有无长期记忆</div>
+
+  <div class="demo reveal">
+    <div class="demo-title">让 AI 出 5 个小红书标题</div>
+    <div class="mem-toggle">
+      <button class="on" id="btnOff">❌ 无记忆</button>
+      <button id="btnOn">✅ 有长期记忆</button>
+    </div>
+    <div class="mem-sim" id="memSim"></div>
+  </div>
+
+  <div class="sec-label">运营智能体该记住什么</div>
+
+  <p class="reveal">长期记忆不是什么都存，存的是<b>“下次还用得上的经验”</b>。对运营来说，这几类最值得入库：</p>
+
+  <div class="rem-grid reveal">
+    <div class="rem-item"><b>🏆 爆款与失败案例</b>上个月哪个款打爆了、用的什么打法；哪个活动翻车了、原因是什么——下次选品和策划直接调取。</div>
+    <div class="rem-item"><b>📊 诊断结论与方法</b>上次推广诊断的结论、你惯用的分析框架——它记得“你上次说引力魔方投产掉是因为人群太宽”。</div>
+    <div class="rem-item"><b>✍️ 内容风格习惯</b>你写公众号的口吻、小红书标题的套路、详情页文案的禁忌词——写出来的东西越来越像你写的。</div>
+    <div class="rem-item"><b>🎨 品牌形象与调性</b>品牌色系、视觉偏好、说话的语气边界——“我们是成分党路线，不玩夸张营销那一套”。</div>
+    <div class="rem-item"><b>📐 呈现格式偏好</b>你习惯诊断报告先结论后数据、表格不要花哨配色——输出格式不用每次重调。</div>
+    <div class="rem-item"><b>👥 店铺基本面</b>客单价、毛利、主力渠道、目标人群——经营常量入库，从此告别重复贴背景。</div>
+  </div>
+
+  <div class="sec-label">记什么、不记什么</div>
+
+  <ul>
+    <li class="reveal"><b>记“提炼后的经验”，不记“流水对话”</b>：存“5 月爆款打法：达人短视频引流 + 搜索承接”，不存完整聊天记录——档案要的是干货，也省 Token。</li>
+    <li class="reveal"><b>记“你确认过的结论”</b>：AI 自己瞎总结的中间过程别入库，错误经验越记越偏。<b>入库前你过一眼，档案柜才可信。</b></li>
+    <li class="reveal"><b>记“会过期的要标期”</b>：活动政策、平台规则、权益价格都会变——带时效的记忆标注时间，过期自动失效，别让 AI 拿着上个月的规则做这个月的事。</li>
+  </ul>
+
+  <p class="reveal">这就是为什么说运营智能体<b>越用越好用</b>：你每协作一次，它就多懂你和你的店一分。三个月后，它不再是通用 AI，是<b>泡在你店铺经验里长大的专属搭子</b>——这道护城河，别人复制不走，因为记忆在你手里。</p>
+
+  <div class="takeaway reveal">
+    <div class="tk-title">📌 本节要点</div>
+    <ul>
+      <li><b>长期记忆 = 经验档案柜</b>：协作结束提炼入库，下次开局自动贴回白板。</li>
+      <li><b>运营最该记的六类</b>：爆款案例、诊断结论、内容风格、品牌调性、呈现格式、店铺基本面。</li>
+      <li><b>记经验不记流水</b>：提炼干货、人工确认、过期标注——档案柜可信才敢用。</li>
+      <li><b>越用越懂你的专属搭子</b>：记忆沉淀在你的智能体里，是别人复制不走的护城河。</li>
+    </ul>
+  </div>
+
+</main>
+
+<script src="course-data.js"></script>
+<script src="lesson.js"></script>
+<script>
+(function(){
+  var sim = document.getElementById('memSim');
+  var btnOff = document.getElementById('btnOff');
+  var btnOn = document.getElementById('btnOn');
+  var off = [
+    ['q','运营 小李','帮我出 5 个小红书标题，推我们新上的辅食碗'],
+    ['a','AI 助手','好的！1. 这个辅食碗也太好用了吧！！2. 宝妈们快冲！不买后悔！3. 震惊！这个碗竟然……4. 全网最低价辅食碗来了！5. 宝宝吃饭神器，错过拍大腿！<br><br>（调性跑偏、风格不对——重写还得再交代一遍品牌要求）']
+  ];
+  var on = [
+    ['card','<b>自动调取档案：</b>品牌调性「温柔专业、成分党路线」· 标题禁忌：不用感叹号轰炸、不喊最低价 · 历史爆款标题结构「数字 + 场景 + 真实体验」'],
+    ['q','运营 小李','帮我出 5 个小红书标题，推我们新上的辅食碗'],
+    ['a','AI 助手','按咱们一贯的风格来：1. 辅食碗换了 4 个，终于遇到吸盘掀不翻的 2. 8 个月自主进食，这只碗帮了大忙 3. 成分党妈妈看材质：这只碗我为什么敢用 4. 从喂饭大战到自己吃，只换了这只碗 5. 儿保医生朋友看了都点头的辅食碗<br><br>（直接就是能用的水平——它记得你的调性，也记得上次哪种标题爆了）']
+  ];
+  function show(withMem){
+    btnOff.classList.toggle('on', !withMem);
+    btnOn.classList.toggle('on', withMem);
+    sim.innerHTML = (withMem ? on : off).map(function(m){
+      if (m[0] === 'card') return '<div class="mem-card">🗂️ ' + m[1] + '</div>';
+      return '<div class="mem-bubble ' + m[0] + '"><span class="who">' + m[1] + '</span>' + m[2] + '</div>';
+    }).join('');
+  }
+  btnOff.addEventListener('click', function(){ show(false); });
+  btnOn.addEventListener('click', function(){ show(true); });
+  show(false);
+})();
+</script>
+</body>
+</html>
