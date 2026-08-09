@@ -11,9 +11,13 @@
 
 ## 📸 长什么样
 
-| 网站首页 | 课程地图 |
-|---|---|
-| ![网站首页](docs/screenshot-home.png) | ![课程地图](docs/screenshot-coursemap.png) |
+**网站首页**
+
+![网站首页](docs/screenshot-home.png)
+
+**这门课适合谁**
+
+![这门课适合谁](docs/screenshot-coursemap.png)
 
 ## 📚 课程结构
 
@@ -40,7 +44,7 @@
 
 纯静态站，无框架无构建，打开 `index.html` 即整个网站。
 
-- 托管：Cloudflare Pages（连本仓库，`main` 分支 push 后约 1 分钟自动部署）
+- 托管：静态托管，自动部署（`main` 分支 push 后约 1 分钟生效）
 - 统计：百度统计
 - 维护指南：见 [AGENTS.md](AGENTS.md)（AI 协作者入职手册）
 
