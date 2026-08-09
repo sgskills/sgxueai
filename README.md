@@ -13,7 +13,7 @@
 
 | 网站首页 | 课程地图 |
 |---|---|
-| ![网站首页](docs/screenshot-home.jpg) | ![课程地图](docs/screenshot-coursemap.jpg) |
+| ![网站首页](docs/screenshot-home.png) | ![课程地图](docs/screenshot-coursemap.png) |
 
 ## 📚 课程结构
 
