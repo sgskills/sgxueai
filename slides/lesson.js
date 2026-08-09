@@ -25,7 +25,10 @@
   }
   function currentFile() {
     var path = window.location.pathname.split('/');
-    return path[path.length - 1] || 'home.html';
+    var f = path[path.length - 1] || 'home.html';
+    /* Cloudflare Pages 会把 /slides/1-1.html 重定向为无后缀的 /slides/1-1，这里补回 .html 再匹配课程数据 */
+    if (f.indexOf('.') === -1) f += '.html';
+    return f;
   }
   function markDone(file) {
     var p = getProgress();
