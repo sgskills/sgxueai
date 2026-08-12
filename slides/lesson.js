@@ -36,7 +36,7 @@
     p.__last = file;
     saveProgress(p);
   }
-  window.AIBP = { markDone: markDone, getProgress: getProgress };
+  window.AIBP = { markDone: markDone, getProgress: getProgress, flat: flattenCourse };
 
   /* ── 主题初始化与切换 ── */
   function initTheme() {
@@ -106,7 +106,8 @@
   /* ── 自动注入「上一节 / 下一节」+ 底部悬浮按钮 ── */
   function injectNav() {
     var file = currentFile();
-    if (file === 'home.html' || file === 'index.html' || file === 'learn.html' || file === 'exam.html' || file === 'final-exam.html') return;
+    if (file === 'home.html' || file === 'index.html' || file === 'learn.html') return;
+    var isExam = (file === 'exam.html' || file === 'final-exam.html');
     var flat = flattenCourse();
     if (!flat.length) return;
     var idx = -1;
@@ -147,8 +148,8 @@
       lesson.appendChild(nav);
     }
 
-    // 底部悬浮「完成并继续」
-    if (!document.querySelector('.fab-wrap')) {
+    // 底部悬浮「完成并继续」（考试页不注入，避免遮住答题栏）
+    if (!isExam && !document.querySelector('.fab-wrap')) {
       var wrap = document.createElement('div');
       wrap.className = 'fab-wrap';
       var btn = document.createElement('button');

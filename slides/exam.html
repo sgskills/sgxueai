@@ -107,6 +107,7 @@ var _hmt = _hmt || [];
       <div class="score" id="finalScore">0</div>
       <div class="rd" id="finalDesc"></div>
       <div class="acts">
+        <a id="nextStageBtn" href="#" style="display:none;align-items:center;padding:12px 28px;border-radius:999px;background:linear-gradient(135deg,#10B981,#059669);box-shadow:0 8px 24px rgba(16,185,129,.35);font-size:14px;font-weight:700;color:#fff;">进入下一篇章 →</a>
         <button class="btn-primary" id="retryBtn" style="background:linear-gradient(135deg,#F97316,#ea580c);border:none;padding:12px 28px;border-radius:999px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:inherit;">↺ 再测一次</button>
         <a href="home.html" style="display:inline-flex;align-items:center;padding:12px 24px;border-radius:999px;border:1.5px solid var(--border-strong);font-size:14px;font-weight:600;color:var(--text);">回课程地图</a>
       </div>
@@ -157,6 +158,18 @@ var _hmt = _hmt || [];
       var pass = score >= E.passScore;
       sEl.textContent = score;
       sEl.className = 'score ' + (pass ? 'pass' : 'fail');
+      if (pass){
+        var nextBtn = document.getElementById('nextStageBtn');
+        var flat = (window.AIBP && window.AIBP.flat) ? window.AIBP.flat() : [];
+        var idx = -1;
+        for (var i = 0; i < flat.length; i++){ if (flat[i].file === 'exam.html'){ idx = i; break; } }
+        if (idx >= 0 && idx < flat.length - 1){
+          var nx = flat[idx + 1];
+          nextBtn.href = nx.file;
+          nextBtn.textContent = '进入' + nx.partNum + '「' + nx.partTitle + '」→';
+          nextBtn.style.display = 'inline-flex';
+        }
+      }
       dEl.innerHTML = pass
         ? '🎉 及格！认知底座和智能体设计两篇已拿下。<br>可以进入第三篇章「电商 AI 落地实战」——生图、知识库、多 Agent 流水线在等你。'
         : '还差一点。别急——上面的错题都有「回这节课复习」的链接，<br>把错题对应的几节再看一遍，回来再战，会稳很多。';
